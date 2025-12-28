@@ -2024,6 +2024,7 @@ This function is designed to be called via `emacsclient -e`."
 (load! "lisp/popup-dirvish-browser")
 (load! "lisp/audio-record")
 (load! "lisp/org-caldav")
+(load! "lisp/download-media")
 ;; POSSE posting system
 (load! "lisp/posse/posse-twitter")
 (load! "lisp/gimp-tweet")

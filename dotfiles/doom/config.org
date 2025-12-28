@@ -2267,6 +2267,7 @@ I have various functions in my lisp directory for creating pomodoros, refiling d
 (load! "lisp/popup-dirvish-browser")
 (load! "lisp/audio-record")
 (load! "lisp/org-caldav")
+(load! "lisp/download-media")
 ;; POSSE posting system
 (load! "lisp/posse/posse-twitter")
 (load! "lisp/gimp-tweet")
