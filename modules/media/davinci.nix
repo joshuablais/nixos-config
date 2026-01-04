@@ -4,34 +4,10 @@
   pkgs,
   ...
 }:
-<<<<<<< Updated upstream
-<<<<<<< HEAD
 {
   # Use DaVinci Resolve (already from unstable since your main input is unstable)
   environment.systemPackages = [
     pkgs.davinci-resolve
-||||||| parent of c000da7 (davinci opts)
-=======
-let
-  unstable = import <nixos-unstable> { config.allowUnfree = true; };
-in
-||||||| Stash base
-let
-  unstable = import <nixos-unstable> { config.allowUnfree = true; };
-in
-=======
->>>>>>> Stashed changes
-{
-  # Use DaVinci Resolve (already from unstable since your main input is unstable)
-  environment.systemPackages = [
-<<<<<<< Updated upstream
-    unstable.davinci-resolve
->>>>>>> c000da7 (davinci opts)
-||||||| Stash base
-    unstable.davinci-resolve
-=======
-    pkgs.davinci-resolve
->>>>>>> Stashed changes
   ];
 
   # Increase file watchers - Resolve uses massive amounts

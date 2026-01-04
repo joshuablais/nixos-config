@@ -10,6 +10,7 @@
     ./hardware-overrides.nix
     ../../profiles/bishop.nix
     ../../modules/media/davinci.nix
+    ../../modules/llms/default.nix
     ../../modules/secrets-joshua.nix
   ];
 
