@@ -30,12 +30,12 @@
   :group 'org
   :prefix "pomodoro-")
 
-(defcustom pomodoro-work-minutes 2
+(defcustom pomodoro-work-minutes 25
   "Work period length in minutes."
   :type 'integer
   :group 'pomodoro)
 
-(defcustom pomodoro-break-minutes 2
+(defcustom pomodoro-break-minutes 5
   "Break period length in minutes."
   :type 'integer
   :group 'pomodoro)
