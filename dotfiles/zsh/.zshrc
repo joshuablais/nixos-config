@@ -272,6 +272,7 @@ alias dl="podman logs"
 # Develoment niceties
 ## Add forgejo workflow file to project
 alias adwflw="~/Development/workflows/scripts/add-workflow.sh "
+alias syncmedia="~/.config/scripts/Development/rclone/rclone.sh"
 
 # Tasks for running htmx app
 alias tfmt="templ fmt"
