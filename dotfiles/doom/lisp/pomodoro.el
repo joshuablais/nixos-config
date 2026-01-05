@@ -30,12 +30,12 @@
   :group 'org
   :prefix "pomodoro-")
 
-(defcustom pomodoro-work-minutes 25
+(defcustom pomodoro-work-minutes 2
   "Work period length in minutes."
   :type 'integer
   :group 'pomodoro)
 
-(defcustom pomodoro-break-minutes 5
+(defcustom pomodoro-break-minutes 2
   "Break period length in minutes."
   :type 'integer
   :group 'pomodoro)
@@ -85,6 +85,8 @@
         (append global-mode-string '(pomodoro--mode-line))))
 
 ;;; Core Functions
+(defvar pomodoro--sound-process nil
+  "Reference to sound process to prevent premature GC.")
 
 (defun pomodoro--play-alert (message)
   "Send notification with MESSAGE and play alert sound."
@@ -93,14 +95,10 @@
      :title "Pomodoro"
      :body message
      :urgency 'critical))
-  (when (file-exists-p pomodoro-sound-file)
-    (cond
-     ((executable-find "pw-play")
-      (start-process "pomodoro-sound" nil "pw-play" pomodoro-sound-file))
-     ((executable-find "mpv")
-      (start-process "pomodoro-sound" nil "mpv" "--no-video" "--volume=100" pomodoro-sound-file))
-     ((executable-find "ffplay")
-      (start-process "pomodoro-sound" nil "ffplay" "-nodisp" "-autoexit" pomodoro-sound-file)))))
+  (let ((sound (expand-file-name pomodoro-sound-file)))
+    (when (file-exists-p sound)
+      (setq pomodoro--sound-process
+            (start-process "pomodoro-sound" nil "pw-play" sound)))))
 
 (defun pomodoro--update-display ()
   "Update the mode line display."
