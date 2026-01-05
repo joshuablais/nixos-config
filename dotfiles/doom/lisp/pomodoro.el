@@ -1,4 +1,4 @@
-;;; pomodoro.el --- A simple pomodoro timer -*- lexical-binding: t; -*-
+;;; pomodoro.el --- Pomodoro timer with org-clock integration -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2025
 ;;
@@ -6,23 +6,28 @@
 ;; Maintainer: Joshua Blais <josh@joshblais.com>
 ;; Created: February 04, 2025
 ;; Modified: February 04, 2025
-;; Version: 0.0.1
-;; Keywords: tools
+;; Version: 0.1.0
+;; Keywords: tools, org, time
 ;; Homepage: https://github.com/jblais493/pomodoro
-;; Package-Requires: ((emacs "29.1") (alert "1.2"))
+;; Package-Requires: ((emacs "29.1"))
 ;;
 ;;; Commentary:
 ;;
-;;  A simple pomodoro timer implementation with countdown display and org logging
+;;  Pomodoro timer that integrates with org-clock for native time tracking.
+;;  Select tasks from org-agenda or enter ad-hoc tasks.
+;;  Uses LOGBOOK entries for accurate time tracking.
 ;;
 ;;; Code:
 
-;;(require 'alert)
+(require 'org)
+(require 'org-clock)
+(require 'org-agenda)
 
-;; Core variables for timer functionality
+;;; Customization
+
 (defgroup pomodoro nil
-  "Simple Pomodoro timer for Emacs."
-  :group 'tools
+  "Pomodoro timer with org-clock integration."
+  :group 'org
   :prefix "pomodoro-")
 
 (defcustom pomodoro-work-minutes 25
@@ -35,183 +40,343 @@
   :type 'integer
   :group 'pomodoro)
 
-;; (defvar pomodoro-break-minutes 5  ; Set to 1 for testing
-;;   "Break period length in minutes.")
+(defcustom pomodoro-long-break-minutes 15
+  "Long break period length in minutes (after 4 pomodoros)."
+  :type 'integer
+  :group 'pomodoro)
 
-(defvar pomodoro-task ""
-  "Current task being worked on.")
+(defcustom pomodoro-adhoc-file "~/org/pomodoro.org"
+  "File for ad-hoc tasks that aren't in your agenda."
+  :type 'file
+  :group 'pomodoro)
 
-(defvar pomodoro-timer nil
-  "Timer object for the main pomodoro countdown.")
+(defcustom pomodoro-sound-file "~/Downloads/Bell.mp3"
+  "Sound file to play on timer completion."
+  :type 'file
+  :group 'pomodoro)
 
-(defvar pomodoro-mode-line ""
-  "String to display in mode line.")
+;;; State Variables
 
-(defvar pomodoro-end-time nil
-  "When the current period ends.")
+(defvar pomodoro--timer nil
+  "Timer object for the pomodoro countdown.")
 
-(defvar pomodoro-update-timer nil
+(defvar pomodoro--display-timer nil
   "Timer object for updating the display.")
 
-(defvar pomodoro-start-time nil
-  "When the current work period started.")
+(defvar pomodoro--end-time nil
+  "When the current period ends.")
 
-(defvar pomodoro-break-p nil
-  "Flag to track if we're in a break period.")
+(defvar pomodoro--state nil
+  "Current state: nil, `work', or `break'.")
 
-;; Add our display to the mode line
-(unless (member 'pomodoro-mode-line global-mode-string)
+(defvar pomodoro--count 0
+  "Number of completed pomodoros in current session.")
+
+(defvar pomodoro--current-marker nil
+  "Marker to the org heading being worked on.")
+
+(defvar pomodoro--mode-line ""
+  "String to display in mode line.")
+
+;;; Mode Line Setup
+
+(unless (member 'pomodoro--mode-line global-mode-string)
   (setq global-mode-string
-        (append global-mode-string '(pomodoro-mode-line))))
+        (append global-mode-string '(pomodoro--mode-line))))
 
-(defun pomodoro-play-alert (message)
-  "Send notification and play sound reliably."
+;;; Core Functions
+
+(defun pomodoro--play-alert (message)
+  "Send notification with MESSAGE and play alert sound."
   (when (fboundp 'notifications-notify)
     (notifications-notify
-     :title "Pomodoro Timer"
+     :title "Pomodoro"
      :body message
      :urgency 'critical))
-  ;; Use pw-play (native PipeWire) or fallback gracefully
-  (let ((sound-file (expand-file-name "~/Downloads/Bell.mp3")))
+  (when (file-exists-p pomodoro-sound-file)
     (cond
      ((executable-find "pw-play")
-      (start-process "pomodoro-sound" nil "pw-play" sound-file))
+      (start-process "pomodoro-sound" nil "pw-play" pomodoro-sound-file))
      ((executable-find "mpv")
-      (start-process "pomodoro-sound" nil "mpv" "--no-video" "--volume=100" sound-file))
+      (start-process "pomodoro-sound" nil "mpv" "--no-video" "--volume=100" pomodoro-sound-file))
      ((executable-find "ffplay")
-      (start-process "pomodoro-sound" nil "ffplay" "-nodisp" "-autoexit" "-volume" "100" sound-file))
-     (t (message "No audio player found for pomodoro alert")))))
+      (start-process "pomodoro-sound" nil "ffplay" "-nodisp" "-autoexit" pomodoro-sound-file)))))
 
-;; Function to ensure the done.org file exists and has today's date
-(defun pomodoro-ensure-done-file ()
-  "Ensure the done.org file exists and has today's date heading."
-  (let ((done-file (expand-file-name "~/org/done.org"))
-        (today (format-time-string "* %Y-%m-%d %A")))
-    (unless (file-exists-p done-file)
-      (append-to-file "" nil done-file))
+(defun pomodoro--update-display ()
+  "Update the mode line display."
+  (if (and pomodoro--end-time pomodoro--state)
+      (let* ((remaining (float-time (time-subtract pomodoro--end-time (current-time))))
+             (remaining (max 0 remaining))
+             (mins (floor (/ remaining 60)))
+             (secs (floor (mod remaining 60)))
+             (icon (if (eq pomodoro--state 'work) "🍅" "☕"))
+             (task (if (and pomodoro--current-marker
+                            (marker-buffer pomodoro--current-marker))
+                       (org-with-point-at pomodoro--current-marker
+                         (org-get-heading t t t t))
+                     "Break")))
+        (setq pomodoro--mode-line
+              (format " %s %02d:%02d %s "
+                      icon mins secs
+                      (if (eq pomodoro--state 'work)
+                          (truncate-string-to-width task 20 nil nil "…")
+                        "Break"))))
+    (setq pomodoro--mode-line ""))
+  (force-mode-line-update t))
 
-    (with-temp-buffer
-      (when (file-exists-p done-file)
-        (insert-file-contents done-file))
+(defun pomodoro--cancel-timers ()
+  "Cancel all active timers."
+  (when pomodoro--timer
+    (cancel-timer pomodoro--timer)
+    (setq pomodoro--timer nil))
+  (when pomodoro--display-timer
+    (cancel-timer pomodoro--display-timer)
+    (setq pomodoro--display-timer nil)))
+
+(defun pomodoro--ensure-adhoc-file ()
+  "Ensure the ad-hoc task file exists with proper structure."
+  (unless (file-exists-p pomodoro-adhoc-file)
+    (with-temp-file pomodoro-adhoc-file
+      (insert "#+TITLE: Pomodoro Tasks\n#+FILETAGS: :pomodoro:\n\n"))))
+
+(defun pomodoro--create-adhoc-task (task-name)
+  "Create an ad-hoc task with TASK-NAME and return marker to it."
+  (pomodoro--ensure-adhoc-file)
+  (let ((today (format-time-string "* %Y-%m-%d %A")))
+    (with-current-buffer (find-file-noselect pomodoro-adhoc-file)
       (goto-char (point-min))
+      ;; Find or create today's date heading
       (unless (search-forward today nil t)
         (goto-char (point-max))
         (unless (bolp) (insert "\n"))
-        (insert today "\n")
-        (write-region (point-min) (point-max) done-file nil 'quiet)))))
-
-;; Enhanced logging function with better file handling
-(defun pomodoro-log-session (task completed)
-  "Log the completed pomodoro session to done.org."
-  (let* ((done-file (expand-file-name "~/org/done.org"))
-         (today (format-time-string "* %Y-%m-%d %A"))
-         (start-time (format-time-string "%H:%M" pomodoro-start-time))
-         (end-time (format-time-string "%H:%M" (current-time)))
-         (entry (format "** %s-%s: %s\n   %s\n"
-                        start-time end-time task completed)))
-    (with-temp-buffer
-      (when (file-exists-p done-file)
-        (insert-file-contents done-file))
-      (goto-char (point-min))
-      (if (search-forward today nil t)
-          (forward-line 1)
-        (goto-char (point-max))
-        (unless (bolp) (insert "\n"))
         (insert today "\n"))
-      (insert entry)
-      (write-region (point-min) (point-max) done-file nil 'quiet))))
+      ;; Insert the task as a subheading
+      (end-of-line)
+      (insert (format "\n** TODO %s" task-name))
+      (beginning-of-line)
+      (save-buffer)
+      (point-marker))))
 
-;; Improved display update function with work/break indication
-(defun pomodoro-update-display ()
-  "Update the mode line display."
-  (when pomodoro-end-time
-    (let* ((remaining-seconds (round (float-time (time-subtract pomodoro-end-time (current-time)))))
-           (remaining-minutes (/ remaining-seconds 60))
-           (remaining-secs (mod remaining-seconds 60)))
-      (if (> remaining-seconds 0)
-          (setq pomodoro-mode-line
-                (format " [%s %02d:%02d %s] "
-                        (if pomodoro-break-p "☕" "✝")
-                        remaining-minutes
-                        remaining-secs
-                        (if pomodoro-break-p "Break" pomodoro-task)))
-        (setq pomodoro-mode-line "")))
-    (force-mode-line-update)))
+(defun pomodoro--select-task ()
+  "Prompt user to select an org-agenda task or enter an ad-hoc task.
+Returns a marker to the selected/created heading."
+  (let* ((choice (completing-read
+                  "Task (select or type new): "
+                  (pomodoro--get-agenda-tasks)
+                  nil nil nil nil nil))
+         (existing (assoc choice (pomodoro--get-agenda-tasks))))
+    (if existing
+        (cdr existing)
+      ;; Create new ad-hoc task
+      (pomodoro--create-adhoc-task choice))))
 
-;; Core timer functions
+(defun pomodoro--get-agenda-tasks ()
+  "Get list of TODO items from org-agenda files.
+Returns alist of (display-string . marker)."
+  (let (tasks)
+    (dolist (file (org-agenda-files))
+      (when (file-exists-p file)
+        (with-current-buffer (find-file-noselect file)
+          (org-map-entries
+           (lambda ()
+             (let* ((heading (org-get-heading t t t t))
+                    (todo (org-get-todo-state))
+                    (tags (org-get-tags))
+                    (display (format "%s [%s] %s"
+                                     (or todo "")
+                                     (file-name-nondirectory file)
+                                     heading)))
+               (when todo  ; Only include items with TODO state
+                 (push (cons display (point-marker)) tasks))))
+           "/!"  ; Match all TODO states
+           'file))))
+    (nreverse tasks)))
+
+;;; Work Period
+
 (defun pomodoro-start ()
-  "Start a new Pomodoro session."
+  "Start a new pomodoro session by selecting a task."
   (interactive)
-  (when pomodoro-update-timer
-    (cancel-timer pomodoro-update-timer))
-  (when pomodoro-timer
-    (cancel-timer pomodoro-timer))
-  (pomodoro-ensure-done-file)
-  (setq pomodoro-task (read-string "What are you working on? "))
-  (pomodoro-work-period))
+  ;; Clean up any existing state
+  (pomodoro--cancel-timers)
+  (when (org-clocking-p)
+    (org-clock-out))
 
-(defun pomodoro-work-period ()
-  "Start a work period."
-  (setq pomodoro-break-p nil)
-  (message "Starting %d minute work period on: %s" pomodoro-work-minutes pomodoro-task)
-  (setq pomodoro-start-time (current-time))
-  (setq pomodoro-end-time (time-add (current-time)
-                                    (seconds-to-time (* pomodoro-work-minutes 60))))
-  (when pomodoro-update-timer
-    (cancel-timer pomodoro-update-timer))
-  (setq pomodoro-update-timer (run-at-time nil 1 #'pomodoro-update-display))
-  (when pomodoro-timer
-    (cancel-timer pomodoro-timer))
-  (setq pomodoro-timer
-        (run-at-time (* pomodoro-work-minutes 60) nil #'pomodoro-work-done)))
+  (let ((marker (pomodoro--select-task)))
+    (setq pomodoro--current-marker marker)
+    (pomodoro--start-work)))
 
-(defun pomodoro-work-done ()
-  "Handle work period completion."
-  (pomodoro-play-alert "Work period complete!")
-  (let ((completed (read-string "What did you accomplish? ")))
-    (pomodoro-log-session pomodoro-task completed)
-    (message "Work period complete! Accomplished: %s" completed)
-    (pomodoro-break-period)))
+(defun pomodoro--start-work ()
+  "Begin the work period with org-clock."
+  (setq pomodoro--state 'work)
 
-(defun pomodoro-break-period ()
+  ;; Clock in to the task
+  (when (and pomodoro--current-marker
+             (marker-buffer pomodoro--current-marker))
+    (org-with-point-at pomodoro--current-marker
+      (org-clock-in)))
+
+  ;; Set up timers
+  (setq pomodoro--end-time
+        (time-add (current-time)
+                  (seconds-to-time (* pomodoro-work-minutes 60))))
+
+  (setq pomodoro--display-timer
+        (run-at-time nil 1 #'pomodoro--update-display))
+
+  (setq pomodoro--timer
+        (run-at-time (* pomodoro-work-minutes 60) nil
+                     #'pomodoro--work-complete))
+
+  (message "🍅 Pomodoro started: %d minutes"
+           pomodoro-work-minutes))
+
+(defun pomodoro--work-complete ()
+  "Handle completion of work period."
+  (pomodoro--cancel-timers)
+  (pomodoro--play-alert "Work period complete!")
+
+  ;; Clock out
+  (when (org-clocking-p)
+    (org-clock-out))
+
+  (cl-incf pomodoro--count)
+
+  ;; Prompt for completion status
+  (let ((action (completing-read
+                 "Session complete. Action: "
+                 '("Start break"
+                   "Task done - start new task"
+                   "Continue same task"
+                   "Stop")
+                 nil t)))
+    (pcase action
+      ("Start break" (pomodoro--start-break))
+      ("Task done - start new task"
+       (pomodoro--mark-task-done)
+       (pomodoro--start-break))
+      ("Continue same task" (pomodoro--start-work))
+      ("Stop" (pomodoro-stop)))))
+
+(defun pomodoro--mark-task-done ()
+  "Mark the current task as DONE."
+  (when (and pomodoro--current-marker
+             (marker-buffer pomodoro--current-marker))
+    (org-with-point-at pomodoro--current-marker
+      (org-todo "DONE"))))
+
+;;; Break Period
+
+(defun pomodoro--start-break ()
   "Start a break period."
-  (setq pomodoro-break-p t)
-  (message "Starting %d minute break" pomodoro-break-minutes)
-  (setq pomodoro-end-time (time-add (current-time)
-                                    (seconds-to-time (* pomodoro-break-minutes 60))))
-  (when pomodoro-timer
-    (cancel-timer pomodoro-timer))
-  (setq pomodoro-timer
-        (run-at-time (* pomodoro-break-minutes 60) nil #'pomodoro-break-done)))
+  (setq pomodoro--state 'break)
+  (setq pomodoro--current-marker nil)
 
-(defun pomodoro-break-done ()
-  "Handle break period completion."
-  (pomodoro-play-alert "Break complete! Start new session?")
-  (pomodoro-start))
+  (let ((break-mins (if (zerop (mod pomodoro--count 4))
+                        pomodoro-long-break-minutes
+                      pomodoro-break-minutes)))
 
-;; Kill function to stop the timer
-(defun pomodoro-kill ()
-  "Kill the current pomodoro session."
-  (interactive)
-  (when pomodoro-update-timer
-    (cancel-timer pomodoro-update-timer)
-    (setq pomodoro-update-timer nil))
-  (when pomodoro-timer
-    (cancel-timer pomodoro-timer)
-    (setq pomodoro-timer nil))
-  (setq pomodoro-mode-line "")
-  (setq pomodoro-end-time nil)
-  (force-mode-line-update)
-  (message "Pomodoro timer stopped."))
+    (setq pomodoro--end-time
+          (time-add (current-time)
+                    (seconds-to-time (* break-mins 60))))
 
-(defun pomodoro-toggle ()
-  "Start or kill the pomodoro timer based on current state."
-  (interactive)
-  (if (or pomodoro-timer pomodoro-update-timer)
-      (pomodoro-kill)
+    (setq pomodoro--display-timer
+          (run-at-time nil 1 #'pomodoro--update-display))
+
+    (setq pomodoro--timer
+          (run-at-time (* break-mins 60) nil
+                       #'pomodoro--break-complete))
+
+    (message "☕ Break started: %d minutes" break-mins)))
+
+(defun pomodoro--break-complete ()
+  "Handle completion of break period."
+  (pomodoro--cancel-timers)
+  (pomodoro--play-alert "Break complete!")
+  (setq pomodoro--state nil)
+  (pomodoro--update-display)
+
+  (when (y-or-n-p "Start another pomodoro? ")
     (pomodoro-start)))
 
+;;; Task Completion Mid-Pomodoro
+
+(defun pomodoro-task-done ()
+  "Mark current task as done and switch to a new task for remaining time.
+Use this when you finish a task before the pomodoro ends."
+  (interactive)
+  (unless (eq pomodoro--state 'work)
+    (user-error "No active work period"))
+
+  (let ((remaining (float-time (time-subtract pomodoro--end-time (current-time)))))
+    (when (< remaining 60)
+      (user-error "Less than a minute remaining—let it finish"))
+
+    ;; Clock out and mark done
+    (when (org-clocking-p)
+      (org-clock-out))
+    (pomodoro--mark-task-done)
+
+    ;; Select new task
+    (let ((marker (pomodoro--select-task)))
+      (setq pomodoro--current-marker marker)
+      ;; Clock into new task (timer continues)
+      (when (and pomodoro--current-marker
+                 (marker-buffer pomodoro--current-marker))
+        (org-with-point-at pomodoro--current-marker
+          (org-clock-in)))
+      (message "Switched to new task. %.0f minutes remaining."
+               (/ remaining 60.0)))))
+
+;;; Control Functions
+
+(defun pomodoro-stop ()
+  "Stop the current pomodoro session entirely."
+  (interactive)
+  (pomodoro--cancel-timers)
+  (when (org-clocking-p)
+    (org-clock-out))
+  (setq pomodoro--state nil
+        pomodoro--end-time nil
+        pomodoro--current-marker nil
+        pomodoro--count 0)
+  (pomodoro--update-display)
+  (message "Pomodoro stopped."))
+
+(defun pomodoro-toggle ()
+  "Start or stop pomodoro based on current state."
+  (interactive)
+  (if pomodoro--state
+      (if (y-or-n-p "Stop current pomodoro? ")
+          (pomodoro-stop)
+        (message "Continuing..."))
+    (pomodoro-start)))
+
+(defun pomodoro-goto ()
+  "Jump to the currently clocked task."
+  (interactive)
+  (if (org-clocking-p)
+      (org-clock-goto)
+    (user-error "No active clock")))
+
+(defun pomodoro-status ()
+  "Display current pomodoro status."
+  (interactive)
+  (if pomodoro--state
+      (let* ((remaining (float-time (time-subtract pomodoro--end-time (current-time))))
+             (mins (floor (/ remaining 60)))
+             (secs (floor (mod remaining 60))))
+        (message "%s: %02d:%02d remaining. Pomodoros today: %d"
+                 (if (eq pomodoro--state 'work) "Working" "Break")
+                 mins secs pomodoro--count))
+    (message "No active pomodoro. Completed today: %d" pomodoro--count)))
+
+;;; Keybindings
+
 (global-set-key (kbd "C-c P") 'pomodoro-toggle)
+(global-set-key (kbd "C-c p g") 'pomodoro-goto)
+(global-set-key (kbd "C-c p d") 'pomodoro-task-done)
+(global-set-key (kbd "C-c p s") 'pomodoro-status)
 
 (provide 'pomodoro)
 ;;; pomodoro.el ends here

@@ -11,7 +11,9 @@
      "7ea883b13485f175d3075c72fceab701b5bf76b2076f024da50dff4107d0db25" default))
  '(magit-todos-insert-after '(bottom) nil nil "Changed by setter of obsolete option `magit-todos-insert-at'")
  '(org-agenda-files
-   '("/home/joshua/org/calendar.org" "/home/joshua/org/learning.org"
+   '("/home/joshua/Projects/Youtube/README.org"
+     "/home/joshua/Projects/Holdsworth Design/README.org"
+     "/home/joshua/org/calendar.org" "/home/joshua/org/learning.org"
      "/home/joshua/org/roam/contacts.org"
      "/home/joshua/Projects/Personal/README.org"
      "/home/joshua/Projects/Ace the OSCE/README.org" "/home/joshua/org/done.org"
@@ -21,11 +23,9 @@
      "/home/joshua/Projects/MaisonOS/README.org"
      "/home/joshua/nixos-config/dotfiles/doom/README.org"
      "/home/joshua/Projects/Homeserver/README.org"
-     "/home/joshua/Projects/Holdsworth Design/README.org"
      "/home/joshua/org/personal.org"
      "/home/joshua/Projects/Revere Imaginative/README.org"
-     "/home/joshua/Development/edifice/todo.org"
-     "/home/joshua/Projects/Youtube/README.org" "/home/joshua/org/inbox.org"))
+     "/home/joshua/Development/edifice/todo.org" "/home/joshua/org/inbox.org"))
  '(pomodoro-break-minutes 5)
  '(pomodoro-work-minutes 25)
  '(send-mail-function 'smtpmail-send-it)
