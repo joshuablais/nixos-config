@@ -616,6 +616,7 @@ Otherwise, prompt for a search engine."
             ("Crates.io" . "https://crates.io/search?q=")
             ("MELPA" . "https://melpa.org/#/?q=")
             ("Man Pages" . "https://man.archlinux.org/search?q=")
+            ("Yandex" . "https://yandex.com/search/?text=")
             ("Emacs Docs" . "https://www.gnu.org/software/emacs/manual/html_node/emacs/index.html?search=")
             )))
     ;; Check if query is a URL
