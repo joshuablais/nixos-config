@@ -2262,31 +2262,44 @@ Use emacs as a clipboard manager - search the killring and add to your system cl
 
 #+begin_src emacs-lisp
 (defun jb/get-cliphist-entries ()
-  "Get clipboard history from cliphist."
+  "Get clipboard history from cliphist, newest first."
   (when (executable-find "cliphist")
     (let ((output (shell-command-to-string "cliphist list")))
-      (reverse (split-string output "\n" t)))))  ;; Reverse to get newest first
+      ;; cliphist list already returns newest first, so we do NOT reverse
+      (split-string output "\n" t)))) 
 
 (defun jb/clipboard-manager ()
   "Browse kill ring + system clipboard history, copy selection to clipboard."
   (interactive)
   (require 'consult)
   (let* ((cliphist-items (jb/get-cliphist-entries))
-         (kill-ring-items (delete-dups kill-ring))
-         ;; Cliphist first (most recent system-wide), then kill-ring
+         (kill-ring-items kill-ring)
+         ;; Combine: newest cliphist items first, then newest kill-ring items
+         ;; delete-dups ensures no duplicates and preserves order.
          (all-items (delete-dups (append cliphist-items kill-ring-items)))
+         ;; Create (display-string . actual-item) candidates for consult
+         (candidates (mapcar (lambda (item)
+                               (cons (truncate-string-to-width
+                                      (replace-regexp-in-string "\n" " " item)
+                                      80 nil nil "...")
+                                     item))
+                             all-items))
          (selected (consult--read
-                    all-items
+                    candidates
                     :prompt "Clipboard history: "
-                    :sort nil
+                    :sort nil             ;; Crucial: Do not re-sort the combined list
                     :require-match t
                     :category 'kill-ring
+                    :lookup #'consult--lookup-cdr
                     :history 'consult--yank-history)))
     (when selected
+      ;; 1. Copy selected item to the system clipboard (wl-copy)
       (with-temp-buffer
         (insert selected)
-        (call-process-region (point-min) (point-max) "wl-copy"))
+        ;; Replace with 'xclip' or similar if not on Wayland/wl-clipboard
+        (call-process-region (point-min) (point-max) "wl-copy")) 
       
+      ;; 2. Ensure the selected item is at the top of the Emacs kill-ring
       (unless (member selected kill-ring)
         (kill-new selected))
       
