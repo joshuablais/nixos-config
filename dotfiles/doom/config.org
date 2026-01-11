@@ -2258,6 +2258,8 @@ Started using EWW to browse more often. Simple hook to make EWW full size buffer
   (set-popup-rule! "^\\*eww\\*" :ignore t))
 #+end_src
 ** Clipboard Manager
+Use emacs as a clipboard manager - search the killring and add to your system clipboard 
+
 #+begin_src emacs-lisp
 (defun jb/clipboard-manager ()
   "Browse kill ring and copy selection to system clipboard."
@@ -2296,6 +2298,31 @@ Started using EWW to browse more often. Simple hook to make EWW full size buffer
 (map! :leader
       (:prefix "y" 
        :desc "Clipboard manager" "y" #'jb/clipboard-manager))
+#+end_src
+** Shell
+Allows instant search of previous shell commands and running async/regular/eshell
+
+#+begin_src emacs-lisp
+(defun jb/run-command ()
+  "Unified interface: shell history + async/output options."
+  (interactive)
+  (let* ((cmd (consult--read
+               shell-command-history
+               :prompt "Run: "
+               :sort nil
+               :require-match nil
+               :category 'shell-command
+               :history 'shell-command-history))
+         (method (completing-read "Method: "
+                                 '("shell-command" "async-shell-command" "eshell-command"))))
+    (pcase method
+      ("shell-command" (shell-command cmd))
+      ("async-shell-command" (async-shell-command cmd))
+      ("eshell-command" (eshell-command cmd)))))
+
+(map! :leader
+      :desc "Run command"
+      "!" #'jb/run-command)
 #+end_src
 
 * Custom functions and templates
