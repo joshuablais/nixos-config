@@ -2261,37 +2261,36 @@ Started using EWW to browse more often. Simple hook to make EWW full size buffer
 Use emacs as a clipboard manager - search the killring and add to your system clipboard 
 
 #+begin_src emacs-lisp
+(defun jb/get-cliphist-entries ()
+  "Get clipboard history from cliphist."
+  (when (executable-find "cliphist")
+    (let ((output (shell-command-to-string "cliphist list")))
+      (reverse (split-string output "\n" t)))))  ;; Reverse to get newest first
+
 (defun jb/clipboard-manager ()
-  "Browse kill ring and copy selection to system clipboard."
+  "Browse kill ring + system clipboard history, copy selection to clipboard."
   (interactive)
-  (let* ((candidates (delete-dups kill-ring))
+  (require 'consult)
+  (let* ((cliphist-items (jb/get-cliphist-entries))
+         (kill-ring-items (delete-dups kill-ring))
+         ;; Cliphist first (most recent system-wide), then kill-ring
+         (all-items (delete-dups (append cliphist-items kill-ring-items)))
          (selected (consult--read
-                    candidates
+                    all-items
                     :prompt "Clipboard history: "
                     :sort nil
                     :require-match t
                     :category 'kill-ring
                     :history 'consult--yank-history)))
     (when selected
-      (cond
-       ;; Wayland - use wl-copy directly
-       ((executable-find "wl-copy")
-        (with-temp-buffer
-          (insert selected)
-          (call-process-region (point-min) (point-max) "wl-copy")))
-       
-       ;; X11 terminal
-       ((executable-find "xclip")
-        (with-temp-buffer
-          (insert selected)
-          (call-process-region (point-min) (point-max) "xclip" nil nil nil
-                              "-selection" "clipboard")))
-       
-       ;; GUI fallback
-       ((display-graphic-p)
-        (gui-set-selection 'CLIPBOARD selected)))
+      (with-temp-buffer
+        (insert selected)
+        (call-process-region (point-min) (point-max) "wl-copy"))
       
-      (message "Copied to system clipboard: %s" 
+      (unless (member selected kill-ring)
+        (kill-new selected))
+      
+      (message "Copied to clipboard: %s" 
                (truncate-string-to-width selected 50 nil nil "...")))))
 
 ;; Bind it

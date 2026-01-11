@@ -539,6 +539,85 @@
         :localleader
         "a" #'my/archive-done-task))
 
+(defun +calendar/open-calendar ()
+  "Open calfw calendar with org integration."
+  (interactive)
+  (require 'calfw)
+  (require 'calfw-org)
+  
+  ;; Apply Compline faces
+  (custom-set-faces!
+   '(cfw:face-title :foreground "#e0dcd4" :weight bold :height 1.2)
+   '(cfw:face-header :foreground "#b8c4b8" :weight bold)
+   '(cfw:face-sunday :foreground "#cdacac" :weight bold)
+   '(cfw:face-saturday :foreground "#b4c0c8" :weight bold)
+   '(cfw:face-grid :foreground "#282c34")
+   '(cfw:face-today :background "#171a1e" :weight bold)
+   '(cfw:face-select :background "#282c34" :foreground "#f0efeb")
+   '(cfw:face-schedule :foreground "#b8c4b8")
+   '(cfw:face-deadline :foreground "#cdacac"))
+  
+  (calfw-org-open-calendar))
+
+;; Prevent byte-compilation of this function
+(put '+calendar/open-calendar 'byte-compile 'byte-compile-file-form-defmumble)
+
+(after! org
+  (defvar my/contacts-file "~/org/roam/contacts.org")
+  
+  (defun my/contacts-get-emails ()
+    "Extract all emails from contacts.org."
+    (let (contacts)
+      (with-current-buffer (find-file-noselect my/contacts-file)
+        (org-with-wide-buffer
+         (goto-char (point-min))
+         (while (re-search-forward "^\\*+ \\(.+\\)$" nil t)
+           (let ((name (match-string 1))
+                 (email (org-entry-get (point) "EMAIL")))
+             (when email
+               (dolist (addr (split-string email "," t " "))
+                 (push (cons name (string-trim addr)) contacts)))))))
+      (nreverse contacts)))
+  
+  (defun my/contacts-complete ()
+    "Complete email addresses from contacts.org."
+    (let* ((end (point))
+           (start (save-excursion
+                    (skip-chars-backward "^:,; \t\n")
+                    (point)))
+           (contacts (my/contacts-get-emails))
+           (collection (mapcar 
+                       (lambda (contact)
+                         (format "%s <%s>" (car contact) (cdr contact)))
+                       contacts)))
+      (list start end collection :exclusive 'no)))
+  
+  (add-hook 'message-mode-hook
+            (lambda ()
+              (setq-local completion-at-point-functions
+                          (cons 'my/contacts-complete
+                                completion-at-point-functions)))))
+
+(after! mu4e
+  (setq mu4e-compose-complete-addresses nil)
+  
+  (defun my/update-last-contacted ()
+    (when (and (derived-mode-p 'mu4e-compose-mode)
+               mu4e-compose-parent-message)
+      (when-let* ((from (mu4e-message-field mu4e-compose-parent-message :from))
+                  (email (if (stringp from) from (cdar from))))
+        (when (stringp email)
+          (with-current-buffer (find-file-noselect my/contacts-file)
+            (save-excursion
+              (goto-char (point-min))
+              (when (search-forward email nil t)
+                (org-back-to-heading)
+                (org-set-property "LAST_CONTACTED" 
+                                (format-time-string "[%Y-%m-%d %a %H:%M]"))
+                (save-buffer))))))))
+  
+  (add-hook 'mu4e-compose-mode-hook #'my/update-last-contacted))
+
 (use-package! org-roam
   :defer t
   :commands (org-roam-node-find 
@@ -1936,6 +2015,64 @@ This function is designed to be called via `emacsclient -e`."
 ;; Remove EWW from popup rules to make it open in a full buffer
 (after! eww
   (set-popup-rule! "^\\*eww\\*" :ignore t))
+
+(defun jb/get-cliphist-entries ()
+  "Get clipboard history from cliphist."
+  (when (executable-find "cliphist")
+    (let ((output (shell-command-to-string "cliphist list")))
+      (reverse (split-string output "\n" t)))))  ;; Reverse to get newest first
+
+(defun jb/clipboard-manager ()
+  "Browse kill ring + system clipboard history, copy selection to clipboard."
+  (interactive)
+  (require 'consult)
+  (let* ((cliphist-items (jb/get-cliphist-entries))
+         (kill-ring-items (delete-dups kill-ring))
+         ;; Cliphist first (most recent system-wide), then kill-ring
+         (all-items (delete-dups (append cliphist-items kill-ring-items)))
+         (selected (consult--read
+                    all-items
+                    :prompt "Clipboard history: "
+                    :sort nil
+                    :require-match t
+                    :category 'kill-ring
+                    :history 'consult--yank-history)))
+    (when selected
+      (with-temp-buffer
+        (insert selected)
+        (call-process-region (point-min) (point-max) "wl-copy"))
+      
+      (unless (member selected kill-ring)
+        (kill-new selected))
+      
+      (message "Copied to clipboard: %s" 
+               (truncate-string-to-width selected 50 nil nil "...")))))
+
+;; Bind it
+(map! :leader
+      (:prefix "y" 
+       :desc "Clipboard manager" "y" #'jb/clipboard-manager))
+
+(defun jb/run-command ()
+  "Unified interface: shell history + async/output options."
+  (interactive)
+  (let* ((cmd (consult--read
+               shell-command-history
+               :prompt "Run: "
+               :sort nil
+               :require-match nil
+               :category 'shell-command
+               :history 'shell-command-history))
+         (method (completing-read "Method: "
+                                 '("shell-command" "async-shell-command" "eshell-command"))))
+    (pcase method
+      ("shell-command" (shell-command cmd))
+      ("async-shell-command" (async-shell-command cmd))
+      ("eshell-command" (eshell-command cmd)))))
+
+(map! :leader
+      :desc "Run command"
+      "!" #'jb/run-command)
 
 ;; Universal Launcher
 (load! "lisp/universal-launcher")
