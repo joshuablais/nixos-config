@@ -2257,6 +2257,46 @@ Started using EWW to browse more often. Simple hook to make EWW full size buffer
 (after! eww
   (set-popup-rule! "^\\*eww\\*" :ignore t))
 #+end_src
+** Clipboard Manager
+#+begin_src emacs-lisp
+(defun jb/clipboard-manager ()
+  "Browse kill ring and copy selection to system clipboard."
+  (interactive)
+  (let* ((candidates (delete-dups kill-ring))
+         (selected (consult--read
+                    candidates
+                    :prompt "Clipboard history: "
+                    :sort nil
+                    :require-match t
+                    :category 'kill-ring
+                    :history 'consult--yank-history)))
+    (when selected
+      (cond
+       ;; Wayland - use wl-copy directly
+       ((executable-find "wl-copy")
+        (with-temp-buffer
+          (insert selected)
+          (call-process-region (point-min) (point-max) "wl-copy")))
+       
+       ;; X11 terminal
+       ((executable-find "xclip")
+        (with-temp-buffer
+          (insert selected)
+          (call-process-region (point-min) (point-max) "xclip" nil nil nil
+                              "-selection" "clipboard")))
+       
+       ;; GUI fallback
+       ((display-graphic-p)
+        (gui-set-selection 'CLIPBOARD selected)))
+      
+      (message "Copied to system clipboard: %s" 
+               (truncate-string-to-width selected 50 nil nil "...")))))
+
+;; Bind it
+(map! :leader
+      (:prefix "y" 
+       :desc "Clipboard manager" "y" #'jb/clipboard-manager))
+#+end_src
 
 * Custom functions and templates
 I have various functions in my lisp directory for creating pomodoros, refiling done tasks to my global done.org file, and adding contacts to emails in mu4e
