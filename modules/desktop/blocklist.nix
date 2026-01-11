@@ -30,10 +30,10 @@ let
     "www.linkedin.com"
 
     # Games
-    "chess.com"
-    "www.chess.com"
-    "lichess.org"
-    "www.lichess.org"
+    # "chess.com"
+    # "www.chess.com"
+    # "lichess.org"
+    # "www.lichess.org"
 
     # Tech news/aggregators
     "news.ycombinator.com"
