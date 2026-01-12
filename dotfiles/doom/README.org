@@ -528,10 +528,4 @@ What it is set to is controlled by `+doom-dashboard-pwd-policy'."
 
 #+end_src
 
-** TODO Add org-agenda clockin/out to pomodoro timer
-:PROPERTIES:
-:CREATED: [2025-09-29 Mon 06:58]
-:CAPTURED:
-:END:
-- Prompt for item select, auto clock in and out on the pomo timer start/stop - allows for time tracking in daily files
-- Automatically add the pomo to done.org and stop timer
+** TODO Fix calendaring system 
