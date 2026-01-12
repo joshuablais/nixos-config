@@ -2262,51 +2262,54 @@ Use emacs as a clipboard manager - search the killring and add to your system cl
 
 #+begin_src emacs-lisp
 (defun jb/get-cliphist-entries ()
-  "Get clipboard history from cliphist, newest first."
+  "Get the 50 most recent clipboard entries from cliphist, fully decoded."
   (when (executable-find "cliphist")
-    (let ((output (shell-command-to-string "cliphist list")))
-      ;; cliphist list already returns newest first, so we do NOT reverse
-      (split-string output "\n" t)))) 
+    (let* ((list-output (shell-command-to-string "cliphist list"))
+           (lines (split-string list-output "\n" t))
+           ;; Take only first 50 entries (newest first)
+           (limited-lines (seq-take lines 50)))
+      ;; Decode each entry to get full content
+      (delq nil
+            (mapcar (lambda (line)
+                      (when (string-match "^\\([0-9]+\\)\t" line)
+                        (let ((id (match-string 1 line)))
+                          (string-trim (shell-command-to-string 
+                                        (format "cliphist decode %s" id))))))
+                    limited-lines)))))
 
 (defun jb/clipboard-manager ()
-  "Browse kill ring + system clipboard history, copy selection to clipboard."
+  "Browse kill ring + system clipboard history, copy selection to clipboard.
+The full, untruncated text is always copied - truncation is only for display."
   (interactive)
   (require 'consult)
   (let* ((cliphist-items (jb/get-cliphist-entries))
          (kill-ring-items kill-ring)
-         ;; Combine: newest cliphist items first, then newest kill-ring items
-         ;; delete-dups ensures no duplicates and preserves order.
          (all-items (delete-dups (append cliphist-items kill-ring-items)))
-         ;; Create (display-string . actual-item) candidates for consult
          (candidates (mapcar (lambda (item)
-                               (cons (truncate-string-to-width
-                                      (replace-regexp-in-string "\n" " " item)
-                                      80 nil nil "...")
-                                     item))
+                               (let ((display (truncate-string-to-width
+                                             (replace-regexp-in-string "\n" " " item)
+                                             80 nil nil "...")))
+                                 (cons display item)))
                              all-items))
          (selected (consult--read
                     candidates
                     :prompt "Clipboard history: "
-                    :sort nil             ;; Crucial: Do not re-sort the combined list
+                    :sort nil
                     :require-match t
                     :category 'kill-ring
                     :lookup #'consult--lookup-cdr
                     :history 'consult--yank-history)))
     (when selected
-      ;; 1. Copy selected item to the system clipboard (wl-copy)
       (with-temp-buffer
         (insert selected)
-        ;; Replace with 'xclip' or similar if not on Wayland/wl-clipboard
-        (call-process-region (point-min) (point-max) "wl-copy")) 
+        (call-process-region (point-min) (point-max) "wl-copy"))
       
-      ;; 2. Ensure the selected item is at the top of the Emacs kill-ring
       (unless (member selected kill-ring)
         (kill-new selected))
       
       (message "Copied to clipboard: %s" 
                (truncate-string-to-width selected 50 nil nil "...")))))
 
-;; Bind it
 (map! :leader
       (:prefix "y" 
        :desc "Clipboard manager" "y" #'jb/clipboard-manager))
