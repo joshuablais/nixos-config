@@ -5,15 +5,12 @@
   (interactive)
   (let* ((done-file (expand-file-name "~/org/done.org"))
          (today-heading (format-time-string "* %Y-%m-%d %A")))
-
     ;; First, mark the task as DONE if it's not already
     (when (org-entry-is-todo-p)
       (org-todo 'done))
-
     ;; Add CLOSED property if it doesn't exist
     (unless (org-entry-get nil "CLOSED")
       (org-add-planning-info 'closed (org-current-effective-time)))
-
     ;; Ensure done.org exists and has today's date heading
     (with-current-buffer (find-file-noselect done-file)
       (goto-char (point-min))
@@ -27,7 +24,6 @@
         ;; We're now positioned at the first heading (or end of buffer)
         (insert today-heading "\n")
         (save-buffer)))
-
     ;; Use org-refile to move the subtree
     (let* ((rfloc (with-current-buffer (find-file-noselect done-file)
                     (goto-char (point-min))
@@ -36,11 +32,11 @@
                           done-file
                           nil
                           (point)))))
-      (org-refile nil nil rfloc))
-
+      (org-refile nil nil rfloc)
+      ;; Save the done-file buffer after refile completes
+      (with-current-buffer (find-file-noselect done-file)
+        (save-buffer)))
     (message "Task moved to done.org under %s" today-heading)))
 
-;; Bind to a convenient key
 (global-set-key (kbd "C-c d") 'my/move-to-done-org)
-
 (provide 'done-refile)
