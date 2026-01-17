@@ -29,23 +29,24 @@
 
   # Install Hyprland ecosystem packages
   environment.systemPackages = with pkgs; [
-    waybar
-    wtype
-    wofi
-    swww
-    grim
-    slurp
-    wl-clipboard
     cliphist
-    xclip
-    hyprlock
+    grim
     hypridle
+    hyprlock
     hyprpicker
-    hyprutils
     hyprsunset
-    wlsunset
+    hyprutils
     hyprwayland-scanner
-    swaynotificationcenter
     kitty
+    slurp
+    swaynotificationcenter
+    swww
+    waybar
+    wl-clipboard
+    wl-kbptr
+    wlsunset
+    wofi
+    wtype
+    xclip
   ];
 }
