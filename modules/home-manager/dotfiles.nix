@@ -20,6 +20,7 @@ in
     ".config/swaync".source = mkOutOfStoreSymlink "${configDir}/swaync";
     ".config/tmux/plugins".source = mkOutOfStoreSymlink "${configDir}/tmux/plugins";
     ".config/waybar".source = mkOutOfStoreSymlink "${configDir}/waybar";
+    ".config/wl-kbptr".source = mkOutOfStoreSymlink "${configDir}/wl-kbptr";
     ".config/wofi".source = mkOutOfStoreSymlink "${configDir}/wofi";
     ".config/yt-dlp".source = mkOutOfStoreSymlink "${configDir}/yt-dlp";
     ".config/zathura".source = mkOutOfStoreSymlink "${configDir}/zathura";
