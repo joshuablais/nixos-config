@@ -47,3 +47,4 @@
  '(emms-playlist-selected-face ((t (:foreground "#BF616A" :weight bold))))
  '(emms-playlist-track-face ((t (:foreground "#D8DEE9" :height 1.0)))))
 (put 'narrow-to-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
