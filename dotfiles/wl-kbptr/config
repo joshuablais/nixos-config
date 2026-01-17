@@ -4,13 +4,13 @@
 # be loaded if it exits. Below is the default configuration.
 [mode_floating]
 # source=stdin
-label_color=#fffd
-label_select_color=#fd0d
-unselectable_bg_color=#2226
-selectable_bg_color=#1718
-selectable_border_color=#040c
-label_font_family=sans-serif
-label_font_size=18 50% 100
+label_color=#f0efeb
+label_select_color=#d4ccb4
+unselectable_bg_color=#1a1d2170
+selectable_bg_color=#282c34
+selectable_border_color=#1a1d21
+label_font_family=geist-mono
+label_font_size=20 50% 100
 label_symbols=asdfghjkl
 
 [mode_bisect]
