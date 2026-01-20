@@ -1182,13 +1182,17 @@ This function is designed to be called via `emacsclient -e`."
       :desc "Aider menu" "a" #'aider-transient-menu)
 
 (after! magit
-  (defun my/magit-stage-commit-push ()
-    "Stage all, commit with quick message, and push with no questions"
+(defun my/quick-commit-push ()
+    "Quick commit and push to origin."
     (interactive)
-    (magit-stage-modified)
     (let ((msg (read-string "Commit message: ")))
-      (magit-commit-create (list "-m" msg))
-      (magit-run-git "push" "origin" (magit-get-current-branch)))))
+      (magit-call-git "add" "-A")
+      (magit-call-git "commit" "-m" msg)
+      ;; Synchronous push - waits for commit to complete
+      (magit-git-push (magit-get-current-branch) 
+                      (format "refs/heads/%s" (magit-get-current-branch))
+                      (list "--set-upstream" "origin"))
+      (message "Committed and pushed: %s" msg))))
 
 (after! dap-mode
   :defer t
@@ -1350,7 +1354,7 @@ This function is designed to be called via `emacsclient -e`."
        :desc "Push"                     "P" #'magit-push
        :desc "Pull"                     "p" #'magit-pull
        :desc "Merge"                    "m" #'magit-merge
-       :desc "Quick commit and push"    "z" #'my/magit-stage-commit-push
+       :desc "Quick commit and push"    "z" #'my/quick-commit-push
        )
       ;; Org mode mappings
       (:prefix("y" . "org-mode-specifics")
