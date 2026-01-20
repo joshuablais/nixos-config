@@ -1182,16 +1182,13 @@ This function is designed to be called via `emacsclient -e`."
       :desc "Aider menu" "a" #'aider-transient-menu)
 
 (after! magit
-(defun my/quick-commit-push ()
+  (defun my/quick-commit-push ()
     "Quick commit and push to origin."
     (interactive)
     (let ((msg (read-string "Commit message: ")))
       (magit-call-git "add" "-A")
       (magit-call-git "commit" "-m" msg)
-      ;; Synchronous push - waits for commit to complete
-      (magit-git-push (magit-get-current-branch) 
-                      (format "refs/heads/%s" (magit-get-current-branch))
-                      (list "--set-upstream" "origin"))
+      (magit-call-git "push" "--set-upstream" "origin" (magit-get-current-branch))
       (message "Committed and pushed: %s" msg))))
 
 (after! dap-mode
