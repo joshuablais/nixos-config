@@ -2,8 +2,8 @@
 {
   environment.systemPackages = with pkgs; [
     # File managers
-    xfce.thunar
-    xfce.tumbler
+    thunar
+    tumbler
 
     # Graphics and image optimizations
     gimp3-with-plugins

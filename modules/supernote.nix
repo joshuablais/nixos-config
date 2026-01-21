@@ -1,9 +1,15 @@
 # modules/supernote.nix
-{ config, pkgs, lib, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 let
   cfg = config.services.supernote-watcher;
-  supernote-tools = inputs.supernote-tools.packages.${pkgs.system}.default;
+  supernote-tools = inputs.supernote-tools.packages.${pkgs.stdenv.hostPlatform.system}.default;
   username = "joshua";
 in
 {
