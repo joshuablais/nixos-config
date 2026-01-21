@@ -35,10 +35,12 @@
 
     # Added for Radicale
     apacheHttpd
+
+    # ADB tooling for android
+    android-tools
   ];
 
   # Android tooling
-  programs.adb.enable = true;
   users.users.joshua.extraGroups = [ "adbusers" ];
 
   services.resolved.enable = true;

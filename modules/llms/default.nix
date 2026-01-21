@@ -8,7 +8,7 @@
   # Enable Ollama as a systemd service with CUDA
   services.ollama = {
     enable = true;
-    acceleration = "cuda"; # This pulls in ollama-cuda automatically
+    package = pkgs.ollama-cuda;
 
     environmentVariables = {
       # Prevent OOM on your 10GB card
