@@ -145,7 +145,7 @@ alias src="source ~/.zshrc"
 alias sshl="ssh_fzf"
 
 # Navigation
-alias godir="cd ~/go/src/github.com/jblais493/"
+alias godir="cd ~/go/src/github.com/joshuablais/"
 alias photos="cd ~/Photos"
 alias f="thunar . &"
 alias revere="cd ~/Revere"
@@ -248,11 +248,12 @@ alias kbon="sudo echo 0 | sudo tee /sys/class/input/event0/device/inhibited"
 alias kboff="sudo echo 1 | sudo tee /sys/class/input/event0/device/inhibited"
 
 # Development
-alias secrets="nix run github:jblais493/go-secrets --"
-alias newrepo="nix run github:jblais493/go-repo"
+alias create="nix run github:joshuablais/go-creation --"
+alias secrets="nix run github:joshuablais/go-secrets --"
+alias newrepo="nix run github:joshuablais/go-repo"
 alias grao="git remote add origin"
 # Generate API Key
-alias keygen="nix run github:jblais493/go-api-key"
+alias keygen="nix run github:joshuablais/go-api-key"
 alias work="arttime --nolearn -a eye -t 'For I consider that the sufferings of this present time are not worth comparing with the glory that is going to be revealed to us - Romans 8:18' -g 4h"
 alias search-email='~/.config/scripts/email_search'
 alias deployapp="~/.config/scripts/Development/deploy"
