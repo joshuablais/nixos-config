@@ -117,10 +117,10 @@
        (go +tree-sitter +lsp)           ; the hipster dialect
        ;;(javascript +tree-sitter +lsp) ; all(hope(abandon(ye(who(enter(here))))))
        (web +tree-sitter)               ; the tubes (handles html/css)
-       (rust +tree-sitter +lsp)         ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       ;; (rust +tree-sitter +lsp)         ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        (emacs-lisp +tree-sitter)        ; drown in parentheses
        ;;agda              ; types of types of types of types...
-       cc                ; C/C++/Obj-C madness
+       ;; cc                ; C/C++/Obj-C madness
        ;;clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs

@@ -43,9 +43,9 @@
 ;; Nix related
 (package! agenix)
 
-(package! gptel)
-(package! elysium :recipe (:host github :repo "lanceberge/elysium" :branch "master"))
-(package! aider :recipe (:host github :repo "tninja/aider.el" :files ("*.el")))
+;; (package! gptel)
+;; (package! elysium :recipe (:host github :repo "lanceberge/elysium" :branch "master"))
+;; (package! aider :recipe (:host github :repo "tninja/aider.el" :files ("*.el")))
 
 ;; Trying to get mu4e nano working
 ;; (package! svg-tag-mode)
@@ -82,10 +82,10 @@
 ;; (package! calibredb)
 (package! org-caldav)
 ;; (package! jabber)
-(package! elpher)
+;; (package! elpher)
 (package! emms)
 ;; Epub reader
-(package! nov)
+;; (package! nov)
 ;; (package! minimap)
 ;; Rest Client
 (package! restclient)

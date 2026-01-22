@@ -196,6 +196,8 @@ alias strip="mogrify -strip"
 # Emacs
 alias emacs="GDK_BACKEND=x11 emacs"
 alias doomsync="~/.config/emacs/bin/doom sync"
+alias doombuild="~/.config/emacs/bin/doom build"
+alias ds="doomsync && doombuild"
 alias doomdoc="~/.config/emacs/bin/doom doctor"
 alias doompurge="~/.config/emacs/bin/doom purge"
 alias doomupgrade="~/.config/emacs/bin/doom upgrade"
