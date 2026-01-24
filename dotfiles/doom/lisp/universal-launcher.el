@@ -585,7 +585,7 @@ Otherwise, prompt for a search engine."
             ("Marginalia" . "https://search.marginalia.nu/search?query=")
             ("Reddit" . "https://www.reddit.com/search/?q=")
             ("Wiby" . "https://wiby.me/?q=")
-            ("Anna's Archive" . "https://annas-archive.org/search?q=")
+            ("Anna's Archive" . "https://annas-archive.li/search?q=")
             ("Wikipedia" . "https://en.wikipedia.org/w/index.php?search=")
             ("4get" . "https://4get.ca/web?s=")
             ("Goodreads" . "https://www.goodreads.com/search?q=")

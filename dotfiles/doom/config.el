@@ -12,6 +12,10 @@
 
 ;; Seeing cost of startup modules - Debug mode
 ;; (setq doom-debug-p t)
+(remove-hook 'doom-load-theme-hook #'doom-themes-org-config)
+
+(after! org
+  (doom-themes-org-config))
 
 ;; Maximum GC threshold during startup - prevent collections entirely
 (setq gc-cons-threshold most-positive-fixnum
@@ -354,11 +358,13 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org")
 
-(use-package org
-  :defer t 
-  :custom (org-modules '(org-habit)))
+;; (use-package org
+;;   :defer t 
+;;   :custom (org-modules '(org-habit)))
 
 (after! org
+  (setq org-modules '(org-habit))
+
   (map! :map org-mode-map
         :n "<M-left>" #'org-do-promote
         :n "<M-right>" #'org-do-demote)
@@ -1133,8 +1139,8 @@ This function is designed to be called via `emacsclient -e`."
 ;;        :desc "Toggle minimap-mode" "m" #'minimap-mode))
 
 ;; Treemacs
-(require 'treemacs-all-the-icons)
-(setq doom-themes-treemacs-theme "all-the-icons")
+;; (require 'treemacs-all-the-icons)
+;; (setq doom-themes-treemacs-theme "all-the-icons")
 
 ;; Define API key function at top level - available to all packages
 (defun gptel-api-key ()
