@@ -1983,10 +1983,25 @@ This function is designed to be called via `emacsclient -e`."
       (message "Password not found"))))
 
 (setq erc-autojoin-channels-alist
-      '(("libera" "#technicalrenaissance" "#emacs" "#go-nuts" "#systemcrafters" "nixos" "librephone"))
+      '(("libera" "#technicalrenaissance" "#emacs" "#go-nuts" "#systemcrafters" "#nixos" "#librephone"))
       erc-track-shorten-start 8
       erc-kill-buffer-on-part t
       erc-auto-query 'bury)
+
+(defun my/erc-notify-on-mention (match-type nick message)
+  "Send desktop notification when mentioned."
+  (when (and (eq match-type 'current-nick)
+             (not (string-match "^\\** *Users on " message)))
+    (let ((channel (buffer-name)))
+      (start-process
+       "erc-notify" nil
+       "notify-send"
+       "-i" "emacs"
+       "-u" "normal"
+       (format "ERC: %s" channel)
+       (format "%s: %s" nick message)))))
+
+(add-hook 'erc-text-matched-hook 'my/erc-notify-on-mention)
 
 (define-minor-mode my/audio-recorder-mode
   "Minor mode for recording audio in Emacs."
