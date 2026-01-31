@@ -27,5 +27,9 @@
       group = "miniflux";
       mode = "0600";
     };
+    sshConfig = {
+      file = ../../secrets/ssh-config.age;
+      mode = "600";
+    };
   };
 }

@@ -23,4 +23,13 @@
     use-agent
     pinentry-mode loopback
   '';
+
+  programs.ssh = {
+    enable = true;
+    addKeysToAgent = "yes";
+  };
+
+  home.file.".ssh/config" = {
+    source = config.age.secrets.sshConfig.path;
+  };
 }
