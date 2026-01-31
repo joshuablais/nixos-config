@@ -8,7 +8,7 @@
 {
   services.gpg-agent = {
     enable = true;
-    enableSshSupport = true;
+    enableSshSupport = false;
     defaultCacheTtl = 86400;
     maxCacheTtl = 86400;
     defaultCacheTtlSsh = 86400;
@@ -35,6 +35,6 @@
   };
 
   home.activation.sshConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ln -sf /run/secrets/sshConfig $HOME/.ssh/config
+    ln -sf /run/agenix/sshConfig $HOME/.ssh/config
   '';
 }
