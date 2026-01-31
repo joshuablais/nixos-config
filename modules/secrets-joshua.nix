@@ -20,5 +20,10 @@
       owner = "joshua";
       mode = "400";
     };
+    sshConfig = {
+      file = ../secrets/ssh-config.age;
+      owner = "joshua";
+      mode = "600";
+    };
   };
 }

@@ -1,5 +1,10 @@
 # home-manager config
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   services.gpg-agent = {
     enable = true;
@@ -29,7 +34,7 @@
     addKeysToAgent = "yes";
   };
 
-  home.file.".ssh/config" = {
-    source = config.age.secrets.sshConfig.path;
-  };
+  home.activation.sshConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ln -sf /run/secrets/sshConfig $HOME/.ssh/config
+  '';
 }
