@@ -1,8 +1,6 @@
 # home-manager config
 { config, pkgs, ... }:
 {
-  programs.gpg.enable = true;
-
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true;
@@ -11,7 +9,7 @@
     maxCacheTtl = 86400;
     defaultCacheTtlSsh = 86400;
 
-    pinentryPackage = pkgs.pinentry-emacs;
+    pinentry.package = pkgs.pinentry-emacs;
 
     extraConfig = ''
       allow-emacs-pinentry
@@ -22,5 +20,10 @@
   programs.zsh.initExtra = ''
     export GPG_TTY=$(tty)
     gpgconf --launch gpg-agent
+  '';
+
+  home.file.".gnupg/gpg.conf".text = ''
+    use-agent
+    pinentry-mode loopback
   '';
 }

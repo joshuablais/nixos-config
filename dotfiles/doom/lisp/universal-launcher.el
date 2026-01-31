@@ -4,7 +4,8 @@
 ;; Simplified version that uses the existing Emacs frame
 
 ;;; Code:
-
+(require 'recentf)
+(recentf-mode 1)
 (require 'all-the-icons)
 (require 'json)
 (require 'url-util)
