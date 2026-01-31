@@ -3,9 +3,11 @@
 {
   services.gpg-agent = {
     enable = true;
-    enableSshSupport = false;
+    enableSshSupport = true;
     defaultCacheTtl = 86400;
     maxCacheTtl = 86400;
+    defaultCacheTtlSsh = 86400;
+    maxCacheTtlSsh = 86400;
     pinentry.package = pkgs.pinentry-emacs;
     extraConfig = ''
       allow-emacs-pinentry
@@ -13,15 +15,9 @@
     '';
   };
 
-  programs.ssh = {
-    enable = true;
-    addKeysToAgent = "yes";
+  programs.gpg = {
+    enable = false;
   };
-
-  programs.zsh.initExtra = ''
-    export GPG_TTY=$(tty)
-    gpgconf --launch gpg-agent
-  '';
 
   home.file.".gnupg/gpg.conf".text = ''
     use-agent
