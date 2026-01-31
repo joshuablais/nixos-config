@@ -4,7 +4,7 @@
   environment.systemPackages = with pkgs; [
     gnupg
     age
-    pinentry-all # Add this so it's available
+    # pinentry-all
     (pass-wayland.withExtensions (
       exts: with exts; [
         pass-otp
