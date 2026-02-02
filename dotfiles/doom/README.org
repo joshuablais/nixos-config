@@ -528,4 +528,3 @@ What it is set to is controlled by `+doom-dashboard-pwd-policy'."
 
 #+end_src
 
-** TODO Fix calendaring system 
