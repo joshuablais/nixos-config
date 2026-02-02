@@ -484,35 +484,41 @@ We set the visual line wrapping and relative line numbers (then we can just go u
 
 ** Org Agenda
 #+begin_src elisp
-;; Configure habit graph display
-(setq org-habit-show-habits-only-for-today t)  ; or nil to show all days
-(setq org-habit-graph-column 50)  ; adjust based on your screen
+;; Time grid configuration - 5 AM to 9 PM
+(setq org-agenda-time-grid
+      '((daily today require-timed)
+        (500 600 700 800 900 1000 1100 1200 
+         1300 1400 1500 1600 1700 1800 1900 2000 2100)
+        "      " "────────────────"))
 
+(setq org-agenda-current-time-string
+      "◀── NOW ────────────────────────────────────────")
+
+;; Configure habit graph display
+(setq org-habit-show-habits-only-for-today t)
+(setq org-habit-graph-column 50)
 (setq org-agenda-remove-tags t)
-(setq org-agenda-block-separator 32)
+(setq org-agenda-block-separator ?─)
+
 (setq org-agenda-custom-commands
       '(("d" "Dashboard"
          ((tags "PRIORITY=\"A\""
                 ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                 (org-agenda-overriding-header "\n HIGHEST PRIORITY")
-                 (org-agenda-prefix-format "   %i %?-2 t%s")))
-
+                 (org-agenda-overriding-header "\n⚡ HIGHEST PRIORITY\n")
+                 (org-agenda-prefix-format "  %?-12t %s")))
           (agenda ""
                   ((org-agenda-start-day "+0d")
-                   (org-agenda-span 3)  ; Show 3 days for better habit tracking
-                   (org-agenda-time)
+                   (org-agenda-span 1)
                    (org-agenda-remove-tags t)
                    (org-agenda-todo-keyword-format "")
                    (org-agenda-scheduled-leaders '("" ""))
-                   (org-agenda-current-time-string "ᐊ┈┈┈┈┈┈┈┈┈ NOW")
-                   (org-agenda-overriding-header "\n TODAY'S SCHEDULE & HABITS")
-                   (org-agenda-prefix-format "   %i %?-2 t%s")))
-
-          (tags-todo "-STYLE=\"habit\""  ; This still excludes habits from TODO list
-                     ((org-agenda-overriding-header "\n ALL TODO")
+                   (org-agenda-overriding-header "\n📅 TODAY\n")
+                   (org-agenda-prefix-format "  %?-12t %s")))
+          (tags-todo "-STYLE=\"habit\""
+                     ((org-agenda-overriding-header "\n✓ ALL TASKS\n")
                       (org-agenda-sorting-strategy '(priority-down))
                       (org-agenda-remove-tags t)
-                      (org-agenda-prefix-format "   %i %?-2 t%s")))))))
+                      (org-agenda-prefix-format "  %?-12t %s")))))))
 
 (defun my/org-agenda-dashboard ()
   "Open the custom org-agenda dashboard."
