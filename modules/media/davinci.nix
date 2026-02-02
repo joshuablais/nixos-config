@@ -7,7 +7,7 @@
 {
   # Use DaVinci Resolve (already from unstable since your main input is unstable)
   environment.systemPackages = [
-    pkgs.davinci-resolve
+    pkgs.davinci-resolve-studio
   ];
 
   # Increase file watchers - Resolve uses massive amounts
