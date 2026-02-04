@@ -1250,7 +1250,7 @@ This function is designed to be called via `emacsclient -e`."
 (setq docker-compose-command "podman-compose")
 
 ;; set compile to bash 
-(setq shell-file-name "/run/current-system/sw/bin/bash")
+(setq shell-file-name "/run/current-system/sw/bin/zsh")
 ;; Keep vterm as zsh
 (setq vterm-shell "/run/current-system/sw/bin/zsh")
 

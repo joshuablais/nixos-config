@@ -165,7 +165,7 @@ alias osrs="flatpak run com.adamcake.Bolt"
 
 # Scripts
 alias w2pdf="wkhtmltopdf"
-alias devwork="~/.config/scripts/devwork.sh"
+alias devwork="~/.config/scripts/Development/devwork.sh"
 alias f2p="~/.config/scripts/file_2_phone.sh"
 alias dlp="nvim ~/.config/scripts/dlphone"
 alias eopn="~/.config/scripts/manage_encrypted_drives eopn"
