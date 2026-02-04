@@ -8,11 +8,15 @@
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_16;
-    ensureDatabases = [ "dev" ];
+    ensureDatabases = [
+      "dev"
+      "joshua"
+    ];
     ensureUsers = [
       {
         name = "joshua";
         ensureDBOwnership = true;
+        ensureClauses.superuser = true;
       }
     ];
     authentication = ''
