@@ -1411,13 +1411,14 @@ go install github.com/sqls-server/sqls@latest
 (setq docker-compose-command "podman-compose")
 #+end_src
 ** Compilation
-Changes environment to bash for compilation commands (ie. zig-run go-test etc.)
-
+Changes environment to zsh for compilation commands (ie. zig-run go-test etc.)
 #+begin_src elisp
-;; set compile to bash 
+;; set compile to zsh (interactive for alias access)
 (setq shell-file-name "/run/current-system/sw/bin/zsh")
-;; Keep vterm as zsh
-(setq vterm-shell "/run/current-system/sw/bin/zsh")
+(setq shell-command-switch "-c")
+
+;; Keep vterm as zsh (interactive)
+(setq vterm-shell "/run/current-system/sw/bin/zsh -i")
 #+end_src
 
 * Nix

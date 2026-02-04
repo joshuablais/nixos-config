@@ -1249,10 +1249,12 @@ This function is designed to be called via `emacsclient -e`."
 (setq docker-command "podman")
 (setq docker-compose-command "podman-compose")
 
-;; set compile to bash 
+;; set compile to zsh (interactive for alias access)
 (setq shell-file-name "/run/current-system/sw/bin/zsh")
-;; Keep vterm as zsh
-(setq vterm-shell "/run/current-system/sw/bin/zsh")
+(setq shell-command-switch "-c")
+
+;; Keep vterm as zsh (interactive)
+(setq vterm-shell "/run/current-system/sw/bin/zsh -i")
 
 (after! lsp-mode
   (lsp-register-client
