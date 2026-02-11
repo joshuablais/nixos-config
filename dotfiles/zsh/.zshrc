@@ -254,6 +254,7 @@ alias kboff="sudo echo 1 | sudo tee /sys/class/input/event0/device/inhibited"
 alias create="nix run github:joshuablais/go-creation --"
 alias secrets="nix run github:joshuablais/go-secrets --"
 alias newrepo="nix run github:joshuablais/go-repo"
+alias rawurl="py ~/.config/scripts/githubcurlurl.py"
 alias grao="git remote add origin"
 # Generate API Key
 alias keygen="nix run github:joshuablais/go-api-key"
