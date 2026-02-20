@@ -193,6 +193,7 @@ alias anime="~/.config/scripts/ani-cli/ani-cli"
 alias brodirs="mkdir 'Brokerage Documents' 'Offer' 'Conveyancing' 'Payout' 'Posts'"
 alias twit="gimp /mnt/Logos/TrueNAS/Personal/Twitter.xcf"
 alias strip="mogrify -strip"
+alias jd="just dev"
 
 # Emacs
 alias emacs="GDK_BACKEND=x11 emacs"
@@ -280,7 +281,8 @@ alias adwflw="~/Development/workflows/scripts/add-workflow.sh "
 alias syncmedia="~/.config/scripts/Development/rclone/rclone.sh"
 
 # Tasks for running htmx app
-alias tfmt="templ fmt"
+alias tf="templ fmt ."
+alias tg="templ generate"
 alias tr="go-task run"
 alias tm="go-task migrate"
 alias tb="go-task templ"
