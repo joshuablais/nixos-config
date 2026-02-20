@@ -2373,6 +2373,7 @@ I have various functions in my lisp directory for creating pomodoros, refiling d
 ;; POSSE posting system
 (load! "lisp/posse/posse-twitter")
 (load! "lisp/gimp-tweet")
+(load! "lisp/0x0")
 
 ;; (load! "lisp/popup-scratch")
 ;; (load! "lisp/termux-sms")

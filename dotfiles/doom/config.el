@@ -2119,6 +2119,7 @@ The full, untruncated text is always copied - truncation is only for display."
 ;; POSSE posting system
 (load! "lisp/posse/posse-twitter")
 (load! "lisp/gimp-tweet")
+(load! "lisp/0x0")
 
 ;; (load! "lisp/popup-scratch")
 ;; (load! "lisp/termux-sms")
