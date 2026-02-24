@@ -10,6 +10,5 @@
   environment.systemPackages = with pkgs; [
     telegram-desktop
     dino
-    signal-desktop
   ];
 }
