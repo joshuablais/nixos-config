@@ -13,6 +13,7 @@
   i18n.defaultLocale = "en_CA.UTF-8";
   boot.loader.systemd-boot.configurationLimit = 20;
 
+  environment.systemPackages = [ pkgs.liquidctl ];
   services.udev.packages = [ pkgs.liquidctl ];
 
   # Optimizations
