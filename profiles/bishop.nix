@@ -39,10 +39,10 @@
       RemainAfterExit = true;
       ExecStart = pkgs.writeShellScript "fan-quiet" ''
         ${pkgs.liquidctl}/bin/liquidctl initialize all
-        ${pkgs.liquidctl}/bin/liquidctl --match "Commander Pro" set fan1 speed 35
-        ${pkgs.liquidctl}/bin/liquidctl --match "Commander Pro" set fan3 speed 35
-        ${pkgs.liquidctl}/bin/liquidctl --match "Commander Pro" set fan4 speed 35
-        ${pkgs.liquidctl}/bin/liquidctl --match "Commander Pro" set fan5 speed 35
+        ${pkgs.liquidctl}/bin/liquidctl --match "Commander Pro" set fan1 speed 25
+        ${pkgs.liquidctl}/bin/liquidctl --match "Commander Pro" set fan3 speed 25
+        ${pkgs.liquidctl}/bin/liquidctl --match "Commander Pro" set fan4 speed 25
+        ${pkgs.liquidctl}/bin/liquidctl --match "Commander Pro" set fan5 speed 25
       '';
     };
   };
