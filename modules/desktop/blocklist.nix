@@ -1,6 +1,12 @@
 # ~/nixos-config/modules/desktop/blocklist.nix
-{ lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
+# Blocklist of domains
 let
   distractionDomains = [
     "reddit.com"

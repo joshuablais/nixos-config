@@ -5,9 +5,10 @@
   ...
 }:
 
+# Apps I find distracting
 {
   environment.systemPackages = with pkgs; [
-    signal-desktop
-    thunderbird
+    telegram-desktop
+    dino
   ];
 }

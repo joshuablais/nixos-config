@@ -5,6 +5,7 @@
     ./audio.nix
     # ./backup.nix
     ./blocklist.nix
+    ./distractions.nix
     ./bluetooth.nix
     ./boot.nix
     ./browsers.nix
