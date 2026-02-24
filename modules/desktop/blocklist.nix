@@ -84,6 +84,7 @@ let
     "thenewstack.io"
     "www.thenewstack.io"
     "dev.to"
+    "monkeytype.com"
   ];
 
 in
