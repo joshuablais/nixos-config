@@ -73,6 +73,17 @@ let
     "www.tildes.net"
     "slashdot.org"
     "www.slashdot.org"
+    "techcrunch.com"
+    "www.techcrunch.com"
+    "theverge.com"
+    "www.theverge.com"
+    "wired.com"
+    "www.wired.com"
+    "arstechnica.com"
+    "www.arstechnica.com"
+    "thenewstack.io"
+    "www.thenewstack.io"
+    "dev.to"
   ];
 
 in
