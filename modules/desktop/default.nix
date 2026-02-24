@@ -5,7 +5,8 @@
     ./audio.nix
     # ./backup.nix
     ./blocklist.nix
-    ./distractions.nix
+    # Comment this out for no distractions:
+    # ./distractions.nix
     ./bluetooth.nix
     ./boot.nix
     ./browsers.nix

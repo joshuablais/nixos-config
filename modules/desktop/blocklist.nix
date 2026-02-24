@@ -31,6 +31,14 @@ let
     "www.twitch.tv"
     "christisking.cc"
     "www.christisking.cc"
+    "studio.youtube.com"
+    "forum.agoraroad.com"
+    "cbc.ca"
+    "www.cbc.ca"
+    "www.brutalist.report"
+    "brutalist.report"
+    "4chan.org"
+    "www.4chan.org"
   ];
 
 in
