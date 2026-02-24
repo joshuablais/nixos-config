@@ -38,7 +38,7 @@
   i18n.defaultLocale = "en_CA.UTF-8";
 
   # Enable Supernote sync tool
-  services.supernote-watcher.enable = true;
+  # services.supernote-watcher.enable = true;
 
   # Set the state version
   system.stateVersion = "25.05";

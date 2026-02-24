@@ -15,7 +15,7 @@
     impermanence.url = "github:nix-community/impermanence";
 
     # Custom modules
-    supernote-tools.url = "github:jblais493/supernote";
+    # supernote-tools.url = "github:jblais493/supernote";
 
     # Styling
     stylix.url = "github:danth/stylix";
@@ -25,7 +25,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
-    supernote-tools.inputs.nixpkgs.follows = "nixpkgs";
+    # supernote-tools.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -40,7 +40,7 @@
 
       # Desktop machines get base + GUI tools
       desktop = base ++ [
-        inputs.supernote-tools.nixosModules.default
+        # inputs.supernote-tools.nixosModules.default
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
