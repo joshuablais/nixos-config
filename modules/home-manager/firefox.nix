@@ -14,7 +14,7 @@
     };
 
     # Native messaging for Tridactyl
-    nativeMessagingHosts = [ pkgs.tridactyl-native ];
+    # nativeMessagingHosts = [ pkgs.tridactyl-native ];
 
     profiles.default = {
       name = "Default";
@@ -22,7 +22,8 @@
 
       extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
         ublock-origin
-        tridactyl
+        # tridactyl
+        vimium-c
         don-t-fuck-with-paste
         violentmonkey
         wayback-machine
