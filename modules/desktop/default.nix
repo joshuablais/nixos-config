@@ -15,7 +15,7 @@
     ./display-manager.nix
     ./email.nix
     ./fonts.nix
-    ./gaming.nix
+    # ./gaming.nix
     ./hyprland.nix
     ./kmonad.nix
     ./networking.nix

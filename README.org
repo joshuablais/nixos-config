@@ -271,8 +271,6 @@ This sets up boot screens and adds logos with plymouth
 Enables power settings and modules for laptops (we can pull this out in the future for a laptop profile)
 *** email.nix
 Setting up email in mu4e in emacs, packages necessary:
-*** gaming.nix
-Add OSRS Runelite 
 
 ** Shared
 *** default.nix
