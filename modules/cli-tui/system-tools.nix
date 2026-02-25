@@ -9,6 +9,7 @@
     killall # process management
     ydotool # automation
     borgbackup # backups
+    duf # better df
 
     gowall # theming
     tesseract # OCR image processing
