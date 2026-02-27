@@ -1057,18 +1057,19 @@ This function is designed to be called via `emacsclient -e`."
 (use-package! gptel
   :defer t
   :config
-  ;; OpenRouter backend
   (setq gptel-backend
         (gptel-make-openai "OpenRouter"
           :host "openrouter.ai"
           :endpoint "/api/v1/chat/completions"
           :stream t
           :key #'my/openrouter-api-key
-          :models '(qwen/qwen3-coder:free
+          :models '(anthropic/claude-haiku-4-5
+                    anthropic/claude-sonnet-4-5
+                    qwen/qwen3-coder:free
                     meta-llama/llama-3.3-70b-instruct:free
                     mistralai/mistral-small-3.1-24b-instruct:free
                     google/gemma-3-27b-it:free))
-        gptel-model 'qwen/qwen3-coder:free)
+        gptel-model 'anthropic/claude-haiku-4-5)
 
   ;; Ollama backend
   (gptel-make-ollama "Ollama"
@@ -1276,10 +1277,7 @@ This function is designed to be called via `emacsclient -e`."
        :desc "Open Elpher"              "l" #'elpher
        :desc "Open Pass"                "p" #'pass
        :desc "Gptel chat"               "g" #'gptel
-       :desc "Send region to Claude"    "s" #'elysium-add-context
-       :desc "Elysium chat UI"          "i" #'elysium-query
-       :desc "Aider code session"       "a" #'aider-session
-       :desc "Aider edit region"        "c" #'aider-edit-regio
+       :desc "Send region to gptel"     "s" #'gptel-send
        )
 
       ;; Various other commands
