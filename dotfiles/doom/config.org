@@ -1272,50 +1272,35 @@ Add Astro and svelte files to web-mode automatically:
 
 ** AI
 #+begin_src elisp
-;; Define API key function at top level - available to all packages
-(defun gptel-api-key ()
-  "Read API key from file and cache it."
-  (or (bound-and-true-p gptel--cached-api-key)
-      (setq gptel--cached-api-key
+(defun my/openrouter-api-key ()
+  "Read OpenRouter API key from pass."
+  (or (bound-and-true-p my/--openrouter-key)
+      (setq my/--openrouter-key
             (string-trim
-             (with-temp-buffer
-               (insert-file-contents "~/secrets/claude_key")
-               (buffer-string))))))
+             (shell-command-to-string "pass LLMs/openrouter.ai")))))
 
-;; GPtel configuration
 (use-package! gptel
   :defer t
-  :custom
-  (gptel-model 'claude-sonnet-4-20250514)
   :config
+  ;; OpenRouter backend
   (setq gptel-backend
-        (gptel-make-anthropic "Claude"
+        (gptel-make-openai "OpenRouter"
+          :host "openrouter.ai"
+          :endpoint "/api/v1/chat/completions"
           :stream t
-          :key #'gptel-api-key
-          :models '(claude-sonnet-4-20250514
-                    claude-opus-4-20250514
-                    claude-3-7-sonnet-20250219))))
+          :key #'my/openrouter-api-key
+          :models '(qwen/qwen3-coder:free
+                    meta-llama/llama-3.3-70b-instruct:free
+                    mistralai/mistral-small-3.1-24b-instruct:free
+                    google/gemma-3-27b-it:free))
+        gptel-model 'qwen/qwen3-coder:free)
 
-;; Elysium - already optimal
-(use-package! elysium
-  :defer t
-  :after gptel
-  :custom
-  (elysium-window-size 0.33)
-  (elysium-window-style 'vertical))
-
-;; Aider configuration
-(use-package! aider
-  :defer t
-  :commands (aider-transient-menu)  ; Make command available immediately
-  :config
-  (setq aider-args '("--model" "claude-sonnet-4-20250514" "--no-auto-accept-architect"))
-  ;; Set API key when aider actually loads
-  (setenv "ANTHROPIC_API_KEY" (gptel-api-key)))
-
-;; Global keybinding - always available
-(map! :leader
-      :desc "Aider menu" "a" #'aider-transient-menu)
+  ;; Ollama backend
+  (gptel-make-ollama "Ollama"
+    :host "localhost:11434"
+    :stream t
+    :models '(qwen2.5-coder:14b-instruct-q4_K_M
+              deepseek-r1:8b)))
 #+end_src
 
 ** Magit
@@ -1557,7 +1542,7 @@ Changes environment to zsh for compilation commands (ie. zig-run go-test etc.)
        :desc "MPV watch video"          "v" #'elfeed-tube-mpv
        :desc "Open Elpher"              "l" #'elpher
        :desc "Open Pass"                "p" #'pass
-       :desc "Claude chat (gptel)"      "g" #'gptel
+       :desc "Gptel chat"               "g" #'gptel
        :desc "Send region to Claude"    "s" #'elysium-add-context
        :desc "Elysium chat UI"          "i" #'elysium-query
        :desc "Aider code session"       "a" #'aider-session
