@@ -1301,6 +1301,8 @@ Add Astro and svelte files to web-mode automatically:
     :host "localhost:11434"
     :stream t
     :models '(qwen2.5-coder:14b-instruct-q4_K_M
+              ;; qwen3-coder-next
+              glm-4.7-flash:latest
               deepseek-r1:8b)))
 #+end_src
 
