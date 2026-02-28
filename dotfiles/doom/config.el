@@ -1156,7 +1156,10 @@ This function is designed to be called via `emacsclient -e`."
 
   ;; Ollama backend
   (gptel-make-ollama "Ollama"
-    :host "localhost:11434"
+    :host (pcase (system-name)
+            ("theologica" "logos:11434")
+            ("logos"       "localhost:11434")
+            (_            "logos:11434"))
     :stream t
     :models '(qwen2.5-coder:14b-instruct-q4_K_M
               ;; qwen3-coder-next
