@@ -1137,9 +1137,18 @@ This function is designed to be called via `emacsclient -e`."
             (string-trim
              (shell-command-to-string "pass LLMs/openrouter.ai")))))
 
+(defun my/gemini-api-key ()
+  "Read Gemini API key from pass."
+  (or (bound-and-true-p my/--gemini-key)
+      (setq my/--gemini-key
+            (string-trim
+             (shell-command-to-string "pass LLMs/geminikey")))))
+
 (use-package! gptel
   :defer t
   :config
+  (setq gptel-default-mode 'org-mode)
+  
   (setq gptel-backend
         (gptel-make-openai "OpenRouter"
           :host "openrouter.ai"
@@ -1153,6 +1162,15 @@ This function is designed to be called via `emacsclient -e`."
                     mistralai/mistral-small-3.1-24b-instruct:free
                     google/gemma-3-27b-it:free))
         gptel-model 'anthropic/claude-haiku-4-5)
+
+  ;; gemini backend
+  (gptel-make-gemini "Gemini"
+    :key #'my/gemini-api-key
+    :stream t
+    :models '(gemini-3-flash        
+            gemini-2.5-pro        
+            gemini-2.5-flash      
+            gemini-flash-latest))
 
   ;; Ollama backend
   (gptel-make-ollama "Ollama"
