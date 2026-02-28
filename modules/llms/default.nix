@@ -21,7 +21,7 @@
     };
 
     # Optional: Expose on network for other machines
-    # listenAddress = "0.0.0.0:11434";
+    listenAddress = "0.0.0.0:11434";
   };
 
   # You likely still want the CLI tools
