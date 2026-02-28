@@ -1160,17 +1160,18 @@ This function is designed to be called via `emacsclient -e`."
                     qwen/qwen3-coder:free
                     meta-llama/llama-3.3-70b-instruct:free
                     mistralai/mistral-small-3.1-24b-instruct:free
-                    google/gemma-3-27b-it:free))
-        gptel-model 'anthropic/claude-haiku-4-5)
+                    google/gemma-3-27b-it:free)))
 
   ;; gemini backend
-  (gptel-make-gemini "Gemini"
-    :key #'my/gemini-api-key
-    :stream t
-    :models '(gemini-3-flash        
-            gemini-2.5-pro        
-            gemini-2.5-flash      
-            gemini-flash-latest))
+  (setq gptel-backend
+        (gptel-make-gemini "Gemini"
+          :key #'my/gemini-api-key
+          :stream t
+          :models '(gemini-3-flash-preview
+                    gemini-2.5-flash
+                    gemini-2.5-pro
+                    gemini-flash-latest)))
+  (setq gptel-model 'gemini-3-flash-preview)
 
   ;; Ollama backend
   (gptel-make-ollama "Ollama"
