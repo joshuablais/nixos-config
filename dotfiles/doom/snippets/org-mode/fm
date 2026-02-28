@@ -14,3 +14,7 @@
 #+SHARE: ${8:true}
 #+GISCUS: ${9:true}
 #+OGIMAGE: ${10:true}
+
+As always, God bless, and until next time.
+
+If you enjoyed this post, consider `(progn (org-insert-link nil "https://joshblais.com/support/" "Supporting my work") nil)`, `(progn (org-insert-link nil "https://mountainthebook.com" "Checking out my book") nil)`, `(progn (org-insert-link nil "https://joshblais.com/work-with-me" "Working with me") nil)`, or sending me an `(progn (org-insert-link nil "mailto:josh@joshblais.com" "Email") nil)` to tell me what you think.

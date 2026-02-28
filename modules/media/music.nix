@@ -3,7 +3,7 @@
   environment.systemPackages = with pkgs; [
     # Music players
     mpc
-    ncmpcpp
+    # ncmpcpp
     spotify
     spotdl
     # Audio tools
@@ -15,5 +15,5 @@
   ];
 
   # Ensure users can access audio devices
-  users.groups.audio = {};
+  users.groups.audio = { };
 }
