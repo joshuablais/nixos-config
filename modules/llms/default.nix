@@ -9,7 +9,8 @@
   services.ollama = {
     enable = true;
     package = pkgs.ollama-cuda;
-
+    host = "0.0.0.0";
+    port = 11434;
     environmentVariables = {
       # Prevent OOM on your 10GB card
       OLLAMA_MAX_LOADED_MODELS = "2";
@@ -20,8 +21,6 @@
       CUDA_VISIBLE_DEVICES = "0";
     };
 
-    # Optional: Expose on network for other machines
-    listenAddress = "0.0.0.0:11434";
   };
 
   # You likely still want the CLI tools
