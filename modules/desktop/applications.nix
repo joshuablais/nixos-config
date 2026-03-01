@@ -17,7 +17,7 @@
     kdePackages.kdeconnect-kde
 
     # Productivity
-    libreoffice
+    # libreoffice
 
     # System utilities
     brightnessctl
