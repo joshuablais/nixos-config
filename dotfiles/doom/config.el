@@ -1182,6 +1182,7 @@ This function is designed to be called via `emacsclient -e`."
     :stream t
     :models '(qwen2.5-coder:14b-instruct-q4_K_M
               ;; qwen3-coder-next
+              qwen3.5:9b
               glm-4.7-flash:latest
               deepseek-r1:8b)))
 
