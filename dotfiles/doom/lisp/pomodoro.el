@@ -8,7 +8,7 @@
 ;; Modified: February 04, 2025
 ;; Version: 0.1.0
 ;; Keywords: tools, org, time
-;; Homepage: https://github.com/jblais493/pomodoro
+;; Homepage: https://github.com/joshuablais/pomodoro
 ;; Package-Requires: ((emacs "29.1"))
 ;;
 ;;; Commentary:

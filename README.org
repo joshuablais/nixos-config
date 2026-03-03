@@ -61,7 +61,7 @@ Excited yet? Let us begin...
 6. Clone this repository:
    #+begin_src bash
    cd /mnt/home
-   git clone https://github.com/jblais493/nixos-config.git
+   git clone https://github.com/joshuablais/nixos-config.git
    #+end_src
 7. Copy the generated hardware configuration:
    #+begin_src bash

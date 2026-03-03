@@ -33,7 +33,7 @@
       merge.conflictStyle = "zdiff3";
 
       # GitHub configuration
-      github.user = "jblais493";
+      github.user = "joshuablais";
 
       # URL rewriting - force SSH for all forges
       url."git@github.com:".insteadOf = "https://github.com/";
@@ -49,10 +49,10 @@
       mf-push = "!git remote | grep -E '(origin|github|codeberg|forgejo)' | xargs -I {} git push {} $(git rev-parse --abbrev-ref HEAD)";
 
       # Setup all remotes
-      mf-init = "!f() { REPO=$1; git remote add github git@github.com:jblais493/$REPO.git; git remote add codeberg git@codeberg.org:joshuablais/$REPO.git; git remote add forgejo git@forge.labrynth.org:josh/$REPO.git; echo 'Multi-forge remotes configured'; git remote -v; }; f";
+      mf-init = "!f() { REPO=$1; git remote add github git@github.com:joshuablais/$REPO.git; git remote add codeberg git@codeberg.org:joshuablais/$REPO.git; git remote add forgejo git@forge.labrynth.org:josh/$REPO.git; echo 'Multi-forge remotes configured'; git remote -v; }; f";
 
       # Individual remote additions
-      add-github = "!f() { git remote add github git@github.com:jblais493/$1.git; }; f";
+      add-github = "!f() { git remote add github git@github.com:joshuablais/$1.git; }; f";
       add-codeberg = "!f() { git remote add codeberg git@codeberg.org:joshuablais/$1.git; }; f";
       add-forgejo = "!f() { git remote add forgejo git@forge.labrynth.org:josh/$1.git; }; f";
 

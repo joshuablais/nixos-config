@@ -6,7 +6,7 @@
       if ${pkgs.openssh}/bin/ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"; then
         if [ ! -d "${config.home.homeDirectory}/.config/scripts" ]; then
           echo "Cloning private scripts repo..."
-          ${pkgs.git}/bin/git clone git@github.com:jblais493/scripts.git \
+          ${pkgs.git}/bin/git clone git@github.com:joshuablais/scripts.git \
             ${config.home.homeDirectory}/.config/scripts
         fi
       else
@@ -14,12 +14,12 @@
       fi
 
       if [ ! -d "${config.home.homeDirectory}/Pictures/Wallpapers" ]; then
-        ${pkgs.git}/bin/git clone https://github.com/jblais493/Wallpapers \
+        ${pkgs.git}/bin/git clone https://github.com/joshuablais/Wallpapers \
           ${config.home.homeDirectory}/Pictures/Wallpapers
       fi
 
       if [ ! -d "${config.home.homeDirectory}/.config/kmonad" ]; then
-        ${pkgs.git}/bin/git clone https://github.com/jblais493/Kmonad-thinkpad \
+        ${pkgs.git}/bin/git clone https://github.com/joshuablais/Kmonad-thinkpad \
           ${config.home.homeDirectory}/.config/kmonad
       fi
     '';

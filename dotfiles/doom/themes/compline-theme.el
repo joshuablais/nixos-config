@@ -1,7 +1,7 @@
 ;;; compline-theme.el --- I'm sure you've heard of it -*- lexical-binding: t; no-byte-compile: t; -*-
 ;;
 ;; Added: December 31, 2017 (#129)
-;; Author: joshuablais <https://github.com/jblais493>
+;; Author: joshuablais <https://github.com/joshuablais>
 ;; Maintainer:
 ;; Source: https://compline-theme.el/
 ;;

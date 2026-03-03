@@ -15,7 +15,7 @@
     impermanence.url = "github:nix-community/impermanence";
 
     # Custom modules
-    # supernote-tools.url = "github:jblais493/supernote";
+    # supernote-tools.url = "github:joshuablais/supernote";
 
     # Styling
     stylix.url = "github:danth/stylix";
