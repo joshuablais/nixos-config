@@ -16,6 +16,14 @@
     options = "--delete-older-than 7d";
   };
 
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "prohibit-password";
+      PasswordAuthentication = false;
+    };
+  };
+
   # Disable ALL documentation
   documentation.enable = lib.mkForce false;
   documentation.nixos.enable = lib.mkForce false;
@@ -28,4 +36,12 @@
   # Server hardening
   security.sudo.wheelNeedsPassword = true;
   services.fail2ban.enable = true;
+
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    auto-optimise-store = true;
+  };
 }
