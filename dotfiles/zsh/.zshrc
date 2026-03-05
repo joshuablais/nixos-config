@@ -210,11 +210,18 @@ alias nrs-empirica="nixos-rebuild switch --flake .#empirica --target-host joshua
 alias ns="nh search"
 alias nrb="sudo nixos-rebuild build --flake"
 alias nrsf='sudo nixos-rebuild switch --no-reexec'  # fast rebuilds
-alias enix="nvim ~/dotfiles/nixos/configuration.nix"
-alias ngc="sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +3 && sudo nix-collect-garbage -d"
+alias ngc="sudo nix-collect-garbage --delete-older-than 14d"
+alias ngenlist="sudo nix-env --profile /nix/var/nix/profiles/system --list-generations"
 alias nopt="sudo nix-store --optimise"               # Deduplicate store
-alias ndev="nix develop"
+alias nb="nix build"
+alias nr="nix run"
+alias dalw="direnv allow"
+alias drel="direnv reload"
 alias backup="sudo systemctl start restic-backups-daily.service"
+alias nfc="nix flake check --impure"
+alias nfu="nix flake update"
+alias nfuq="nix flake update && nix flake check --impure"
+alias colmena="colmena apply"
 
 # Tofu
 
