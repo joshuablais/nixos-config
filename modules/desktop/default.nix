@@ -7,7 +7,7 @@
     # Comment this out in free time
     # ./blocklist.nix
     # Comment this out for no distractions:
-    # ./distractions.nix
+    ./distractions.nix
     ./bluetooth.nix
     ./boot.nix
     ./browsers.nix

@@ -74,14 +74,16 @@
     {
       # System configurations
       nixosConfigurations = {
-        # Personal machines (desktop environment)
+        # Personal machines
         theologica = mkHost "theologica" desktop;
         logos = mkHost "logos" desktop;
         king = mkHost "king" desktop;
         axios = mkHost "axios" desktop;
 
-        # Server infrastructure (headless)
+        # Server infrastructure
         empirica = mkHost "empirica" base;
+        # empire = mkHost "empire" server;
+        # nexus = mkHost "nexus" server;
       };
 
       # Remote deployment targets
