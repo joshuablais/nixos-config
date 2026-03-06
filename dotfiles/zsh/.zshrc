@@ -260,6 +260,7 @@ alias kboff="sudo echo 1 | sudo tee /sys/class/input/event0/device/inhibited"
 
 # Development
 alias create="nix run github:joshuablais/go-creation --"
+alias create-flake="~/.config/scripts/Development/create-flake.sh"
 alias secrets="nix run github:joshuablais/go-secrets --"
 alias newrepo="nix run github:joshuablais/go-repo"
 alias rawurl="py ~/.config/scripts/githubcurlurl.py"
