@@ -273,6 +273,7 @@ alias deployapp="~/.config/scripts/Development/deploy"
 alias blogdeploy="deployapp blogrevamp joshblais.com auto"
 alias deployato="deployapp acetheosce acetheosce.com auto"
 alias lh="~/.config/scripts/Development/lighthouse.sh"
+alias goose-create='goose create -dir ./database/migrations'
 
 # Docker commands migrated to podman
 alias docker compose="podman compose"
