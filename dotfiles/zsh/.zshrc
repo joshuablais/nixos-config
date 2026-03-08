@@ -132,20 +132,11 @@ alias cl="clear"
 alias cd="z"
 alias ls="eza -l --icons"
 alias la="eza -TL 2 --icons"
-alias lg="lazygit"
-alias ld="lazydocker"
 alias py="python"
-alias td="termdown"
-
-# Aliases 2024
-alias dnf="sudo dnf"
-alias p="sudo pacman"
 alias ytd='yt-dlp'
 alias src="source ~/.zshrc"
-alias sshl="ssh_fzf"
 
 # Navigation
-alias godir="cd ~/go/src/github.com/joshuablais/"
 alias photos="cd ~/Photos"
 alias f="thunar . &"
 alias revere="cd ~/Revere"
@@ -193,7 +184,6 @@ alias anime="~/.config/scripts/ani-cli/ani-cli"
 alias brodirs="mkdir 'Brokerage Documents' 'Offer' 'Conveyancing' 'Payout' 'Posts'"
 alias twit="gimp /mnt/Logos/TrueNAS/Personal/Twitter.xcf"
 alias strip="mogrify -strip"
-alias jd="just dev"
 
 # Emacs
 alias emacs="GDK_BACKEND=x11 emacs"
@@ -222,8 +212,6 @@ alias nfc="nix flake check --impure"
 alias nfu="nix flake update"
 alias nfuq="nix flake update && nix flake check --impure"
 alias colmena="colmena apply"
-
-# Tofu
 
 # Networking
 alias nmconnect="nmcli device wifi connect"
@@ -265,6 +253,7 @@ alias secrets="nix run github:joshuablais/go-secrets --"
 alias newrepo="nix run github:joshuablais/go-repo"
 alias rawurl="py ~/.config/scripts/githubcurlurl.py"
 alias grao="git remote add origin"
+ 
 # Generate API Key
 alias keygen="nix run github:joshuablais/go-api-key"
 alias work="arttime --nolearn -a eye -t 'For I consider that the sufferings of this present time are not worth comparing with the glory that is going to be revealed to us - Romans 8:18' -g 4h"
@@ -273,7 +262,6 @@ alias deployapp="~/.config/scripts/Development/deploy"
 alias blogdeploy="deployapp blogrevamp joshblais.com auto"
 alias deployato="deployapp acetheosce acetheosce.com auto"
 alias lh="~/.config/scripts/Development/lighthouse.sh"
-alias goose-create='goose create -dir ./database/migrations'
 
 # Docker commands migrated to podman
 alias docker compose="podman compose"
