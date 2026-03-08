@@ -41,5 +41,5 @@
   # services.supernote-watcher.enable = true;
 
   # Set the state version
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }

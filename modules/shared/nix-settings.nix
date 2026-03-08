@@ -48,8 +48,6 @@
     dates = [ "03:45" ];
   };
 
-  nixpkgs.config.allowUnfree = true;
-
   # Clean up old boot entries automatically
   boot.loader.systemd-boot.configurationLimit = lib.mkDefault 10;
 }

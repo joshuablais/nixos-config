@@ -29,7 +29,8 @@
 
   programs.ssh = {
     enable = true;
-    addKeysToAgent = "yes";
+    enableDefaultConfig = false;
+    matchBlocks."*".addKeysToAgent = "yes";
   };
 
   home.activation.sshConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

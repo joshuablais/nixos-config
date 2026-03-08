@@ -2,99 +2,34 @@
   description = "Joshua Blais' NixOS Infrastructure";
 
   inputs = {
-    # Core
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
     nur.url = "github:nix-community/NUR";
+    flake-parts.url = "github:hercules-ci/flake-parts";
 
-    # Tools
     disko.url = "github:nix-community/disko";
-    home-manager.url = "github:nix-community/home-manager";
-    deploy-rs.url = "github:serokell/deploy-rs";
-    agenix.url = "github:ryantm/agenix";
-    impermanence.url = "github:nix-community/impermanence";
-
-    # Custom modules
-    # supernote-tools.url = "github:joshuablais/supernote";
-
-    # Styling
-    stylix.url = "github:danth/stylix";
-
-    # Pin all inputs to main nixpkgs
     disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+
+    colmena.url = "github:zhaofengli/colmena";
+    colmena.inputs.nixpkgs.follows = "nixpkgs";
+
+    agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
-    # supernote-tools.inputs.nixpkgs.follows = "nixpkgs";
+
+    impermanence.url = "github:nix-community/impermanence";
+    stylix.url = "github:danth/stylix";
   };
 
   outputs =
-    { self, nixpkgs, ... }@inputs:
-    let
-      lib = nixpkgs.lib;
-
-      # Common modules for all systems
-      base = [
-        inputs.agenix.nixosModules.default
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [ "x86_64-linux" ];
+      imports = [
+        ./parts/nixos.nix
+        ./parts/colmena.nix
       ];
-
-      # Desktop machines get base + GUI tools
-      desktop = base ++ [
-        # inputs.supernote-tools.nixosModules.default
-        inputs.home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.joshua = import ./modules/home-manager;
-          home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.backupFileExtension = "backup";
-        }
-      ];
-
-      # Build a NixOS system configuration
-      mkHost =
-        hostname: modules:
-        lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = { inherit inputs; };
-          modules = [ ./hosts/${hostname}/configuration.nix ] ++ modules;
-        };
-
-      # Build a deploy-rs deployment target
-      mkDeploy = hostname: cfg: {
-        hostname = cfg.hostname; # Use the hostname from cfg, not the parameter
-        profiles.system = {
-          user = "root";
-          sshUser = cfg.sshUser or "root";
-          path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.${hostname}; # Use hostname for config lookup
-        };
-      };
-
-    in
-    {
-      # System configurations
-      nixosConfigurations = {
-        # Personal machines
-        theologica = mkHost "theologica" desktop;
-        logos = mkHost "logos" desktop;
-        king = mkHost "king" desktop;
-        axios = mkHost "axios" desktop;
-
-        # Server infrastructure
-        empirica = mkHost "empirica" base;
-        # empire = mkHost "empire" server;
-        # nexus = mkHost "nexus" server;
-      };
-
-      # Remote deployment targets
-      deploy.nodes = {
-        empirica = mkDeploy "empirica" {
-          sshUser = "joshua";
-          hostname = "192.168.0.28";
-        };
-      };
-
-      # Deployment validation checks
-      checks = builtins.mapAttrs (_: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib;
     };
 }
