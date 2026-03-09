@@ -847,6 +847,14 @@ We set the visual line wrapping and relative line numbers (then we can just go u
   (define-key org-mode-map (kbd "C-c o") #'org-clock-out))
 #+end_src
 
+** Move text
+#+begin_src elisp
+(map! "M-<down>"  #'move-text-down
+      "M-<up>"    #'move-text-up
+      "M-<left>"  #'backward-word
+      "M-<right>" #'forward-word)
+#+end_src
+
 ** Custom function for image insertion
 #+begin_src elisp
 ;; Insert image into org from selection

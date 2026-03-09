@@ -27,6 +27,7 @@
 (package! prettier-js)
 (package! svelte-mode)
 (package! templ-ts-mode)
+(package! move-text)
 ;; (package! company-tabnine)
 ;; (package! sublimity)
 (package! treemacs-all-the-icons)

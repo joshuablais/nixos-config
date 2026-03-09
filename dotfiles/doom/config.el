@@ -753,6 +753,11 @@
   (define-key org-mode-map (kbd "C-c i") #'org-clock-in)
   (define-key org-mode-map (kbd "C-c o") #'org-clock-out))
 
+(map! "M-<down>"  #'move-text-down
+      "M-<up>"    #'move-text-up
+      "M-<left>"  #'backward-word
+      "M-<right>" #'forward-word)
+
 ;; Insert image into org from selection
 (defun my/org-insert-image ()
   "Select and insert an image into org file."
