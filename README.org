@@ -323,7 +323,7 @@ I generally keep secrets at the machine level, the user "joshua" is my main user
 Defines all machines as a flake, inputs etc. and where we deploy.
 
 * Roadmap
-** TODO Integrate ZRAM
+** TODO Integrate ZRAM for swap
 ** TODO Impermanance
 ** TODO Disko for all machines
 ** TODO Attic binary Cache on Logos
