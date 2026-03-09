@@ -326,5 +326,8 @@ Defines all machines as a flake, inputs etc. and where we deploy.
 ** TODO Integrate ZRAM
 ** TODO Impermanance
 ** TODO Disko for all machines
+** TODO Attic binary Cache on Logos
+** TODO Forgjo worker on server for builds and shipping closures
+** TODO Bring server architecture into repo
 
 ** IDEA Dendritic configuration?
