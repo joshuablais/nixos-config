@@ -570,6 +570,13 @@ in
     # Reverse proxy for all services (critical for clean architecture)
     services.caddy = {
       enable = true;
+      virtualHosts."empirica.tailffa4c7.ts.net" = {
+        extraConfig = ''
+          tls /var/lib/tailscale/certs/empirica.tailffa4c7.ts.net.crt \
+              /var/lib/tailscale/certs/empirica.tailffa4c7.ts.net.key
+          reverse_proxy localhost:13378
+        '';
+      };
 
       virtualHosts = {
         "jellyfin.empirica" = {
