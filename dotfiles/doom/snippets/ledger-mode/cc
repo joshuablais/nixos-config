@@ -4,6 +4,7 @@
 # --
 `(format-time-string "%Y/%m/%d")` * ${1:Payee}
     ; ${2:Description}
-    Expenses:${3:Category}                      CAD -${4:Amount}
-    Liabilities:Credit_Card                     CAD ${4:Amount}
+    Liabilities:Credit_Card                     CAD -${4:Amount}
+    Expenses:${3:Category}                      CAD ${5:Amount}
+    Liabilities:GST_Payable                     CAD ${6:Amount}
 $0

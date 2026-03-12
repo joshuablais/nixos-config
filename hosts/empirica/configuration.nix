@@ -25,11 +25,15 @@
 
   users.users.joshua = {
     isNormalUser = true;
-    description = "Joshua Blais";
-    group = "joshua";
+    description = "joshua";
     extraGroups = [
       "networkmanager"
       "wheel"
+      "uinput"
+      "input"
+    ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCWNto66rFbOvb1VDEDuZYdwHQPfKM7+EjpnHvs3eRr joshua@joshuablais.com"
     ];
   };
 
