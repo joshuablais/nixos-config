@@ -12,7 +12,7 @@
     nvd # Nix/NixOS package version diff tool
     nh # nix helper
     nixfmt # nix formatting
-    deploy-rs # deployment
+    colmena # deployments
     direnv # start environments on cd into directory
     devenv # development environments
     nix-output-monitor # nix output monitoring
