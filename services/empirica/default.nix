@@ -721,7 +721,8 @@ in
       ];
 
       volumes = [
-        "${cfg.mediaDir}/books:/books"
+        "/var/lib/media/books:/calibre-library" # actual library
+        "/var/lib/media/books-ingest:/cwa-book-ingest" # ingest folder
         "/home/${cfg.user}/containers/calibre-web-automated/config:/config"
       ];
 
