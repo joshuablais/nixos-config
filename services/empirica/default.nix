@@ -570,6 +570,13 @@ in
     # Reverse proxy for all services (critical for clean architecture)
     services.caddy = {
       enable = true;
+      package = pkgs.caddy.withPlugins {
+        plugins = [ "github.com/caddy-dns/cloudflare@v0.0.0-20250207144630-e7c77b6ca9ba" ];
+        hash = "";
+      };
+      globalConfig = ''
+        acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+      '';
       virtualHosts = {
         "jellyfin.labrynth.org" = {
           extraConfig = ''
@@ -670,6 +677,8 @@ in
         };
       };
     };
+
+    systemd.services.caddy.serviceConfig.EnvironmentFile = config.age.secrets.cloudflare-api-token.path;
 
     # Create media directories with proper permissions
     systemd.tmpfiles.rules = [
