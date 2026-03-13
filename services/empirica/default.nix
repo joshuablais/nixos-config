@@ -655,6 +655,11 @@ in
             reverse_proxy localhost:3000
           '';
         };
+        "searx.labrynth.org" = {
+          extraConfig = ''
+            reverse_proxy localhost:8888
+          '';
+        };
         "radicale.labrynth.org" = {
           extraConfig = ''
             reverse_proxy localhost:5232
