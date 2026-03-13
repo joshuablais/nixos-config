@@ -2,8 +2,8 @@
 
 (use-package! org-caldav
   :config
-  (setq org-caldav-url "http://localhost:5232/joshua"
-        org-caldav-calendar-id "09880ecf-4174-e3b4-706f-c504ecb5e19b"
+  (setq org-caldav-url "https://radicale.labrynth.org/joshua"
+        org-caldav-calendar-id "a3c565df-28ac-ae51-9fba-0795415c09d3"
         org-caldav-inbox "~/org/caldav-inbox.org"
         org-caldav-files '("~/org/calendar.org")
         org-caldav-sync-direction 'twoway
@@ -49,10 +49,10 @@
 (defun my/org-contacts-to-radicale ()
   "Export org-contacts to vCard and upload to Radicale."
   (interactive)
-  (let* ((url "http://localhost:5232/joshua/81d7c750-eb55-53e8-7af9-0d08e8121b64/")
+  (let* ((url "https://radicale.labrynth.org/joshua/3138d498-1df5-0ddf-1632-9dca442bb144/")
          (username "joshua")
-         (auth-info (auth-source-search :host "localhost"
-                                        :port 5232
+         (auth-info (auth-source-search :host "radicale.labrynth.org"
+                                        :port 443 
                                         :user username
                                         :require '(:secret)))
          (password (if auth-info

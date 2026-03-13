@@ -126,7 +126,7 @@ in
       settings = {
         MICROBIN_PORT = 8090;
         MICROBIN_BIND = "0.0.0.0";
-        MICROBIN_PUBLIC_PATH = "https://paste.empirica";
+        MICROBIN_PUBLIC_PATH = "https://paste.labrynth.org";
         MICROBIN_EDITABLE = true;
         MICROBIN_HIDE_FOOTER = false;
         MICROBIN_PRIVATE = false;
@@ -295,7 +295,7 @@ in
             style = "row";
             columns = 3;
           };
-          "Media Consumption" = {
+          "Media" = {
             style = "row";
             columns = 3;
           };
@@ -358,7 +358,7 @@ in
             {
               "AdGuard Home" = {
                 icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/adguard-home.webp";
-                href = "https://adguard.empirica";
+                href = "https://adguard.labrynth.org";
                 description = "DNS sovereignty and network-level blocking";
                 # widget = {
                 #   type = "adguard";
@@ -376,7 +376,7 @@ in
             {
               "Syncthing" = {
                 icon = "syncthing";
-                href = "https://sync.empirica";
+                href = "https://sync.labrynth.org";
                 description = "Distributed file synchronization";
                 # widget = {
                 #   type = "syncthing";
@@ -393,7 +393,7 @@ in
             {
               "Jellyfin" = {
                 icon = "jellyfin";
-                href = "https://jellyfin.empirica";
+                href = "https://jellyfin.labrynth.org";
                 description = "Self-hosted media server";
                 # widget = {
                 #   type = "jellyfin";
@@ -405,14 +405,14 @@ in
             {
               "Audiobookshelf" = {
                 icon = "audiobookshelf";
-                href = "https://audiobookshelf.empirica";
+                href = "https://audiobookshelf.labrynth.org";
                 description = "Audiobook and podcast server";
               };
             }
             {
               "Calibre" = {
                 icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/calibre-web.png";
-                href = "https://calibre.empirica";
+                href = "https://calibre.labrynth.org";
                 description = "Ebook library and management";
               };
             }
@@ -425,7 +425,7 @@ in
             {
               "Prowlarr" = {
                 icon = "prowlarr";
-                href = "https://prowlarr.empirica";
+                href = "https://prowlarr.labrynth.org";
                 description = "Indexer manager - the source of all sources";
                 # widget = {
                 #   type = "prowlarr";
@@ -437,7 +437,7 @@ in
             {
               "Radarr" = {
                 icon = "radarr";
-                href = "https://radarr.empirica";
+                href = "https://radarr.labrynth.org";
                 description = "Movie collection manager";
                 # widget = {
                 #   type = "radarr";
@@ -449,7 +449,7 @@ in
             {
               "Sonarr" = {
                 icon = "sonarr";
-                href = "https://sonarr.empirica";
+                href = "https://sonarr.labrynth.org";
                 description = "Series collection manager";
                 # widget = {
                 #   type = "sonarr";
@@ -461,7 +461,7 @@ in
             {
               "Lidarr" = {
                 icon = "lidarr";
-                href = "https://lidarr.empirica";
+                href = "https://lidarr.labrynth.org";
                 description = "Music collection manager";
                 # widget = {
                 #   type = "lidarr";
@@ -473,7 +473,7 @@ in
             {
               "Bazarr" = {
                 icon = "bazarr";
-                href = "https://bazarr.empirica";
+                href = "https://bazarr.labrynth.org";
                 description = "Subtitle automation";
                 # widget = {
                 #   type = "bazarr";
@@ -485,7 +485,7 @@ in
             {
               "SABnzbd" = {
                 icon = "sabnzbd";
-                href = "https://sabnzbd.empirica";
+                href = "https://sabnzbd.labrynth.org";
                 description = "Usenet download client";
                 # widget = {
                 #   type = "sabnzbd";
@@ -503,14 +503,14 @@ in
             {
               "Miniflux" = {
                 icon = "miniflux";
-                href = "https://miniflux.empirica";
+                href = "https://miniflux.labrynth.org";
                 description = "RSS feed reader - curated information diet";
               };
             }
             {
               "Paperless-NGX" = {
                 icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/paperless-ngx.webp";
-                href = "https://paperless.empirica";
+                href = "https://paperless.labrynth.org";
                 description = "Document management with OCR";
                 # widget = {
                 #   type = "paperlessngx";
@@ -522,7 +522,7 @@ in
             {
               "Immich" = {
                 icon = "immich";
-                href = "https://immich.empirica";
+                href = "https://immich.labrynth.org";
                 description = "Self-hosted photo and video management";
               };
             }
@@ -535,7 +535,7 @@ in
             {
               "Uptime Kuma" = {
                 icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/uptime-kuma.webp";
-                href = "https://uptime.empirica";
+                href = "https://uptime.labrynth.org";
                 description = "Service monitoring and status";
                 # widget = {
                 #   type = "uptimekuma";
@@ -547,8 +547,15 @@ in
             {
               "Microbin" = {
                 icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/microbin.webp";
-                href = "https://paste.empirica";
+                href = "https://paste.labrynth.org";
                 description = "Self-hosted pastebin";
+              };
+            }
+            {
+              "Radicale" = {
+                icon = "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/radicale.webp";
+                href = "https://radicale.labrynth.org";
+                description = "Self-hosted calendaring and contacts";
               };
             }
           ];
