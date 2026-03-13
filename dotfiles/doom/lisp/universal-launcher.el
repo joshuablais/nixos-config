@@ -580,6 +580,7 @@ If QUERY looks like a URL, navigate directly to it.
 Otherwise, prompt for a search engine."
   (let* ((search-engines
           '(("Google" . "https://www.google.com/search?q=")
+            ("Searx" . "https://searx.labrynth.org/search?q=")
             ("Go documentation" . "https://pkg.go.dev/search?q=")
             ("ArchWiki" . "https://wiki.archlinux.org/index.php?search=")
             ("DuckDuckGo" . "https://duckduckgo.com/?q=")
