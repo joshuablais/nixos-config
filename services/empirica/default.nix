@@ -571,8 +571,8 @@ in
     services.caddy = {
       enable = true;
       package = pkgs.caddy.withPlugins {
-        plugins = [ "github.com/caddy-dns/cloudflare@v0.0.0-20250207144630-e7c77b6ca9ba" ];
-        hash = "";
+        plugins = [ "github.com/caddy-dns/cloudflare@v0.2.3" ];
+        hash = "sha256-mmkziFzEMBcdnCWCRiT3UyWPNbINbpd3KUJ0NMW632w=";
       };
       globalConfig = ''
         acme_dns cloudflare {env.CLOUDFLARE_API_TOKEN}
