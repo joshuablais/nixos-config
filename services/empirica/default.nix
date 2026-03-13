@@ -570,127 +570,101 @@ in
     # Reverse proxy for all services (critical for clean architecture)
     services.caddy = {
       enable = true;
-      virtualHosts."empirica.tailffa4c7.ts.net" = {
-        extraConfig = ''
-          tls /var/lib/tailscale/certs/empirica.tailffa4c7.ts.net.crt \
-              /var/lib/tailscale/certs/empirica.tailffa4c7.ts.net.key
-          reverse_proxy localhost:13378
-        '';
-      };
-
       virtualHosts = {
-        "jellyfin.empirica" = {
+        "jellyfin.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:8096
           '';
         };
-        "sync.empirica" = {
+        "sync.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:8384 {
               header_up Host localhost:8384
               header_up X-Forwarded-Host {host}
             }
           '';
         };
-        "homepage.empirica" = {
+        "homepage.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:3000
           '';
         };
-        "radicale.empirica" = {
+        "radicale.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:5232
           '';
         };
-        "adguard.empirica" = {
+        "adguard.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:3001
           '';
         };
-        "audiobookshelf.empirica" = {
+        "audiobookshelf.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:13378
           '';
         };
-        "calibre.empirica" = {
+        "calibre.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:8083
           '';
         };
-        "radarr.empirica" = {
+        "radarr.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:7878
           '';
         };
-        "sonarr.empirica" = {
+        "sonarr.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:8989
           '';
         };
-        "lidarr.empirica" = {
+        "lidarr.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:8686
           '';
         };
-        "prowlarr.empirica" = {
+        "prowlarr.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:9696
           '';
         };
-        "bazarr.empirica" = {
+        "bazarr.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:6767
           '';
         };
-        "sabnzbd.empirica" = {
+        "sabnzbd.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:8080
           '';
         };
         # New services
-        "miniflux.empirica" = {
+        "miniflux.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:8082
           '';
         };
-        "paperless.empirica" = {
+        "paperless.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:28981
           '';
         };
-        "immich.empirica" = {
+        "immich.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:2283 {
               header_up X-Forwarded-For {remote_host}
               header_up X-Forwarded-Proto {scheme}
             }
           '';
         };
-        "uptime.empirica" = {
+        "uptime.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:3002
           '';
         };
-        "paste.empirica" = {
+        "paste.labrynth.org" = {
           extraConfig = ''
-            tls internal
             reverse_proxy localhost:8090
           '';
         };
@@ -760,7 +734,6 @@ in
         53
         80
         443
-        3001
       ];
       allowedUDPPorts = [ 53 ];
     };
