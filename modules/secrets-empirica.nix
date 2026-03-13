@@ -17,5 +17,11 @@
       group = "caddy";
       mode = "0400";
     };
+    searx-key = {
+      file = ../secrets/searx-key.age;
+      owner = "searx";
+      group = "searx";
+      mode = "0400";
+    };
   };
 }

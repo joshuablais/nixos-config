@@ -561,9 +561,62 @@ in
           ];
         }
       ];
+    };
 
-      # When ready, uncomment this and create /run/secrets/homepage-env with API keys
-      # environmentFile = "/run/secrets/homepage-env";
+    services.searx = {
+      enable = true;
+      environmentFile = config.age.secrets.searx-key.path;
+      settings = {
+        server = {
+          port = 8888;
+          bind_address = "0.0.0.0";
+          secret_key = "@SEARX_KEY@";
+          limiter = false;
+        };
+        search = {
+          safe_search = 0;
+          autocomplete = "duckduckgo";
+          default_lang = "en";
+        };
+        engines = [
+          {
+            name = "google";
+            engine = "google";
+            shortcut = "g";
+          }
+          {
+            name = "duckduckgo";
+            engine = "duckduckgo";
+            shortcut = "ddg";
+          }
+          {
+            name = "brave";
+            engine = "brave";
+            shortcut = "br";
+          }
+          {
+            name = "wikipedia";
+            engine = "wikipedia";
+            shortcut = "w";
+          }
+          {
+            name = "github";
+            engine = "github";
+            shortcut = "gh";
+          }
+          {
+            name = "nixos wiki";
+            engine = "mediawiki";
+            shortcut = "nw";
+            url = "https://wiki.nixos.org/";
+          }
+          {
+            name = "stackoverflow";
+            engine = "stackoverflow";
+            shortcut = "so";
+          }
+        ];
+      };
     };
 
     # Homepage environment configuration
