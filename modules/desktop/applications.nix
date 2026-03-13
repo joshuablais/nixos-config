@@ -33,9 +33,6 @@
     qbittorrent
     flatpak
 
-    # Added for Radicale
-    apacheHttpd
-
     # ADB tooling for android
     android-tools
   ];
@@ -195,31 +192,4 @@
     "d /home/joshua/Downloads/Elfeed 0755 joshua users -"
     "d /home/joshua/Pictures/Phone\\ Backup 0755 joshua users -"
   ];
-
-  # Radicale testing for server calendar/VCard sync
-  services.radicale = {
-    enable = true;
-    settings = {
-      server = {
-        hosts = [ "0.0.0.0:5232" ]; # Localhost only for testing
-      };
-      auth = {
-        type = "htpasswd";
-        htpasswd_filename = "/var/lib/radicale/users";
-        htpasswd_encryption = "bcrypt";
-      };
-      storage = {
-        filesystem_folder = "/var/lib/radicale/collections";
-      };
-      logging = {
-        level = "info"; # Helpful for debugging during testing
-      };
-    };
-  };
-
-  networking.firewall = {
-    interfaces."tailscale0" = {
-      allowedTCPPorts = [ 5232 ];
-    };
-  };
 }
