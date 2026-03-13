@@ -282,7 +282,7 @@ in
       openFirewall = false;
 
       settings = {
-        title = "Empirica Homelab";
+        title = "The Labrynth";
         theme = "dark";
         color = "slate";
         background = "https://raw.githubusercontent.com/joshuablais/Wallpapers/refs/heads/master/serenity.jpg";
