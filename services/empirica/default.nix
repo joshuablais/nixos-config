@@ -22,6 +22,10 @@ let
 
 in
 {
+  imports = [
+    ./miniflux.nix
+  ];
+
   options.services.homelab = {
     enable = mkEnableOption "Enable all homelab services";
 
@@ -82,15 +86,6 @@ in
       };
     };
 
-    # Miniflux - RSS feed reader
-    services.miniflux = {
-      enable = true;
-      config = {
-        LISTEN_ADDR = "0.0.0.0:8082";
-      };
-      adminCredentialsFile = "/run/agenix/miniflux-admin";
-    };
-
     # Paperless-NGX - Document management
     services.paperless = {
       enable = true;
@@ -100,7 +95,7 @@ in
         PAPERLESS_OCR_LANGUAGE = "eng";
         PAPERLESS_TIME_ZONE = cfg.timezone;
         PAPERLESS_ADMIN_USER = cfg.user;
-        PAPERLESS_ADMIN_PASSWORD = "changeme"; # Change this after first login
+        PAPERLESS_ADMIN_PASSWORD = "changeme";
       };
     };
 
@@ -217,36 +212,37 @@ in
             name = "Porn block list 1";
             id = 4;
           }
-          {
-            enabled = true;
-            url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts01";
-            name = "Porn block list 2";
-            id = 5;
-          }
-          {
-            enabled = true;
-            url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts02";
-            name = "Porn block list 3";
-            id = 6;
-          }
-          {
-            enabled = true;
-            url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts03";
-            name = "Porn block list 4";
-            id = 7;
-          }
-          {
-            enabled = true;
-            url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts04";
-            name = "Porn block list 5";
-            id = 8;
-          }
-          {
-            enabled = true;
-            url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts05";
-            name = "Porn block list 6";
-            id = 9;
-          }
+          # Comment out for RAM Usage testing
+          # {
+          #   enabled = true;
+          #   url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts01";
+          #   name = "Porn block list 2";
+          #   id = 5;
+          # }
+          # {
+          #   enabled = true;
+          #   url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts02";
+          #   name = "Porn block list 3";
+          #   id = 6;
+          # }
+          # {
+          #   enabled = true;
+          #   url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts03";
+          #   name = "Porn block list 4";
+          #   id = 7;
+          # }
+          # {
+          #   enabled = true;
+          #   url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts04";
+          #   name = "Porn block list 5";
+          #   id = 8;
+          # }
+          # {
+          #   enabled = true;
+          #   url = "https://raw.githubusercontent.com/columndeeply/hosts/main/hosts05";
+          #   name = "Porn block list 6";
+          #   id = 9;
+          # }
         ];
         filtering = {
           rewrites = dnsRewrites;
@@ -389,7 +385,7 @@ in
 
         # Consumption Layer: Direct interaction with media
         {
-          "Media Consumption" = [
+          "Media" = [
             {
               "Jellyfin" = {
                 icon = "jellyfin";
