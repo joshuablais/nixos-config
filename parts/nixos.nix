@@ -38,5 +38,6 @@ in
     king = mkHost "king" desktop;
     axios = mkHost "axios" desktop;
     empirica = mkHost "empirica" base;
+    empire = mkHost "empire" base;
   };
 }

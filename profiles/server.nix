@@ -1,7 +1,7 @@
 { lib, ... }:
 {
   imports = [
-    # ../modules/cli-tui/shell
+    ../modules/security
     # NO audio modules
   ];
 
