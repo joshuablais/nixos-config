@@ -794,7 +794,6 @@ in
         PUID = "1000";
         PGID = "100";
         TZ = cfg.timezone;
-        CALIBRE_LIBRARY_PATH = "/books";
         METADATA_UPDATE = "true";
       };
     };
