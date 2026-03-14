@@ -13,7 +13,7 @@
     ./disk-config.nix
     # ../../services/empire
     ../../modules/cli-tui/neovim.nix
-    ../../sites/luminaforge.nix
+    # ../../sites/luminaforge.nix
   ];
 
   networking.hostName = "empire";
@@ -33,11 +33,11 @@
   };
 
   # Enable garden
-  services.garden = {
-    enable = true;
-    port = 3000;
-    domain = "luminaforge.org";
-  };
+  # services.garden = {
+  #   enable = true;
+  #   port = 3000;
+  #   domain = "luminaforge.org";
+  # };
 
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII7upEnqqvZMGYQVkwnQRogLIJZ814TNjfdGqP1zJ4En josh@joshblais.com"
