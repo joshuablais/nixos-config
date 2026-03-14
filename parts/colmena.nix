@@ -17,7 +17,10 @@ in
 {
   flake.colmena = {
     meta = {
-      nixpkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
+      nixpkgs = import inputs.nixpkgs {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
       specialArgs = { inherit inputs; };
     };
   }
