@@ -11,7 +11,7 @@
     ../../modules/shared
     ../../modules/security
     ../../services/empirica
-    ../../modules/secrets-empirica.nix
+    ../../modules/secrets/empirica.nix
   ];
 
   services.homelab.enable = true;

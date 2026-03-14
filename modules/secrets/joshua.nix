@@ -6,22 +6,22 @@
 
   age.secrets = {
     canlock = {
-      file = ../secrets/canlock.age;
+      file = ../../secrets/canlock.age;
       owner = "joshua";
       mode = "400";
     };
     gnus-name = {
-      file = ../secrets/gnus-name.age;
+      file = ../../secrets/gnus-name.age;
       owner = "joshua";
       mode = "400";
     };
     gnus-email = {
-      file = ../secrets/gnus-email.age;
+      file = ../../secrets/gnus-email.age;
       owner = "joshua";
       mode = "400";
     };
     sshConfig = {
-      file = ../secrets/ssh-config.age;
+      file = ../../secrets/ssh-config.age;
       owner = "joshua";
       mode = "600";
     };

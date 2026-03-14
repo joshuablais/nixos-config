@@ -9,7 +9,7 @@
     ./hardware-configuration.nix
     ./hardware-overrides.nix
     ../../profiles/workstation.nix
-    ../../modules/secrets-joshua.nix
+    ../../modules/secrets/joshua.nix
   ];
 
   # Host-specific configuration
