@@ -113,7 +113,7 @@
           ignorePerms = false;
         };
         "music" = {
-          path = "/home/joshua/MusicOrganized";
+          path = "/home/joshua/Music";
           devices = [
             "theologica"
             "logos"
