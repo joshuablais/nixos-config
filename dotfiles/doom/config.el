@@ -17,6 +17,12 @@
 (after! org
   (doom-themes-org-config))
 
+;; Fix mu4e search path issue
+(add-to-list 'load-path
+  (concat (string-trim-right
+    (shell-command-to-string "nix eval --raw nixpkgs#mu"))
+    "/share/emacs/site-lisp/mu4e"))
+
 ;; Maximum GC threshold during startup - prevent collections entirely
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 1.0)
@@ -85,7 +91,7 @@
 ;; Maintain terminal transparency in Doom Emacs
 (after! doom-themes
   (unless (display-graphic-p)
-    (set-face-background 'default "undefined")))
+    (set-face-background 'default "unspecified-bg")))
 
 ;; remove top frame bar in emacs
 (add-to-list 'default-frame-alist '(undecorated . t))
@@ -1671,14 +1677,6 @@ This function is designed to be called via `emacsclient -e`."
         :n "s" #'calibredb-set-metadata-dispatch
         :n "S" #'calibredb-switch-library
         :n "q" #'calibredb-search-quit))
-
-;; Make system mu4e visible to Doom
-(when-let ((mu4e-path (car (split-string
-                           (shell-command-to-string
-                            "find /nix/store -name 'mu4e.el' -path '*/share/emacs/site-lisp/*' 2>/dev/null | head -1")
-                           "\n"))))
-  (when (file-exists-p mu4e-path)
-    (add-to-list 'load-path (file-name-directory mu4e-path))))
 
 (after! mu4e
   (setq mu4e-mu-binary (executable-find "mu"))
