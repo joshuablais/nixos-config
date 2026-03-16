@@ -2,7 +2,7 @@
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs; # This is the ONLY emacs installation
+    package = pkgs.emacs;
     extraPackages =
       epkgs: with epkgs; [
         doom
@@ -10,7 +10,7 @@
         pdf-tools
         org-roam
         treesit-grammars.with-all-grammars
-        mu4e # Move this from system level
+        mu4e
       ];
   };
 
@@ -30,7 +30,6 @@
 
       Environment = [
         "PATH=${config.home.profileDirectory}/bin:/run/current-system/sw/bin"
-        "GDK_BACKEND=x11"
       ];
     };
 
