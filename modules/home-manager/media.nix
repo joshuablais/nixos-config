@@ -2,6 +2,6 @@
 {
   services.mpd = {
     enable = true;
-    musicDirectory = "${config.home.homeDirectory}/MusicOrganized";
+    musicDirectory = "${config.home.homeDirectory}/Music";
   };
 }

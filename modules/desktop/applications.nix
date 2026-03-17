@@ -183,7 +183,7 @@
   # Ensure directories exist
   systemd.tmpfiles.rules = [
     "d /home/joshua/Library 0755 joshua users -"
-    "d /home/joshua/MusicOrganized 0755 joshua users -"
+    "d /home/joshua/Music 0755 joshua users -"
     "d /home/joshua/Projects 0755 joshua users -"
     "d /home/joshua/Accounting 0755 joshua users -"
     "d /home/joshua/Catholic 0755 joshua users -"
