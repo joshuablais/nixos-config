@@ -1679,7 +1679,7 @@ Changes environment to zsh for compilation commands (ie. zig-run go-test etc.)
              emms-shuffle)
   :init
   ;; Set these early so they're available when EMMS loads
-  (setq emms-source-file-default-directory "~/MusicOrganized"
+  (setq emms-source-file-default-directory "~/Music"
         emms-playlist-buffer-name "*Music*"
         emms-info-asynchronously t
         emms-browser-default-browse-type 'artist)
@@ -1701,7 +1701,7 @@ Changes environment to zsh for compilation commands (ie. zig-run go-test etc.)
   (require 'emms-player-mpd)
   (setq emms-player-mpd-server-name "localhost"
         emms-player-mpd-server-port "6600"
-        emms-player-mpd-music-directory (expand-file-name "~/MusicOrganized"))
+        emms-player-mpd-music-directory (expand-file-name "~/Music"))
 
   ;; Connect to MPD and add it to player list
   (add-to-list 'emms-player-list 'emms-player-mpd)
