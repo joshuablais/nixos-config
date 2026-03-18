@@ -1,3 +1,4 @@
+# this is a minimal emacs installation for lightweight machines
 {
   config,
   pkgs,
