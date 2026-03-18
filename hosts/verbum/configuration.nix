@@ -41,6 +41,8 @@
     "joshua"
   ];
 
+  security.sudo.wheelNeedsPassword = false;
+
   users.users.joshua = {
     isNormalUser = true;
     description = "joshua";
