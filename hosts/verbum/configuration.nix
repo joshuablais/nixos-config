@@ -55,6 +55,12 @@
     ];
   };
 
+  environment.sessionVariables = {
+    XDG_DATA_HOME = "$HOME/.local/share";
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_CACHE_HOME = "$HOME/.cache";
+  };
+
   # Set the state version
   system.stateVersion = "25.11";
 }
