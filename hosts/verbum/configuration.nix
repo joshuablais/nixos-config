@@ -10,33 +10,44 @@
     ../../profiles/tiny.nix
   ];
 
+  # Bootloader.
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.useOSProber = true;
+
+  # Use latest kernel.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # Setup keyfile
+  boot.initrd.secrets = {
+    "/boot/crypto_keyfile.bin" = null;
+  };
+
+  boot.loader.grub.enableCryptodisk = true;
+
+  boot.initrd.luks.devices."luks-65f8f8c1-feb2-4ba1-bfc4-1e8214361602".keyFile =
+    "/boot/crypto_keyfile.bin";
+
   # Host-specific configuration
   networking.hostName = "verbum";
 
-  # Boot loader configuration
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  networking.networkmanager.enable = true;
 
-  # Define your user properly
+  users.groups.joshua = { };
+
   users.users.joshua = {
     isNormalUser = true;
-    description = "Joshua Blais";
-    group = "joshua";
+    description = "joshua";
     extraGroups = [
       "networkmanager"
       "wheel"
+      "uinput"
+      "input"
+    ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICCWNto66rFbOvb1VDEDuZYdwHQPfKM7+EjpnHvs3eRr joshua@joshuablais.com"
     ];
   };
-
-  # Create the user group
-  users.groups.joshua = { };
-
-  # Basic system configuration
-  time.timeZone = "America/Edmonton";
-  i18n.defaultLocale = "en_CA.UTF-8";
-
-  # Enable Supernote sync tool
-  # services.supernote-watcher.enable = true;
 
   # Set the state version
   system.stateVersion = "25.11";
