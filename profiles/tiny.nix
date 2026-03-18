@@ -5,7 +5,6 @@
     ../modules/development
     ../modules/desktop/desktop-minimal.nix
     ../modules/media
-    ../modules/security
     ../modules/shared
   ];
 
