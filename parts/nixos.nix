@@ -37,7 +37,7 @@ in
     logos = mkHost "logos" desktop;
     king = mkHost "king" desktop;
     axios = mkHost "axios" desktop;
-    verbum = mkHost "verbum" desktop;
+    verbum = mkHost "verbum" base;
     empirica = mkHost "empirica" base;
     empire = mkHost "empire" base;
   };
