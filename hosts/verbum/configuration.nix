@@ -36,6 +36,11 @@
 
   users.groups.joshua = { };
 
+  nix.settings.trusted-users = [
+    "root"
+    "joshua"
+  ];
+
   users.users.joshua = {
     isNormalUser = true;
     description = "joshua";
