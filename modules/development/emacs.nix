@@ -27,8 +27,8 @@
   };
 
   environment.variables = {
-    DOOMDIR = "/root/.config/doom";
-    DOOMLOCALDIR = "/root/.local/share/doom";
+    DOOMDIR = "$HOME/.config/doom";
+    DOOMLOCALDIR = "$HOME/.local/share/doom";
     EDITOR = "emacsclient -nw";
     VISUAL = "emacsclient -nw";
   };
