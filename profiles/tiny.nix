@@ -3,7 +3,7 @@
   imports = [
     ../modules/cli-tui
     ../modules/development
-    ../modules/desktop-minimal.nix
+    ../modules/desktop/desktop-minimal.nix
     ../modules/media
     ../modules/security
     ../modules/shared
