@@ -8,7 +8,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../profiles/tiny.nix
-    ../../modules/home-manager/emacs.nix
+    ../../modules/development/emacs.nix
   ];
 
   # Bootloader.
