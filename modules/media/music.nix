@@ -6,6 +6,7 @@
     # ncmpcpp
     spotify
     spotdl
+    jellyfin-tui
     # Audio tools
     audacity
     # Audio codecs
