@@ -2282,6 +2282,7 @@ Started using EWW to browse more often. Simple hook to make EWW full size buffer
 (after! eww
   (set-popup-rule! "^\\*eww\\*" :ignore t))
 #+end_src
+
 ** Clipboard Manager
 Use emacs as a clipboard manager - search the killring and add to your system clipboard 
 
@@ -2393,94 +2394,3 @@ I have various functions in my lisp directory for creating pomodoros, refiling d
 ;; (load! "lisp/termux-sms")
 ;; (load! "lisp/weather")
 #+end_src
-
-* Legacy
-** Email to self at beginning of day
-#+begin_src elisp
-;;;; Send a daily email to myself with the days agenda:
-;;(defun my/send-daily-agenda ()
-;;  "Send daily agenda email using mu4e"
-;;  (interactive)
-;;  (let* ((date-string (format-time-string "%Y-%m-%d"))
-;;         (subject (format "Daily Agenda: %s" (format-time-string "%A, %B %d")))
-;;         (tmp-file (make-temp-file "agenda")))
-;;
-;;    ;; Generate agenda and save to temp file
-;;    (save-window-excursion
-;;      (org-agenda nil "d")
-;;      (with-current-buffer org-agenda-buffer-name
-;;        (org-agenda-write tmp-file)))
-;;
-;;    ;; Read the agenda content
-;;    (let ((agenda-content
-;;           (with-temp-buffer
-;;             (insert-file-contents tmp-file)
-;;             (buffer-string))))
-;;
-;;      ;; Create and send email
-;;      (with-current-buffer (mu4e-compose-new)
-;;        (mu4e-compose-mode)
-;;        ;; Set up headers
-;;        (message-goto-to)
-;;        (insert "josh@joshblais.com")
-;;        (message-goto-subject)
-;;        (insert subject)
-;;        (message-goto-body)
-;;        ;; Insert the agenda content
-;;        (insert agenda-content)
-;;        ;; Send
-;;        (message-send-and-exit)))
-;;
-;;    ;; Cleanup
-;;    (delete-file tmp-file)))
-;;
-;;;; Remove any existing timer
-;;(cancel-function-timers 'my/send-daily-agenda)
-;;
-;;;; Schedule for 5:30 AM
-;;(run-at-time "05:30" 86400 #'my/send-daily-agenda)
-#+end_src
-
-** Deft
-#+begin_src elisp
-;; Deft mode
-;; (setq deft-extensions '("txt" "tex" "org"))
-;; (setq deft-directory "~/Vaults/org/roam")
-;; (setq deft-recursive t)
-;; (setq deft-use-filename-as-title t)
-#+end_src
-
-** Drag and drop
-#+begin_src elisp
-;; Drag and drop:
-;; Function for mouse events
-;;(defun my/drag-file-mouse (event)
-;;  "Drag current file using dragon (mouse version)"
-;;  (interactive "e")
-;;  (let ((file (dired-get-filename nil t)))
-;;    (when file
-;;      (message "Click and drag the dragon window to your target location")
-;;      (start-process "dragon" nil "/usr/local/bin/dragon"
-;;                     "-x"          ; Send mode
-;;                     "--keep"      ; Keep the window open
-;;                     file))))
-;;
-;;;; Function for keyboard shortcut with multiple files support
-;;(defun my/drag-file-keyboard ()
-;;  "Drag marked files (or current file) using dragon"
-;;  (interactive)
-;;  (let ((files (or (dired-get-marked-files)
-;;                   (list (dired-get-filename nil t)))))
-;;    (when files
-;;      (message "Click and drag the dragon window to your target location")
-;;      (apply 'start-process "dragon" nil "/usr/local/bin/dragon"
-;;             (append (list "-x" "--keep") files)))))
-;;
-;;;; Bind both versions
-;;(after! dired
-;;  (define-key dired-mode-map [drag-mouse-1] 'my/drag-file-mouse)
-;;  (define-key dired-mode-map (kbd "C-c C-d") 'my/drag-file-keyboard))
-#+end_src
-
-* TODO
-- Addin video previews to dirvish
