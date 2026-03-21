@@ -38,20 +38,21 @@
     };
     thermald.enable = false;
     fwupd.enable = true;
-
-    # Unbind/rebind Goodix fingerprint reader around sleep to stop USB reset loops
-    udev.extraRules = ''
-      ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="27c6", ATTRS{idProduct}=="6594", \
-        RUN+="${pkgs.bash}/bin/sh -c 'echo 0 > /sys$DEVPATH/power/autosuspend_delay_ms'"
-    '';
   };
+
+  # Top-level, not nested under services
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="27c6", ATTRS{idProduct}=="6594", RUN+="${pkgs.writeShellScript "goodix-no-autosuspend" ''
+      echo 0 > /sys$DEVPATH/power/autosuspend_delay_ms
+    ''}"
+  '';
 
   boot.kernelParams = [
     "amd_pstate=guided"
     "nvme_core.default_ps_max_latency_us=0"
     "amdgpu.runpm=0"
     "amdgpu.aspm=0"
-    "amdgpu.sg_display=0" # disable scatter-gather display buffers on Rembrandt — implicated in DC hangs on resume
+    "amdgpu.sg_display=0"
     "nmi_watchdog=1"
     "softlockup_panic=1"
     "iommu=pt"
@@ -65,42 +66,50 @@
     "kernel.hung_task_timeout_secs" = 60;
   };
 
-  # Disable PSR at boot — prevents DMCUB firmware crash on Rembrandt
   systemd.services.disable-amdgpu-psr = {
     description = "Disable AMD PSR to prevent DMCUB firmware crash";
     wantedBy = [
       "multi-user.target"
       "sleep.target"
     ];
-    after = [ "systemd-udev-settle.service" ];
+    after = [
+      "systemd-udev-settle.service"
+      "sys-kernel-debug.mount"
+    ];
     before = [ "sleep.target" ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
+      User = "root";
       ExecStart = pkgs.writeShellScript "disable-psr" ''
         sleep 2
-        for psr_path in /sys/kernel/debug/dri/*/eDP-1/psr_state; do
-          [ -f "$psr_path" ] && echo 0 > "$psr_path"
-        done
+        PSR_BLOCK=/sys/kernel/debug/dri/1/eDP-1/disallow_edp_enter_psr
+        if [ -f "$PSR_BLOCK" ]; then
+          echo 1 > "$PSR_BLOCK" && echo "PSR entry blocked on eDP-1" || echo "Failed to block PSR entry"
+        else
+          echo "disallow_edp_enter_psr not found, skipping"
+        fi
       '';
     };
   };
 
-  # Re-disable PSR after resume — the boot service doesn't run again on wake
   systemd.services.amdgpu-resume-fix = {
-    description = "Re-disable AMD PSR after resume";
+    description = "Re-block AMD PSR after resume";
     wantedBy = [ "post-resume.target" ];
-    after = [ "post-resume.target" ];
+    after = [
+      "post-resume.target"
+      "sys-kernel-debug.mount"
+    ];
     serviceConfig = {
       Type = "oneshot";
+      User = "root";
       ExecStart = pkgs.writeShellScript "amdgpu-resume-fix" ''
         sleep 3
-        for psr_path in /sys/kernel/debug/dri/*/eDP-1/psr_state; do
-          [ -f "$psr_path" ] && echo 0 > "$psr_path"
-        done
-        # Force modeset refresh to unstick DMCUB state machine
-        if command -v xrandr &>/dev/null; then
-          DISPLAY=:0 xrandr --auto 2>/dev/null || true
+        PSR_BLOCK=/sys/kernel/debug/dri/1/eDP-1/disallow_edp_enter_psr
+        if [ -f "$PSR_BLOCK" ]; then
+          echo 1 > "$PSR_BLOCK" && echo "PSR entry blocked on eDP-1 after resume" || echo "Failed to block PSR after resume"
+        else
+          echo "disallow_edp_enter_psr not found after resume, skipping"
         fi
       '';
     };
