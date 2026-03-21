@@ -22,7 +22,7 @@
 
   home.username = "joshua";
   home.homeDirectory = "/home/joshua";
-  home.stateVersion = "25.05";
+  home.stateVersion = "26.05";
 
   # Let home-manager manage itself
   programs.home-manager.enable = true;
