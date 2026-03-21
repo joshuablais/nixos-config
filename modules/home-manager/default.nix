@@ -10,6 +10,7 @@
   imports = [
     inputs.stylix.homeModules.stylix
     ./activation.nix
+    ./atuin.nix
     ./dotfiles.nix
     ./emacs.nix
     ./firefox.nix
