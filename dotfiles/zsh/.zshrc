@@ -360,24 +360,7 @@ esac
 
 # Add in direnv hook
 eval "$(direnv hook zsh)"
-
-# Use keychain to manage ssh-agent - load both keys
-# eval $(keychain --eval --agents ssh empire.key id_ed25519 2>/dev/null)
-# Add keys manually since keychain has trouble with them
-# if ! ssh-add -l 2>/dev/null | grep -q "empire beginning ssh key"; then
-#   ssh-add ~/.ssh/empire.key
-# fi
-# if ! ssh-add -l 2>/dev/null | grep -q "joshua@joshuablais.com"; then
-#   ssh-add ~/.ssh/id_ed25519
-# fi
+eval "$(atuin init zsh)"
 
 # Set SSH_AUTH_SOCK for gpg-agent
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gnupg/S.gpg-agent.ssh"
-
-# # Auto-load SSH keys once per session
-# if ! ssh-add -l 2>/dev/null | grep -q "empire beginning ssh key"; then
-#   ssh-add ~/.ssh/empire.key
-# fi
-# if ! ssh-add -l 2>/dev/null | grep -q "josh@joshuablais.com"; then
-#   ssh-add ~/.ssh/id_ed25519
-# fi
