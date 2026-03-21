@@ -33,7 +33,7 @@
     matchBlocks."*".addKeysToAgent = "yes";
   };
 
-  home.activation.sshConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ln -sf /run/agenix/sshConfig $HOME/.ssh/config
-  '';
+  # home.activation.sshConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  #   ln -sf /run/agenix/sshConfig $HOME/.ssh/config
+  # '';
 }

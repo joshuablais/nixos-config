@@ -22,6 +22,7 @@
     };
     sshConfig = {
       file = ../../secrets/ssh-config.age;
+      path = "/home/joshua/.ssh/config";
       owner = "joshua";
       mode = "600";
     };
