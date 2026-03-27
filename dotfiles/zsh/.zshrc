@@ -22,7 +22,7 @@ export PATH=$PATH:~/.config/scripts/Accounting
 export PATH=$PATH:~/.config/scripts/Dotfiles
 
 # Path to your oh-my-zsh installation.
-export EDITOR="nvim"
+export EDITOR="emacs"
 export PATH="$HOME/.tmux/plugins/tmuxifier/bin:$PATH"
 
 plugins=(
@@ -62,8 +62,6 @@ fi
 # Key bindings
 # source "/usr/share/fzf/shell/key-bindings.zsh"
 
-bindkey '^R' fzf-history-widget
-
 # Quick cd using fzf
 fcd() {
   cd "$(find -type d | fzf --preview 'tree -C {} | head -200' --preview-window 'up:60%')"
@@ -100,13 +98,13 @@ pe() {
 frm() {
   # Use `find` to list files and directories, and pipe them to `fzf` for selection
   selected=$(find . -type f -o -type d 2>/dev/null | fzf -m)
-  
+
   # Check if any selection was made
   if [[ -n "$selected" ]]; then
     # Echo the files or directories that will be deleted
     echo "Deleting the following files or directories:"
     echo "$selected"
-    
+
     # Use `xargs` to safely pass selected files/directories to `rm -rf`
     echo "$selected" | xargs -d '\n' rm -rf
   else
@@ -254,7 +252,7 @@ alias secrets="nix run github:joshuablais/go-secrets --"
 alias newrepo="nix run github:joshuablais/go-repo"
 alias rawurl="py ~/.config/scripts/githubcurlurl.py"
 alias grao="git remote add origin"
- 
+
 # Generate API Key
 alias keygen="nix run github:joshuablais/go-api-key"
 alias work="arttime --nolearn -a eye -t 'For I consider that the sufferings of this present time are not worth comparing with the glory that is going to be revealed to us - Romans 8:18' -g 4h"
@@ -299,8 +297,7 @@ alias dailysites="~/.config/scripts/Misc/dailysites"
 # Zig
 alias zr="zig run"
 
-bindkey -v
-bindkey -M viins 'kj' vi-cmd-mode
+bindkey -e
 # this will cd and ls at the same time.
 function cd {
     builtin cd "$@" && ls -F
