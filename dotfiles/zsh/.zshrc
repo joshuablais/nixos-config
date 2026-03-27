@@ -306,11 +306,6 @@ function cd {
 SAVEHIST=1000  # Save most-recent 1000 lines
 HISTFILE=~/.zsh_history
 
-# Edit line in vim with ctrl-e:
-autoload edit-command-line; zle -N edit-command-line
-bindkey '^e' edit-command-line
-
-
 function r() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	yazi "$@" --cwd-file="$tmp"
