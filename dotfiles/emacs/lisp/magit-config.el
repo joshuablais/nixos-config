@@ -9,7 +9,7 @@
 (elpaca-wait)
 
 (use-package magit
-  :demand t
+  :defer t
   :bind (:map leader
               ("g g" . magit-status))
   :config
