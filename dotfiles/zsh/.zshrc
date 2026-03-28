@@ -119,7 +119,7 @@ alias mpray="nvim ~/Vaults/Personal/Prayers/Morning\ Prayers.md"
 alias epray="nvim ~/Vaults/Personal/Prayers/Evening\ Prayers.md"
 
 # ALIASES — Emacs
-alias emacs="GDK_BACKEND=x11 emacs"
+# alias emacs="GDK_BACKEND=x11 emacs"
 
 # ============================================================
 # ALIASES — NixOS
