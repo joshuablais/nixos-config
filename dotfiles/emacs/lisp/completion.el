@@ -13,6 +13,8 @@
   :init
   (marginalia-mode 1))
 
+(elpaca-wait)
+
 (use-package orderless
   :ensure t
   :custom
@@ -54,10 +56,10 @@
 
 (use-package nerd-icons-completion
   :ensure t
-  :after (nerd-icons marginalia)
+  :demand t
   :config
   (nerd-icons-completion-mode)
-  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+  (nerd-icons-completion-marginalia-setup))
 
 (use-package corfu
   :ensure t

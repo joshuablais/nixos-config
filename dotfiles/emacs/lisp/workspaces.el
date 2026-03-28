@@ -11,6 +11,7 @@
 ;;; Backend: bufferlo for real isolation
 (use-package bufferlo
   :ensure t
+  :demand t
   :config
   (bufferlo-mode 1)
   (bufferlo-anywhere-mode 1))
