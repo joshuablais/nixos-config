@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: short variable declaration
+# key: :=
+# --
+${1:name} := ${2:value}$0

@@ -1,0 +1,94 @@
+* Studium Emacs
+The motivation behind this configuration was to build out a vanilla emacs which has feature parity with [[https://github.com/doomemacs/doomemacs][DOOM emacs]] though with more emphasis on native emacs keybinds and modules.
+
+It is heavily influenced by Doom Emacs in the aesthetic and functional sense, and may be too "heavy" for those seeking a totally minimal emacs. I call all modules in init.el, allowing total customization of usecase - ie. I have a "typewriter" machine which strictly has writing.el/org-config.el and some niceities, whereas my workstation has all modules installed. I have taken much of the early-init.el and init.el from [[https://github.com/jamescherti/minimal-emacs.d][minimal-emacs.d]] for optimization of startup time and sane defaults.
+
+We make use of use-package and defer aggressively for acceptable start-times (<1s on my machines).
+
+** Modules
+*** avy-config.el
+Avy is a quick jump method for anywhere on screen. I have "f" bound in normal mode to jump anywhere after typing 2 letters.
+*** browser.el
+Sets default browser for opening links and integration with universal-launcher
+*** completion.el
+Vertico/Marginalia/Orderless/Consult as well as Embark for actions. Corfu/Cape for completion in buffer.
+*** development.el
+Simple development settings including hideshow/hl-todo/envrc for direnv integration
+*** dired-config.el
+Dired using Dirvish as a modern replacement for aesthetics.
+*** editing.el
+Editing configuration. Grammars are contained in grammars.el
+*** elfeed-config.el
+Elfeed configuration with keys.
+*** elpher-config.el
+Elpher for gemini/gopher browsing
+*** emms-config.el
+Music player settings. You will require MPD/MPC running on your machine to get all out of this.  Supports album artwork/notifcations when song switches with notify-send.
+*** erc-config.el
+IRC in emacs.
+*** everywhere.el
+Emacs everywhere using thanos' implementation for wayland.
+*** evil-config.el
+Evil mode globally configured with evil-collection
+*** gnus-config.el
+GNUs for usenet usage.
+*** grammars.el
+Treesit/eglot configuration for LSP support and editing.
+*** keys.el
+I generally bind keys in the applicable module, here are overflow key binds (needs cleanup). SPC leader as global leader. We try to do much more with emacs native binds, however.  Leader is mostly to interact with splits/buffers/files and to launch specific programs.
+*** ledger-config.el
+Ledger for accounting in emacs.
+*** llms.el
+LLM inside emacs with gptel.
+*** magit-config.el
+Minor magit tweaks. Using stock keybinds mostly.
+*** mail.el
+Email in emacs, using Mu4e.
+*** markdown.el
+Markdown minor adjustment.
+*** modeline.el
+Doom modeline as a nice status bar.
+*** move-text-config.el
+Move text with move-text package.
+*** org-config.el
+Extensive org-mode configuration with keys, templates for capture, etc.
+*** pass-config.el
+Password-store integration in emacs. I hit Alt-p globally for a password manager.
+*** persist.el
+Persistence of buffers when emacs is closed/reopened.
+*** reading.el
+PDF, nov.el additions and configuration.
+*** spelling.el
+ispell/flyspell integrations.
+*** tabs.el
+Tabs with centaur tabs and nerd-icons
+*** test-runner.el
+test mode for programs.
+*** tools.el
+Miscellaneous additions that didn't merit files themselves.
+*** vterm-config.el
+Vterm configuration as a popup buffer and defaults.
+*** workspaces.el
+Workspaces with bufferlo as a replacement for persp.
+*** writing.el
+Focused writing mode using olivetti, dictionary/thesaurus integration.
+
+** Custom Additions
+*** audio-record.el
+*** create-daily.el
+*** done-refile.el
+*** download-media.el
+*** elfeed-download.el
+*** gimp-tweet.el
+*** jb-0x0.el
+*** jb-clipboard-manager.el
+*** jitsi-meeting.el
+*** nm.el
+*** org-caldav-config.el
+*** pomodoro.el
+*** posse-twitter.el
+*** post-to-blog.el
+*** universal-launcher.el
+
+** Roadmap
+This is a "pre 1.0" release, there may be breaking changes and bugs. The goal is for my own deep understanding of emacs and how it works, as well as a configuration that is (at least I would consider to be) fairly minimal yet complete.  I use emacs for essentially all computing duties, so this permits the use of the greatest text editor ever as your OS.

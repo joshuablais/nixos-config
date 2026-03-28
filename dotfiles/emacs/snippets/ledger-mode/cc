@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: Credit Card Transaction
+# key: cc
+# --
+`(format-time-string "%Y/%m/%d")` * ${1:Payee}
+    ; ${2:Description}
+    Liabilities:Credit_Card                     CAD -${4:Amount}
+    Expenses:${3:Category}                      CAD ${5:Amount}
+    Liabilities:GST_Payable                     CAD ${6:Amount}
+$0

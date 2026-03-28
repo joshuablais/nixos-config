@@ -8,7 +8,7 @@ in
   home.file = {
     ".config/bat".source = mkOutOfStoreSymlink "${configDir}/bat";
     ".config/btop".source = mkOutOfStoreSymlink "${configDir}/btop";
-    ".config/doom".source = mkOutOfStoreSymlink "${configDir}/doom";
+    ".config/emacs".source = mkOutOfStoreSymlink "${configDir}/emacs";
     ".config/fastfetch".source = mkOutOfStoreSymlink "${configDir}/fastfetch";
     ".config/gowall".source = mkOutOfStoreSymlink "${configDir}/gowall";
     ".config/hypr".source = mkOutOfStoreSymlink "${configDir}/hypr";

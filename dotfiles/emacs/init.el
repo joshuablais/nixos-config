@@ -1,135 +1,190 @@
-;;; init.el --- Typewriter config for X201 TTY -*- lexical-binding: t; -*-
-;;
-;; Copyright (C) 2026 Joshua Blais
-;; Author: Joshua Blais <josh@joshblais.com>
-;; Version: 0.0.1
-;; Homepage: https://github.com/joshuablais
-;;
-;; This file is not part of GNU Emacs.
-;;; Commentary:
-;; Minimal typewriter environment. Org, Evil, Avy, Olivetti. Nothing else.
-;;; Code:
+;;; init.el -*- lexical-binding: t; -*-
 
-;;; Bootstrap straight.el
-(defvar bootstrap-version)
-(let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
-      (bootstrap-version 6))
-  (unless (file-exists-p bootstrap-file)
-    (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
-      (goto-char (point-max))
-      (eval-print-last-sexp)))
-  (load bootstrap-file nil 'nomessage))
+;; Initial setup for user and auth sources
+(setq user-full-name "Joshua Blais"
+      user-mail-address "josh@joshblais.com")
+(setq auth-sources '("~/.authinfo.gpg" "~/.authinfo")
+      auth-source-cache-expiry nil)
 
-;;; Packages
-(straight-use-package 'evil)
-(straight-use-package 'evil-org)
-(straight-use-package 'olivetti)
-(straight-use-package 'avy)
-(straight-use-package 'org)
+;; Setup MELPA
+(require 'package)
+(setq package-user-dir "~/.config/emacs/var/elpa/")
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
 
-;;; Evil — load early, everything else binds after
-(setq evil-want-integration t
-      evil-want-keybinding nil
-      evil-want-C-u-scroll t
-      evil-want-C-d-scroll t
-      evil-respect-visual-line-mode t
-      evil-undo-system 'undo-redo)
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
-(require 'evil)
-(evil-mode 1)
+(require 'use-package)
+(setq use-package-always-ensure t)
 
-;;; Evil-org
-(require 'evil-org)
-(add-hook 'org-mode-hook #'evil-org-mode)
-(with-eval-after-load 'evil-org
-  (evil-org-set-key-theme '(navigation textobjects insert additional)))
-(require 'evil-org-agenda)
-(evil-org-agenda-set-keys)
+;; point packages to etc/var for cleaner directory structure (gitignored)
+(use-package no-littering
+  :init
+  (setq no-littering-etc-directory "~/.config/emacs/etc/"
+        no-littering-var-directory "~/.config/emacs/var/")
+  :config
+  (setq auto-save-file-name-transforms
+        `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
+  (setq backup-directory-alist
+        `((".*" . ,(no-littering-expand-var-file-name "backup/")))))
 
-;;; Avy on s in normal mode
-(with-eval-after-load 'evil
-  (define-key evil-normal-state-map (kbd "s") #'avy-goto-char-2)
-  (define-key evil-visual-state-map (kbd "s") #'avy-goto-char-2))
+;; Keep Custom out of init.el
+(setq custom-file (no-littering-expand-etc-file-name "custom.el"))
+(when (file-exists-p custom-file)
+  (load custom-file))
 
-;;; Silence the machine
-(setq inhibit-startup-message t
-      initial-scratch-message nil
-      ring-bell-function 'ignore
-      visible-bell nil)
+;; GC MANAGEMENT - restore after startup
+(use-package gcmh
+  :defer 1
+  :config
+  (setq gcmh-idle-delay 5
+        gcmh-high-cons-threshold (* 16 1024 1024))
+  (gcmh-mode 1))
 
-;;; Clean UI
-(when (display-graphic-p)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1))
-(menu-bar-mode -1)
-(blink-cursor-mode -1)
+;; Sane defaults
+(setq-default
+ delete-by-moving-to-trash t
+ window-combination-resize t
+ x-stretch-cursor t)
 
-;;; Lines and display
-(setq-default fill-column 80
-              word-wrap t
-              truncate-lines nil)
-(global-visual-line-mode 1)
+(setq
+ undo-limit 80000000
+ scroll-margin 2
+ scroll-conservatively 101
+ mouse-wheel-scroll-amount '(2 ((shift) . 5))
+ mouse-wheel-progressive-speed nil
+ confirm-kill-emacs 'yes-or-no-p
+ make-backup-files nil
+ create-lockfiles nil
+ initial-scratch-message nil
+ use-short-answers t
+ truncate-string-ellipsis "…")
 
-;;; Auto-save
-(setq auto-save-default t
-      auto-save-timeout 10
-      auto-save-interval 100
-      make-backup-files t
-      backup-directory-alist '(("." . "~/.emacs.d/backups"))
-      backup-by-copying t
-      version-control t
-      kept-new-versions 6
-      kept-old-versions 2
-      delete-old-versions t)
+;; Global modes
+(electric-pair-mode 1)
+(save-place-mode 1)
+(setq save-place-limit 400)
+(savehist-mode 1)
+(recentf-mode 1)
+(global-hl-line-mode 1)
+(show-paren-mode 1)
+(column-number-mode 1)
+(delete-selection-mode 1)
+(global-auto-revert-mode 1)
+(setq show-paren-delay 0
+      auto-revert-verbose nil)
 
-(add-hook 'focus-out-hook #'save-buffer)
+;; testing for package timings
+;; (setq use-package-compute-statistics t)
 
-;;; Keybindings
-(global-set-key (kbd "C-s") #'save-buffer)
+;; autosaving
+(setq auto-save-default t)
+;; Trigger an auto-save after 300 keystrokes
+(setq auto-save-interval 300)
+;; Trigger an auto-save 30 seconds of idle time.
+(setq auto-save-timeout 30)
 
-;;; Org-mode
-(setq org-directory "~/org"
-      org-default-notes-file "~/org/notes.org"
-      org-startup-indented t
-      org-hide-leading-stars t
-      org-hide-emphasis-markers t
-      org-pretty-entities t
-      org-ellipsis " ▾"
-      org-startup-folded 'showall)
+;; UI
+(set-fringe-mode 10)
 
-(add-hook 'org-mode-hook #'org-indent-mode)
+(add-to-list 'custom-theme-load-path
+             (expand-file-name "themes/" user-emacs-directory))
+(use-package doom-themes
+  :config
+  (load-theme 'compline t))
 
-;;; Olivetti
-(setq olivetti-body-width 80)
-(add-hook 'org-mode-hook #'olivetti-mode)
-(add-hook 'text-mode-hook #'olivetti-mode)
+;; Highlight line
+(custom-set-faces
+ '(hl-line ((t (:background "#22262b" :foreground unspecified :extend t)))))
 
-;;; Typewriter scrolling
-(setq scroll-margin 999
-      scroll-conservatively 0
-      scroll-up-aggressively 0.5
-      scroll-down-aggressively 0.5)
+;; Which-key
+(use-package which-key
+  :defer 1
+  :config
+  (setq which-key-idle-delay 0.2)
+  (which-key-mode 1))
 
-;;; No line numbers in writing buffers
-(add-hook 'org-mode-hook (lambda () (display-line-numbers-mode -1)))
-(add-hook 'text-mode-hook (lambda () (display-line-numbers-mode -1)))
+;; Recentf - saves recent file locations
+(use-package recentf
+  :ensure nil
+  :defer 1
+  :config
+  (setq recentf-max-menu-items 25
+        recentf-max-saved-items 100)
+  (add-to-list 'recentf-exclude "\\.git/")
+  (add-to-list 'recentf-exclude "/tmp/")
+  (add-to-list 'recentf-exclude "/nix/store/")
+  (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-var-directory))
+  (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-etc-directory))
+  (add-hook 'kill-emacs-hook #'recentf-cleanup -90))
 
-;;; Minimal modeline
-(defun wc/word-count ()
-  (number-to-string (count-words (point-min) (point-max))))
+;; Save history and auto open on re-launch
+(use-package savehist
+  :ensure nil
+  :defer 1
+  :config
+  (setq history-length 1000
+        history-delete-duplicates t
+        savehist-save-minibuffer-history t)
+  (dolist (var '(extended-command-history
+                 search-ring
+                 regexp-search-ring
+                 consult--buffer-history
+                 recentf-list))
+    (add-to-list 'savehist-additional-variables var)))
 
-(setq-default mode-line-format
-              '("%e "
-                mode-line-modified
-                " %b "
-                "| W:" (:eval (wc/word-count))
-                " | L:%l "))
+;; Load Path  + Modules
+(add-to-list 'load-path (expand-file-name "lisp/" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "lisp/custom/" user-emacs-directory))
 
-;;; Open directly into org notes on launch
-(find-file org-default-notes-file)
+(require 'evil-config)
+(require 'keys)
+(require 'magit-config)
+(require 'mail)
+(require 'move-text-config)
+(require 'flash-config)
+(require 'pass-config)
+(require 'org-caldav-config)
+(require 'markdown)
+(require 'development)
+(require 'ledger-config)
+(require 'grammars)
+(require 'modeline)
+(require 'editing)
+(require 'tabs)
+(require 'llms)
+(require 'completion)
+(require 'test-runner)
+(require 'persist)
+(require 'dired-config)
+(require 'vterm-config)
+(require 'elfeed-config)
+(require 'reading)
+(require 'emms-config)
+(require 'erc-config)
+(require 'browser)
+(require 'writing)
+(require 'spelling)
+(require 'workspaces)
+(require 'everywhere)
+(require 'elpher-config)
+(require 'gnus-config)
+(require 'tools)
 
-;;; init.el ends here
+;; heavy org deferral
+(with-eval-after-load 'org
+  (require 'org-config))
+
+;; Custom
+(require 'jitsi-meeting)
+(require 'universal-launcher)
+(require 'jb-0x0)
+(require 'jb-clipboard-manager)
+(require 'pomodoro)
+(require 'posse-twitter)
+(require 'post-to-blog)
+(require 'done-refile)
+(require 'create-daily)
+(require 'nm)
