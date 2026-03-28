@@ -120,6 +120,7 @@ alias epray="nvim ~/Vaults/Personal/Prayers/Evening\ Prayers.md"
 
 # ALIASES — Emacs
 # alias emacs="GDK_BACKEND=x11 emacs"
+alias ec="emacsclient -nw"
 
 # ============================================================
 # ALIASES — NixOS
