@@ -3,7 +3,6 @@
 (use-package mu4e
   :ensure nil
   :defer t
-  :demand t
   :commands (mu4e mu4e-compose-new)
   :init
   (setq mu4e-mu-binary (executable-find "mu"))
