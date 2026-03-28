@@ -127,6 +127,9 @@
 (custom-set-faces
  '(hl-line ((t (:background "#22262b" :foreground unspecified :extend t)))))
 
+;; Opacity
+(add-to-list 'default-frame-alist '(alpha-background . 90))
+
 (use-package which-key
   :defer 1
   :config
