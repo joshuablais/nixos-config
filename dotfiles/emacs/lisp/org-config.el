@@ -604,13 +604,14 @@
     (evil-define-key 'normal org-mode-map (kbd "RET") #'+org/dwim-at-point)))
 
 ;; org-babel
+(use-package ob-go :demand t)
+(elpaca-wait)
+
 (with-eval-after-load 'org
   (require 'ob-shell)
   (require 'ob-python)
   (require 'ob-C)
-  (use-package ob-go
-    :ensure t
-    :demand t)
+  (require 'ob-go)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((shell      . t)

@@ -7,7 +7,7 @@
     (string-trim (buffer-string))))
 
 (use-package gnus
-  :defer t
+  :ensure nil
   :config
   ;; === SERVER CONNECTION ===
   (setq gnus-select-method

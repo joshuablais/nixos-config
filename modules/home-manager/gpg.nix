@@ -28,9 +28,9 @@
   '';
 
   programs.ssh = {
-    enable = true;
-    enableDefaultConfig = false;
-    matchBlocks."*".addKeysToAgent = "yes";
+    enable = false;
+    # enableDefaultConfig = false;
+    # matchBlocks."*".addKeysToAgent = "yes";
   };
 
   # home.activation.sshConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

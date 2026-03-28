@@ -1,8 +1,5 @@
 ;;; tabs.el --- Description -*- lexical-binding: t; -*-
 
-(use-package nerd-icons
-  :ensure t)
-
 (use-package centaur-tabs
   :ensure t
   :demand t

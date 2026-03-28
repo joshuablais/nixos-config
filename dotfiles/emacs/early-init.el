@@ -20,6 +20,8 @@
 ;;; Code:
 
 ;;; GC optimization — defer collection during startup
+(setq package-enable-at-startup nil)
+
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 1.0)
 

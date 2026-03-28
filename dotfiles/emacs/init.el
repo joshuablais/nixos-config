@@ -1,41 +1,77 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
-;; Initial setup for user and auth sources
 (setq user-full-name "Joshua Blais"
       user-mail-address "josh@joshblais.com")
 (setq auth-sources '("~/.authinfo.gpg" "~/.authinfo")
       auth-source-cache-expiry nil)
 
-;; Setup MELPA
-(require 'package)
-(setq package-user-dir "~/.config/emacs/var/elpa/")
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
+;; Elpaca bootstrap
+(defvar elpaca-installer-version 0.12)
+(defvar elpaca-directory (expand-file-name "elpaca/" user-emacs-directory))
+(defvar elpaca-builds-directory (expand-file-name "builds/" elpaca-directory))
+(defvar elpaca-sources-directory (expand-file-name "sources/" elpaca-directory))
+(defvar elpaca-order '(elpaca :repo "https://github.com/progfolio/elpaca.git"
+                              :ref nil :depth 1 :inherit ignore
+                              :files (:defaults "elpaca-test.el" (:exclude "extensions"))
+                              :build (:not elpaca-activate)))
+(let* ((repo  (expand-file-name "elpaca/" elpaca-sources-directory))
+       (build (expand-file-name "elpaca/" elpaca-builds-directory))
+       (order (cdr elpaca-order))
+       (default-directory repo))
+  (add-to-list 'load-path (if (file-exists-p build) build repo))
+  (unless (file-exists-p repo)
+    (make-directory repo t)
+    (when (<= emacs-major-version 28) (require 'subr-x))
+    (condition-case-unless-debug err
+        (if-let* ((buffer (pop-to-buffer-same-window "*elpaca-bootstrap*"))
+                  ((zerop (apply #'call-process `("git" nil ,buffer t "clone"
+                                                  ,@(when-let* ((depth (plist-get order :depth)))
+                                                      (list (format "--depth=%d" depth) "--no-single-branch"))
+                                                  ,(plist-get order :repo) ,repo))))
+                  ((zerop (call-process "git" nil buffer t "checkout"
+                                        (or (plist-get order :ref) "--"))))
+                  (emacs (concat invocation-directory invocation-name))
+                  ((zerop (call-process emacs nil buffer nil "-Q" "-L" "." "--batch"
+                                        "--eval" "(byte-recompile-directory \".\" 0 'force)")))
+                  ((require 'elpaca))
+                  ((elpaca-generate-autoloads "elpaca" repo)))
+            (progn (message "%s" (buffer-string)) (kill-buffer buffer))
+          (error "%s" (with-current-buffer buffer (buffer-string))))
+      ((error) (warn "%s" err) (delete-directory repo 'recursive))))
+  (unless (require 'elpaca-autoloads nil t)
+    (require 'elpaca)
+    (elpaca-generate-autoloads "elpaca" repo)
+    (let ((load-source-file-function nil)) (load "./elpaca-autoloads"))))
+(add-hook 'after-init-hook #'elpaca-process-queues)
+(elpaca `(,@elpaca-order))
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+(elpaca elpaca-use-package
+        (elpaca-use-package-mode))
+(elpaca-wait)
 
-(require 'use-package)
-(setq use-package-always-ensure t)
+(setq use-package-always-defer t
+      use-package-always-ensure t
+      use-package-expand-minimally t
+      use-package-compute-statistics t)
 
-;; point packages to etc/var for cleaner directory structure (gitignored)
+;; no-littering must run before anything writes files
+(setq custom-file (expand-file-name "etc/custom.el" user-emacs-directory))
+
 (use-package no-littering
+  :demand t
   :init
-  (setq no-littering-etc-directory "~/.config/emacs/etc/"
-        no-littering-var-directory "~/.config/emacs/var/")
+  (setq no-littering-etc-directory (expand-file-name "etc/" user-emacs-directory)
+        no-littering-var-directory  "~/.local/share/emacs/")
   :config
   (setq auto-save-file-name-transforms
         `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
   (setq backup-directory-alist
         `((".*" . ,(no-littering-expand-var-file-name "backup/")))))
-
-;; Keep Custom out of init.el
-(setq custom-file (no-littering-expand-etc-file-name "custom.el"))
+(elpaca-wait) ; block until no-littering is fully built and configured
 (when (file-exists-p custom-file)
   (load custom-file))
 
-;; GC MANAGEMENT - restore after startup
+;; GC
 (use-package gcmh
   :defer 1
   :config
@@ -60,9 +96,8 @@
  create-lockfiles nil
  initial-scratch-message nil
  use-short-answers t
- truncate-string-ellipsis "…")
+ truncate-string-ellipsis " ")
 
-;; Global modes
 (electric-pair-mode 1)
 (save-place-mode 1)
 (setq save-place-limit 400)
@@ -76,51 +111,40 @@
 (setq show-paren-delay 0
       auto-revert-verbose nil)
 
-;; testing for package timings
-;; (setq use-package-compute-statistics t)
-
-;; autosaving
-(setq auto-save-default t)
-;; Trigger an auto-save after 300 keystrokes
-(setq auto-save-interval 300)
-;; Trigger an auto-save 30 seconds of idle time.
-(setq auto-save-timeout 30)
+(setq auto-save-default t
+      auto-save-interval 300
+      auto-save-timeout 30)
 
 ;; UI
 (set-fringe-mode 10)
-
 (add-to-list 'custom-theme-load-path
              (expand-file-name "themes/" user-emacs-directory))
 (use-package doom-themes
+  :demand t
   :config
   (load-theme 'compline t))
 
-;; Highlight line
 (custom-set-faces
  '(hl-line ((t (:background "#22262b" :foreground unspecified :extend t)))))
 
-;; Which-key
 (use-package which-key
   :defer 1
   :config
   (setq which-key-idle-delay 0.2)
   (which-key-mode 1))
 
-;; Recentf - saves recent file locations
 (use-package recentf
   :ensure nil
   :defer 1
   :config
   (setq recentf-max-menu-items 25
         recentf-max-saved-items 100)
-  (add-to-list 'recentf-exclude "\\.git/")
-  (add-to-list 'recentf-exclude "/tmp/")
-  (add-to-list 'recentf-exclude "/nix/store/")
+  (dolist (path '("\\.git/" "/tmp/" "/nix/store/"))
+    (add-to-list 'recentf-exclude path))
   (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-var-directory))
   (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-etc-directory))
   (add-hook 'kill-emacs-hook #'recentf-cleanup -90))
 
-;; Save history and auto open on re-launch
 (use-package savehist
   :ensure nil
   :defer 1
@@ -135,9 +159,11 @@
                  recentf-list))
     (add-to-list 'savehist-additional-variables var)))
 
-;; Load Path  + Modules
+;; Modules
 (add-to-list 'load-path (expand-file-name "lisp/" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "lisp/custom/" user-emacs-directory))
+
+(elpaca-wait)
 
 (require 'evil-config)
 (require 'keys)
@@ -169,15 +195,13 @@
 (require 'spelling)
 (require 'workspaces)
 (require 'everywhere)
-(require 'elpher-config)
+;;(require 'elpher-config)
 (require 'gnus-config)
 (require 'tools)
 
-;; heavy org deferral
 (with-eval-after-load 'org
   (require 'org-config))
 
-;; Custom
 (require 'jitsi-meeting)
 (require 'universal-launcher)
 (require 'jb-0x0)

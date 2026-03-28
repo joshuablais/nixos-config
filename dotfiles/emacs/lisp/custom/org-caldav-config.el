@@ -1,10 +1,7 @@
 ;;; org-caldav-config.el -*- lexical-binding: t; -*-
 
-(unless (package-installed-p 'org-caldav)
-  (package-refresh-contents)
-  (package-install 'org-caldav))
-
-(require 'org-caldav)
+(use-package org-caldav
+  :ensure (:host github :repo "dengste/org-caldav"))
 
 (setq org-caldav-url "https://radicale.labrynth.org/joshua"
       org-caldav-calendar-id "a3c565df-28ac-ae51-9fba-0795415c09d3"

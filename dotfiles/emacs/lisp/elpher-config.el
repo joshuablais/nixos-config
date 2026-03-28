@@ -1,6 +1,7 @@
 ;;; elpher-config.el --- Description -*- lexical-binding: t; -*-
+
 (use-package elpher
-  :ensure t
+  :ensure (:url "https://thelambdalab.xyz/git/elpher.git" :depth nil)
   :defer t
   :config
   (defun my/org-return-and-maybe-elpher ()
@@ -12,7 +13,6 @@
           (let ((url (org-element-property :raw-link context)))
             (elpher-go url))
         (org-return))))
-
   (with-eval-after-load 'org
     (define-key org-mode-map (kbd "RET") #'my/org-return-and-maybe-elpher)
     (org-link-set-parameters "gemini"
