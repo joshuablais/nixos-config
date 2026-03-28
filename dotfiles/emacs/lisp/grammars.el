@@ -11,11 +11,13 @@
           (javascript-mode . js-ts-mode)
           (css-mode        . css-ts-mode)
           (html-mode       . html-ts-mode)
+          (nix-mode        . nix-ts-mode)
           (c-mode          . c-ts-mode)))
   (setq treesit-language-source-alist
         '((go         "https://github.com/tree-sitter/tree-sitter-go")
           (gomod      "https://github.com/camdencheek/tree-sitter-go-mod")
           (templ      "https://github.com/vrischmann/tree-sitter-templ")
+          (nix "https://github.com/nix-community/tree-sitter-nix")
           (python     "https://github.com/tree-sitter/tree-sitter-python")
           (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
           (css        "https://github.com/tree-sitter/tree-sitter-css")
@@ -32,8 +34,10 @@
   (add-to-list 'auto-mode-alist entry))
 
 (use-package templ-ts-mode
-  :ensure t
   :mode "\\.templ\\'")
+
+(use-package nix-ts-mode
+  :mode "\\.nix\\'")
 
 ;; YASNIPPET
 ;; No :defer — yas-global-mode must be live before the first eglot buffer
