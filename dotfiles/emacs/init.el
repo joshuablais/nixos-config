@@ -166,6 +166,7 @@
 (elpaca-wait)
 
 (require 'evil-config)
+(require 'dashboard)
 (require 'keys)
 (require 'magit-config)
 (require 'mail)
