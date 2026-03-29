@@ -436,11 +436,12 @@
   :ensure t
   :hook (org-mode . org-modern-mode)
   :config
-  (setq org-modern-star '(" " " " " " " " "◉")
+  (setq org-modern-star '("●" "○" "◆" "◇" "▸")
         org-modern-todo t
         org-modern-progress t
         org-modern-priority t
         org-modern-tag t
+        org-modern-hide-stars t
         org-modern-block-fringe t
         org-modern-todo-faces
         '(("TODO" . (:background "#b8c4b8" :foreground "#1a1d21"))

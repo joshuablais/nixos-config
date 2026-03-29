@@ -6,8 +6,8 @@ It is heavily influenced by Doom Emacs in the aesthetic and functional sense, an
 We make use of use-package and defer aggressively for acceptable start-times (<1s on my machines).
 
 ** Modules
-*** avy-config.el
-Avy is a quick jump method for anywhere on screen. I have "f" bound in normal mode to jump anywhere after typing 2 letters.
+*** flash-config.el
+Flash is a quick jump method for anywhere on screen. I have "f" bound in normal mode to jump anywhere, immediately initiating the search and providing a jump list. If only one candidate is present, automatically jump.
 *** browser.el
 Sets default browser for opening links and integration with universal-launcher
 *** completion.el

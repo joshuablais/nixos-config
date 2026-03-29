@@ -6,8 +6,8 @@
   (flash-multi-window t)
   (flash-backdrop t)
   (flash-autojump t)
-  (flash-rainbow t)
-  (flash-rainbow-shade 1)
+  (flash-rainbow nil)
+  ;; (flash-rainbow-shade 1)
   (flash-char-jump-labels t)
   (flash-char-multi-line t)
   :init

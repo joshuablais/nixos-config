@@ -12,7 +12,7 @@
     ./activation.nix
     ./atuin.nix
     ./dotfiles.nix
-    ./emacs-wayland.nix
+    ./emacs.nix
     ./firefox.nix
     ./gammastep.nix
     ./gpg.nix
