@@ -462,15 +462,6 @@
   (add-to-list 'org-structure-template-alist '("go" . "src go"))
   (add-to-list 'org-structure-template-alist '("sh" . "src sh")))
 
-(add-hook 'org-mode-hook
-          (lambda ()
-            (setq-local completion-at-point-functions
-                        (list #'yasnippet-capf
-                              #'cape-dabbrev
-                              #'cape-file
-                              #'pcomplete-completions-at-point
-                              #'ispell-completion-at-point))))
-
 (add-hook 'org-mode-hook #'display-line-numbers-mode)
 
 ;; DWIM at point

@@ -65,10 +65,13 @@
   :ensure t
   :custom
   (corfu-auto        t)
-  (corfu-auto-delay  0.2)
-  (corfu-auto-prefix 2)
+  (corfu-auto-delay  0)
+  (corfu-preview-current t)
+  (corfu-auto-prefix 1)
   (corfu-cycle       t)
   (corfu-quit-no-match t)
+  :config
+  (corfu-popupinfo-mode)
   :init
   (global-corfu-mode))
 

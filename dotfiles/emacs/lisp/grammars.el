@@ -53,9 +53,21 @@
   :ensure t
   :after yasnippet)
 
+(elpaca-wait)
+
 (use-package yasnippet-capf
   :ensure t
-  :after (cape yasnippet))
+  :custom
+  (yasnippet-capf-lookup-by 'key))
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (setq-local completion-at-point-functions
+                        (list #'yasnippet-capf
+                              #'cape-dabbrev
+                              #'cape-file
+                              #'pcomplete-completions-at-point
+                              #'ispell-completion-at-point))))
 
 ;; EGLOT
 (use-package eglot
