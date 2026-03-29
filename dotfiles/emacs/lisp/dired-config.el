@@ -25,6 +25,9 @@
   (dirvish-override-dired-mode)
   :custom
   (dirvish-attributes '(nerd-icons subtree-state file-size))
+  (dirvish-use-mode-line nil)
+  (dirvish-use-header-line t)
+  (dirvish-header-line-format '(:left (path) :right (free-space)))
   (dirvish-subtree-always-show-state t)
   (dirvish-hide-details '(dirvish))
   (dirvish-reuse-session 'open)
