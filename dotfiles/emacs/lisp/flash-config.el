@@ -5,15 +5,14 @@
   :custom
   (flash-multi-window t)
   (flash-backdrop t)
-  (flash-autojump nil)
+  (flash-autojump t)
+  (flash-rainbow t)
+  (flash-rainbow-shade 1)
   (flash-char-jump-labels t)
   (flash-char-multi-line t)
   :init
   (with-eval-after-load 'evil
     (require 'flash-evil)
-    ;; Don't use flash-evil-setup — we're taking explicit control
-    ;; Bind f in normal/visual/operator states to flash-evil-jump
-    ;; This replaces avy-goto-char-2's whole-buffer jump behavior
     (evil-define-key '(normal visual operator motion) 'global
       (kbd "f") #'flash-evil-jump))
   :config
