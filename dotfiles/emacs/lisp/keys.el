@@ -1,7 +1,6 @@
 ;;; keys.el --- Description -*- lexical-binding: t; -*-
 ;; SPACE Leader key
 (define-prefix-command 'leader)
-(evil-define-key '(normal motion) 'global (kbd "SPC") 'leader)
 
 ;; Window bindings
 (define-key leader (kbd "w v") #'split-window-right)
@@ -10,7 +9,7 @@
 
 ;; Buffer
 (define-key leader (kbd "b k") (lambda () (interactive) (kill-buffer (current-buffer))))
-(define-key leader (kbd "b l") #'evil-switch-to-windows-last-buffer)
+(define-key leader (kbd "b l") (lambda () (interactive) (switch-to-buffer nil)))
 (define-key leader (kbd "b b") #'switch-to-buffer)
 (define-key leader (kbd "b n") #'next-buffer)
 (define-key leader (kbd "b i") #'ibuffer)
@@ -20,6 +19,9 @@
 (define-key leader (kbd ",") #'consult-buffer)
 (define-key leader (kbd "/") #'consult-ripgrep)
 (define-key leader (kbd "f r") #'consult-recent-file)
+(define-key leader (kbd "SPC") #'project-find-file)
+(define-key leader (kbd "p R") #'project-query-replace-regexp)
+(define-key leader (kbd "s o") #'universal-launcher--web-search)
 
 ;; paste into minibuffer
 (define-key minibuffer-local-map (kbd "C-S-v") #'yank)
@@ -40,20 +42,20 @@
 ;; Resizing windows
 (global-set-key (kbd "S-<right>") (lambda () (interactive)
                                     (if (window-in-direction 'left)
-                                        (evil-window-decrease-width 5)
-                                      (evil-window-increase-width 5))))
+                                        (shrink-window-horizontally 5)
+                                      (enlarge-window-horizontally 5))))
 (global-set-key (kbd "S-<left>")  (lambda () (interactive)
                                     (if (window-in-direction 'right)
-                                        (evil-window-decrease-width 5)
-                                      (evil-window-increase-width 5))))
+                                        (shrink-window-horizontally 5)
+                                      (enlarge-window-horizontally 5))))
 (global-set-key (kbd "S-<up>")    (lambda () (interactive)
                                     (if (window-in-direction 'below)
-                                        (evil-window-decrease-height 2)
-                                      (evil-window-increase-height 2))))
+                                        (shrink-window 2)
+                                      (enlarge-window 2))))
 (global-set-key (kbd "S-<down>")  (lambda () (interactive)
                                     (if (window-in-direction 'above)
-                                        (evil-window-decrease-height 2)
-                                      (evil-window-increase-height 2))))
+                                        (shrink-window 2)
+                                      (enlarge-window 2))))
 
 
 ;; zoom in/out like we do everywhere else.
@@ -69,12 +71,8 @@
 (define-key leader (kbd "x") #'org-capture)
 
 ;; Save
-(global-set-key (kbd "C-r") #'evil-redo)
 (global-set-key (kbd "C-s") #'save-buffer)
-(setq evil-move-cursor-back nil)
-(setq evil-want-fine-undo t)
-(evil-define-key 'insert global-map (kbd "C-v") 'clipboard-yank)
-(global-set-key (kbd "C-r") #'undo-redo)
+(global-set-key (kbd "C-v") #'clipboard-yank)
 
 ;; Save all buffers
 (defun my/save-all-buffers ()
@@ -119,9 +117,6 @@
 
 ;; yank when in file
 (define-key leader (kbd "f y") #'my/yank-buffer-path)
-;; yank in dired
-(evil-define-key 'normal dired-mode-map
-  (kbd "y p") #'my/yank-buffer-path)
 
 ;; Reload function
 (defun my/reload-config ()
@@ -130,12 +125,6 @@
   (message "Config reloaded."))
 
 (global-set-key (kbd "C-c r") #'my/reload-config)
-
-(with-eval-after-load 'evil
-  (evil-set-leader 'normal (kbd "SPC"))
-  (evil-define-key 'normal 'global (kbd "<leader> SPC") #'project-find-file)
-  (evil-define-key 'normal 'global (kbd "<leader> p R") #'project-query-replace-regexp)
-  (evil-define-key 'normal 'global (kbd "<leader> s o") #'universal-launcher--web-search))
 
 ;; config hotkey
 (define-key leader (kbd "f p")
