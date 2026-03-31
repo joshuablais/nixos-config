@@ -1,9 +1,51 @@
-;;; init.el -*- lexical-binding: t; -*-
+;; init.el -*- lexical-binding: t; -*-
 
-;; Username setup
+;; EMACS 31 REGRESSION: epa-file-insert-file-contents passes nil to
+;; set-visited-file-modtime when visit is nil (auth-source case), and
+;; file-local-copy returns nil for local files which then propagates
+;; incorrectly. Patch until upstream fixes it.
+;; Ref: bug# — check if resolved before removing on 31 stable release.
+(require 'epa-file)
+(epa-file-enable)
+
+(define-advice epa-file-insert-file-contents
+    (:override (file &optional visit beg end replace) fix-emacs31-nil)
+  (barf-if-buffer-read-only)
+  (if (and visit (or beg end))
+      (error "Attempt to visit less than an entire file"))
+  (setq file (expand-file-name file))
+  (let* ((local-file (or (file-local-copy file) file))
+         (context (epg-make-context))
+         (buf (current-buffer))
+         (tmp-file (make-temp-file "epa-decrypt-"))
+         string)
+    (epg-context-set-passphrase-callback
+     context (cons #'epa-file-passphrase-callback-function file))
+    (epg-context-set-progress-callback
+     context (cons #'epa-progress-callback-function
+                   (format "Decrypting %s" file)))
+    (unwind-protect
+        (progn
+          (epg-decrypt-file context local-file tmp-file)
+          (setq string (with-temp-buffer
+                         (insert-file-contents-literally tmp-file)
+                         (buffer-string))))
+      (when (file-exists-p tmp-file)
+        (delete-file tmp-file))
+      (unless (equal file local-file)
+        (delete-file local-file)))
+    (with-current-buffer buf
+      (let ((inhibit-read-only t))
+        (insert (decode-coding-string string 'utf-8))))
+    (when visit
+      (setq buffer-file-name file)
+      (set-visited-file-modtime))
+    (list file (length string))))
+;; REGRESSION for 31
+
 (setq user-full-name "Joshua Blais"
       user-mail-address "josh@joshblais.com")
-(setq auth-sources '("~/.authinfo.gpg" "~/.authinfo")
+(setq auth-sources '("~/.authinfo.gpg")
       auth-source-cache-expiry nil)
 
 ;; Elpaca bootstrap

@@ -19,21 +19,14 @@
   };
 
   programs.gpg = {
-    enable = false;
+    enable = true;
+    settings = {
+      use-agent = true;
+      pinentry-mode = "loopback";
+    };
   };
-
-  home.file.".gnupg/gpg.conf".text = ''
-    use-agent
-    pinentry-mode loopback
-  '';
 
   programs.ssh = {
     enable = false;
-    # enableDefaultConfig = false;
-    # matchBlocks."*".addKeysToAgent = "yes";
   };
-
-  # home.activation.sshConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-  #   ln -sf /run/agenix/sshConfig $HOME/.ssh/config
-  # '';
 }
