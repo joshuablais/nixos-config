@@ -1,7 +1,6 @@
 ;;; elfeed-config.el --- Description -*- lexical-binding: t; -*-
 (use-package elfeed
   :ensure t
-  :defer t
   :custom
   (elfeed-db-directory "~/.elfeed")
   (elfeed-search-filter "@1-week-ago +unread -news")
@@ -9,7 +8,6 @@
   (make-directory "~/.elfeed" t)
   (load (expand-file-name "lisp/custom/elfeed-download" user-emacs-directory))
   (elfeed-download-setup)
-  (run-at-time nil (* 60 60) #'elfeed-update)
   (with-eval-after-load 'evil
     (define-key elfeed-search-mode-map (kbd "SPC") nil)
     (define-key elfeed-show-mode-map (kbd "SPC") nil)
@@ -25,7 +23,8 @@
   :custom
   (rmh-elfeed-org-files '("~/.config/emacs/elfeed.org"))
   :config
-  (elfeed-org))
+  (elfeed-org)
+  (run-at-time nil (* 60 60) #'elfeed-update))
 
 (use-package elfeed-tube
   :ensure t
