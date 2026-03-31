@@ -1,5 +1,4 @@
 ;;; evil-config.el --- Description -*- lexical-binding: t; -*-
-;;; evil-config.el --- Description -*- lexical-binding: t; -*-
 (use-package undo-fu :demand t)
 (use-package undo-fu-session
   :demand t
