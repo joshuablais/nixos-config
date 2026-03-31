@@ -5,7 +5,10 @@ let
   pkgs = import inputs.nixpkgs {
     system = "x86_64-linux";
     config.allowUnfree = true;
-    overlays = [ inputs.nur.overlays.default ];
+    overlays = [
+      inputs.nur.overlays.default
+      inputs.emacs-overlay.overlays.default
+    ];
   };
 
   base = [

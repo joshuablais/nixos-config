@@ -21,6 +21,11 @@
 
     impermanence.url = "github:nix-community/impermanence";
     stylix.url = "github:danth/stylix";
+
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

@@ -1,4 +1,4 @@
-;;; test-runner.el — language-agnostic test/benchmark dispatch
+;;; task-runner.el --- Description -*- lexical-binding: t; -*-
 
 ;;; ── Configuration table ──────────────────────────────────────
 (defvar my/test-runner-alist

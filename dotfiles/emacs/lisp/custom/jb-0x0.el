@@ -1,3 +1,5 @@
+;;; jb-0x0.el --- Description -*- lexical-binding: t; -*-
+
 (defun jb/post-to-0x0 (file)
   "Upload FILE to 0x0.st via curl. Copies URL to wl-clipboard and kill-ring."
   (interactive

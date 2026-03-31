@@ -1,4 +1,4 @@
-;;; universal-launcher.el --- Optimized universal launcher
+;;; universal-launcher.el --- Description -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; Simplified version that uses the existing Emacs frame
