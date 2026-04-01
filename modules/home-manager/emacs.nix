@@ -2,7 +2,7 @@
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs-git-pgtk;
+    package = pkgs.emacs;
     extraPackages = epkgs: with epkgs; [
       vterm
       pdf-tools
