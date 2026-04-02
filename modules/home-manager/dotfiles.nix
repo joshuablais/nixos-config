@@ -12,6 +12,7 @@ in
     ".config/fastfetch".source = mkOutOfStoreSymlink "${configDir}/fastfetch";
     ".config/gowall".source = mkOutOfStoreSymlink "${configDir}/gowall";
     ".config/hypr".source = mkOutOfStoreSymlink "${configDir}/hypr";
+    ".config/noctalia".source = mkOutOfStoreSymlink "${configDir}/noctalia";
     ".config/kitty".source = mkOutOfStoreSymlink "${configDir}/kitty";
     ".config/mpd".source = mkOutOfStoreSymlink "${configDir}/mpd";
     ".config/mpv".source = mkOutOfStoreSymlink "${configDir}/mpv";

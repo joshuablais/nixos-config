@@ -41,7 +41,8 @@
     slurp
     swaynotificationcenter
     swww
-    waybar
+    noctalia-shell
+    # waybar
     wl-clipboard
     wl-kbptr
     wlsunset
