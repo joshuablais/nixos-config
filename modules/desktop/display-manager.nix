@@ -1,10 +1,14 @@
 { config, pkgs, ... }:
 {
-  # Enable GDM display manager (updated syntax)
-  services.xserver.enable = true;
+  services.xserver.enable = false;
 
-  services.displayManager.gdm = {
-    enable = true;
-    wayland = true;
+services.greetd = {
+  enable = true;
+  settings = {
+    default_session = {
+      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --remember --cmd start-hyprland";
+      user = "greeter";
+    };
   };
+};
 }

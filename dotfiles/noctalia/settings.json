@@ -360,7 +360,7 @@
         "lockScreenMonitors": [
         ],
         "lockScreenTint": 0,
-        "radiusRatio": 1.08,
+        "radiusRatio": 0.71,
         "reverseScroll": false,
         "scaleRatio": 1,
         "screenRadiusRatio": 1,
