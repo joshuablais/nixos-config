@@ -91,15 +91,15 @@
                     "colorizeIcons": false,
                     "emptyColor": "secondary",
                     "enableScrollWheel": true,
-                    "focusedColor": "primary",
+                    "focusedColor": "none",
                     "followFocusedScreen": false,
                     "groupedBorderOpacity": 1,
                     "hideUnoccupied": false,
                     "iconScale": 0.8,
                     "id": "Workspace",
-                    "labelMode": "name",
+                    "labelMode": "index",
                     "occupiedColor": "secondary",
-                    "pillSize": 0.6,
+                    "pillSize": 0.6000000000000001,
                     "showApplications": false,
                     "showBadge": true,
                     "showLabelsOnlyWhenOccupied": true,
@@ -109,7 +109,7 @@
                     "colorizeIcons": false,
                     "hideMode": "hidden",
                     "id": "ActiveWindow",
-                    "maxWidth": 145,
+                    "maxWidth": 215,
                     "scrollingMode": "hover",
                     "showIcon": false,
                     "textColor": "none",
@@ -127,14 +127,6 @@
                     "id": "Tray",
                     "pinned": [
                     ]
-                },
-                {
-                    "hideWhenZero": false,
-                    "hideWhenZeroUnread": false,
-                    "iconColor": "none",
-                    "id": "NotificationHistory",
-                    "showUnreadBadge": true,
-                    "unreadBadgeColor": "primary"
                 },
                 {
                     "deviceNativePath": "__default__",
@@ -173,12 +165,12 @@
                 },
                 {
                     "colorizeDistroLogo": false,
-                    "colorizeSystemIcon": "none",
+                    "colorizeSystemIcon": "primary",
                     "customIconPath": "",
-                    "enableColorization": false,
+                    "enableColorization": true,
                     "icon": "noctalia",
                     "id": "ControlCenter",
-                    "useDistroLogo": false
+                    "useDistroLogo": true
                 },
                 {
                     "id": "plugin:kde-connect"
