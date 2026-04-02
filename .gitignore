@@ -1,3 +1,5 @@
 dotfiles/mpd/log
 
 /result
+/dotfiles/kitty/current-theme.conf
+/dotfiles/kitty/kitty.conf.bak

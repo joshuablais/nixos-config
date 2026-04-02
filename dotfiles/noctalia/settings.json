@@ -82,6 +82,12 @@
                     "visualizerType": "linear"
                 },
                 {
+                    "defaultSettings": {
+                        "leftButton": "next",
+                        "middleButton": "shuffle",
+                        "rightButton": "toggle",
+                        "shuffleStopsPlayback": true
+                    },
                     "id": "plugin:mpd"
                 }
             ],
@@ -93,13 +99,13 @@
                     "enableScrollWheel": true,
                     "focusedColor": "none",
                     "followFocusedScreen": false,
-                    "groupedBorderOpacity": 1,
+                    "groupedBorderOpacity": 0,
                     "hideUnoccupied": false,
-                    "iconScale": 0.74,
+                    "iconScale": 0.6799999999999999,
                     "id": "Workspace",
-                    "labelMode": "name",
+                    "labelMode": "none",
                     "occupiedColor": "none",
-                    "pillSize": 0.6000000000000001,
+                    "pillSize": 0.44,
                     "showApplications": false,
                     "showBadge": false,
                     "showLabelsOnlyWhenOccupied": false,
@@ -152,7 +158,21 @@
                     "textColor": "none"
                 },
                 {
+                    "defaultSettings": {
+                        "autoMount": false,
+                        "fileBrowser": "yazi",
+                        "hideWhenEmpty": false,
+                        "iconColor": "none",
+                        "showBadge": false,
+                        "showNotifications": true,
+                        "terminalCommand": "kitty"
+                    },
                     "id": "plugin:usb-drive-manager"
+                },
+                {
+                    "defaultSettings": {
+                    },
+                    "id": "plugin:kde-connect"
                 },
                 {
                     "clockColor": "none",
@@ -171,9 +191,6 @@
                     "icon": "noctalia",
                     "id": "ControlCenter",
                     "useDistroLogo": true
-                },
-                {
-                    "id": "plugin:kde-connect"
                 }
             ]
         }
@@ -206,7 +223,7 @@
         "manualSunset": "18:00",
         "monitorForColors": "",
         "predefinedScheme": "Compline",
-        "schedulingMode": "manual",
+        "schedulingMode": "off",
         "useWallpaperColors": false
     },
     "controlCenter": {
