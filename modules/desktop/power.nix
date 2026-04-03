@@ -25,6 +25,10 @@
         CPU_MAX_PERF_ON_AC = 100;
         CPU_MIN_PERF_ON_BAT = 20;
         CPU_MAX_PERF_ON_BAT = 80;
+        CPU_BOOST_ON_AC = 1;
+        CPU_BOOST_ON_BAT = 0;           # ADD: boost on battery = thermal spikes = freezes
+        PCIE_ASPM_ON_AC = "performance"; # ADD: explicit, since you're using pcie_aspm=off at boot this is belt-and-suspenders
+        PCIE_ASPM_ON_BAT = "powersave";
         WIFI_PWR_ON_AC = "off";
         WIFI_PWR_ON_BAT = "off";
         USB_AUTOSUSPEND = 0;
@@ -47,20 +51,25 @@
     ''}"
   '';
 
-  boot.kernelParams = [
-    "amd_pstate=guided"
-    "nvme_core.default_ps_max_latency_us=0"
-    "amdgpu.runpm=0"
-    "amdgpu.aspm=0"
-    "amdgpu.sg_display=0"
-    "nmi_watchdog=1"
-    "softlockup_panic=1"
-    "iommu=pt"
-  ];
+boot.kernelParams = [
+  "amd_pstate=active"                    # 6850U supports CPPC2 — use it properly
+  "nvme_core.default_ps_max_latency_us=0"
+  "amdgpu.runpm=0"
+  "amdgpu.aspm=0"
+  "amdgpu.sg_display=0"
+  "amdgpu.gpu_recovery=1"               # ADD: auto-recover GPU hangs instead of freezing
+  "pcie_aspm=off"                        # ADD: amdgpu.aspm=0 only covers the GPU node; NVMe/TB/USB PCIe links still negotiate ASPM
+  "nmi_watchdog=1"
+  "softlockup_panic=1"
+  "hardlockup_panic=1"                   # ADD: you had soft but not hard lockup panic
+  "iommu=pt"
+  "mem_sleep_default=s2idle"             # ADD: Rembrandt requires s2idle (no S3 in BIOS); without this, suspend/resume freezes are common
+  "initcall_blacklist=acpi_cpufreq_init" # ADD: prevent acpi_cpufreq loading alongside amd_pstate=active
+];
 
-  boot.extraModprobeConfig = ''
-    options amdgpu dpm=1 dc=1 dcfeaturemask=0x0
-  '';
+boot.extraModprobeConfig = ''
+  options amdgpu dpm=1 dc=1 dcfeaturemask=0x8
+'';
 
   boot.kernel.sysctl = {
     "kernel.hung_task_timeout_secs" = 60;
@@ -81,14 +90,14 @@
       Type = "oneshot";
       RemainAfterExit = true;
       User = "root";
-      ExecStart = pkgs.writeShellScript "disable-psr" ''
-        sleep 2
-        PSR_BLOCK=/sys/kernel/debug/dri/1/eDP-1/disallow_edp_enter_psr
+        ExecStart = pkgs.writeShellScript "disable-psr" ''
+      sleep 2
+      for i in 0 1 2; do
+        PSR_BLOCK="/sys/kernel/debug/dri/$i/eDP-1/disallow_edp_enter_psr"
         if [ -f "$PSR_BLOCK" ]; then
-          echo 1 > "$PSR_BLOCK" && echo "PSR entry blocked on eDP-1" || echo "Failed to block PSR entry"
-        else
-          echo "disallow_edp_enter_psr not found, skipping"
+          echo 1 > "$PSR_BLOCK" && echo "PSR entry blocked on dri/$i/eDP-1" && break
         fi
+      done
       '';
     };
   };
@@ -103,14 +112,14 @@
     serviceConfig = {
       Type = "oneshot";
       User = "root";
-      ExecStart = pkgs.writeShellScript "amdgpu-resume-fix" ''
+ExecStart = pkgs.writeShellScript "amdgpu-resume-fix" ''
         sleep 3
-        PSR_BLOCK=/sys/kernel/debug/dri/1/eDP-1/disallow_edp_enter_psr
-        if [ -f "$PSR_BLOCK" ]; then
-          echo 1 > "$PSR_BLOCK" && echo "PSR entry blocked on eDP-1 after resume" || echo "Failed to block PSR after resume"
-        else
-          echo "disallow_edp_enter_psr not found after resume, skipping"
-        fi
+        for i in 0 1 2; do
+          PSR_BLOCK="/sys/kernel/debug/dri/$i/eDP-1/disallow_edp_enter_psr"
+          if [ -f "$PSR_BLOCK" ]; then
+            echo 1 > "$PSR_BLOCK" && echo "PSR entry blocked on dri/$i/eDP-1 after resume" && break
+          fi
+        done
       '';
     };
   };
