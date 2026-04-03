@@ -32,20 +32,20 @@
     cliphist
     grim
     hypridle
-    hyprlock
     hyprpicker
-    hyprsunset
     hyprutils
     hyprwayland-scanner
     kitty
     slurp
-    swaynotificationcenter
-    swww
     noctalia-shell
+    # hyprlock
+    # hyprsunset
+    # swaynotificationcenter
+    # swww
+    wlsunset
     # waybar
     wl-clipboard
     wl-kbptr
-    wlsunset
     wofi
     wtype
     xclip

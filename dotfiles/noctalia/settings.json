@@ -410,13 +410,13 @@
         "wifiEnabled": true
     },
     "nightLight": {
-        "autoSchedule": true,
+        "autoSchedule": false,
         "dayTemp": "6500",
         "enabled": true,
-        "forced": true,
+        "forced": false,
         "manualSunrise": "06:30",
         "manualSunset": "18:30",
-        "nightTemp": "1682"
+        "nightTemp": "1563"
     },
     "notifications": {
         "backgroundOpacity": 1,

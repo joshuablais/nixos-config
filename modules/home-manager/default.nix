@@ -14,7 +14,7 @@
     ./dotfiles.nix
     ./emacs.nix
     ./firefox.nix
-    ./gammastep.nix
+    # ./gammastep.nix
     ./gpg.nix
     ./media.nix
     ./theming.nix

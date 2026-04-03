@@ -23,7 +23,7 @@
     brightnessctl
     libnotify
     xdg-utils
-    gammastep
+    # gammastep
     usbutils
 
     # VPN
