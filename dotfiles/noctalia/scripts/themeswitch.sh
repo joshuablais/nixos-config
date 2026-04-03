@@ -37,7 +37,7 @@ else
 fi
 
 # 4. Kitty
-pkill -SIGUSR1 kitty 2>/dev/null
+kill -SIGUSR1 $(pgrep -x kitty) 2>/dev/null
 
 # 5. Emacs
 if [[ "$MODE" == "dark" ]]; then
