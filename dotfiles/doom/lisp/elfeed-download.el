@@ -1,4 +1,4 @@
-;;; elfeed-download.el --- Download articles and videos from elfeed
+;; -*- lexical-binding: t; -*-
 
 ;;; Commentary:
 ;; This package provides functionality to download YouTube videos and save
