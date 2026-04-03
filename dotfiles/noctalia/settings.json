@@ -6,28 +6,28 @@
         "clipboardWrapText": true,
         "customLaunchPrefix": "",
         "customLaunchPrefixEnabled": false,
-        "density": "default",
+        "density": "compact",
         "enableClipPreview": true,
-        "enableClipboardHistory": false,
+        "enableClipboardHistory": true,
         "enableSessionSearch": true,
         "enableSettingsSearch": true,
         "enableWindowsSearch": true,
-        "iconMode": "tabler",
-        "ignoreMouseInput": false,
+        "iconMode": "native",
+        "ignoreMouseInput": true,
         "overviewLayer": false,
         "pinnedApps": [
         ],
         "position": "center",
         "screenshotAnnotationTool": "",
-        "showCategories": true,
+        "showCategories": false,
         "showIconBackground": false,
         "sortByMostUsed": true,
-        "terminalCommand": "alacritty -e",
+        "terminalCommand": "kitty -e",
         "useApp2Unit": false,
         "viewMode": "list"
     },
     "audio": {
-        "cavaFrameRate": 30,
+        "cavaFrameRate": 240,
         "mprisBlacklist": [
         ],
         "preferredPlayer": "",
@@ -59,7 +59,7 @@
         ],
         "showCapsule": false,
         "showOutline": false,
-        "useSeparateOpacity": true,
+        "useSeparateOpacity": false,
         "widgets": {
             "center": [
                 {
@@ -335,7 +335,7 @@
         "enableLockScreenCountdown": false,
         "enableShadows": true,
         "forceBlackScreenCorners": false,
-        "iRadiusRatio": 0.58,
+        "iRadiusRatio": 0.9500000000000001,
         "keybinds": {
             "keyDown": [
                 "Down"
@@ -367,7 +367,7 @@
         "lockScreenMonitors": [
         ],
         "lockScreenTint": 0.23,
-        "radiusRatio": 0.71,
+        "radiusRatio": 0.99,
         "reverseScroll": false,
         "scaleRatio": 1,
         "screenRadiusRatio": 1,
@@ -392,7 +392,7 @@
         "wallpaperChange": ""
     },
     "location": {
-        "analogClockInCalendar": false,
+        "analogClockInCalendar": true,
         "firstDayOfWeek": 0,
         "hideWeatherCityName": false,
         "hideWeatherTimezone": false,
@@ -418,7 +418,7 @@
     "nightLight": {
         "autoSchedule": false,
         "dayTemp": "6500",
-        "enabled": true,
+        "enabled": false,
         "forced": false,
         "manualSunrise": "06:30",
         "manualSunset": "18:30",
@@ -457,7 +457,7 @@
         }
     },
     "osd": {
-        "autoHideMs": 2000,
+        "autoHideMs": 1500,
         "backgroundOpacity": 1,
         "enabled": true,
         "enabledTypes": [
@@ -530,8 +530,8 @@
                 "keybind": ""
             }
         ],
-        "showHeader": true,
-        "showKeybinds": true
+        "showHeader": false,
+        "showKeybinds": false
     },
     "settingsVersion": 53,
     "systemMonitor": {
@@ -602,7 +602,7 @@
         "wifiDetailsViewMode": "grid"
     },
     "wallpaper": {
-        "automationEnabled": true,
+        "automationEnabled": false,
         "directory": "/home/joshua/Pictures/Wallpapers",
         "enableMultiMonitorDirectories": false,
         "enabled": true,
