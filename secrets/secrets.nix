@@ -1,15 +1,16 @@
 let
-  # Your personal age key (from ~/.config/age/keys.txt
+  # main machine key
   joshua = "age1k0sc4ugaxzpav2rs8cmugwthaa3tpuzygvax8u84m6sm9ldh737qspv058";
 
-  # Machine age keys
+  # server machine key
   empirica = "age1gt2m3dtrkx3lwnddwv62fesadyd5pkmadtwtdfwvcs4lhcyqt33qfq386s";
 
-  # Groups for convenience
   users = [ joshua ];
   servers = [ empirica ];
   allSystems = users ++ servers;
 in
+
+# Create secrets here:
 {
   "canlock.age".publicKeys = users;
   "gnus-name.age".publicKeys = users;
