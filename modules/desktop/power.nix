@@ -44,12 +44,12 @@
     fwupd.enable = true;
   };
 
-  # Top-level, not nested under services
-  services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="27c6", ATTRS{idProduct}=="6594", RUN+="${pkgs.writeShellScript "goodix-no-autosuspend" ''
-      echo 0 > /sys$DEVPATH/power/autosuspend_delay_ms
-    ''}"
-  '';
+services.udev.extraRules = ''
+  ACTION=="add", SUBSYSTEM=="usb", ATTRS{idVendor}=="27c6", ATTRS{idProduct}=="6594", RUN+="${pkgs.writeShellScript "goodix-no-autosuspend" ''
+    echo -1 > /sys$DEVPATH/power/autosuspend_delay_ms
+    echo on > /sys$DEVPATH/power/control
+  ''}"
+'';
 
 boot.kernelParams = [
   "amd_pstate=active"                    # 6850U supports CPPC2 — use it properly
@@ -101,6 +101,16 @@ boot.extraModprobeConfig = ''
       '';
     };
   };
+
+  systemd.services.fprintd-resume = {
+  description = "Restart fprintd after resume to reinitialize fingerprint reader";
+  wantedBy = [ "post-resume.target" ];
+  after = [ "post-resume.target" ];
+  serviceConfig = {
+    Type = "oneshot";
+    ExecStart = "${pkgs.systemd}/bin/systemctl restart fprintd.service";
+  };
+};
 
   systemd.services.amdgpu-resume-fix = {
     description = "Re-block AMD PSR after resume";
