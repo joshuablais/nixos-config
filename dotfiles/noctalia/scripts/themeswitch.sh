@@ -37,7 +37,12 @@ else
 fi
 
 # 4. Kitty
-kill -SIGUSR1 $(pgrep -x kitty) 2>/dev/null
+if [[ "$MODE" == "dark" ]]; then
+    cp "$HOME/.config/kitty/themes/dark.conf" "$HOME/.config/kitty/themes/active.conf"
+else
+    cp "$HOME/.config/kitty/themes/light.conf" "$HOME/.config/kitty/themes/active.conf"
+fi
+kill -SIGUSR1 $(pgrep -a kitty | awk '{print $1}') 2>/dev/null
 
 # 5. Emacs
 if [[ "$MODE" == "dark" ]]; then
