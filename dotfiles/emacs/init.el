@@ -151,11 +151,18 @@
       (load-theme 'compline t)
     (load-theme 'lauds t)))
 
-(with-eval-after-load 'hl-line
-  (set-face-attribute 'hl-line nil
-                      :background "#22262b"
-                      :foreground 'unspecified
-                      :extend t))
+;; hl line for theme
+(defun my/set-hl-line-face (&rest _)
+  (when (facep 'hl-line)
+    (set-face-attribute 'hl-line nil
+                        :background (if (eq (frame-parameter nil 'background-mode) 'dark)
+                                        "#22262b"
+                                      "#e0dcd4")
+                        :foreground 'unspecified
+                        :extend t)))
+
+(add-hook 'enable-theme-functions #'my/set-hl-line-face)
+(add-hook 'hl-line-mode-hook #'my/set-hl-line-face)
 
 (use-package which-key
   :demand t
