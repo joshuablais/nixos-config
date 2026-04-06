@@ -30,7 +30,7 @@
   ];
 
   # Ensure NVIDIA drivers are properly configured
-  hardware.nvidia-container-toolkit.enable = true;
+  hardware.nvidia-container-toolkit.enable = false;
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
 }
