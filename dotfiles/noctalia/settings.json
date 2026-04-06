@@ -31,7 +31,7 @@
         "mprisBlacklist": [
         ],
         "preferredPlayer": "",
-        "spectrumFrameRate": 30,
+        "spectrumFrameRate": 144,
         "spectrumMirrored": true,
         "visualizerType": "linear",
         "volumeFeedback": false,
