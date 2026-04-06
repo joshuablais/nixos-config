@@ -1,9 +1,15 @@
 { config, pkgs, ... }:
 {
-  # System-level browser installations
   environment.systemPackages = with pkgs; [
     librewolf
-    ungoogled-chromium
+    (ungoogled-chromium.override {
+      commandLineArgs = [
+        "--ozone-platform-hint=auto"
+        "--enable-features=WaylandWindowDecorations"
+        "--enable-wayland-ime=true"
+        "--gtk-version=4"
+      ];
+    })
     tor-browser
   ];
 }
