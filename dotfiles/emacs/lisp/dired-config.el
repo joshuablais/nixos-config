@@ -108,9 +108,13 @@
   (define-key dired-mode-map (kbd ".")         #'dired-omit-mode)
   (define-key dired-mode-map (kbd "G")         #'revert-buffer))
 
-(custom-set-faces
- '(dirvish-hl-line-inactive ((t (:background "#171a1e"))))
- '(dirvish-hl-line ((t (:background "#2a2d32")))))
+;; (with-eval-after-load 'dirvish
+;;   (set-face-attribute 'dirvish-hl-line nil
+;;                       :inherit 'hl-line
+;;                       :background 'unspecified)
+;;   (set-face-attribute 'dirvish-hl-line-inactive nil
+;;                       :inherit 'hl-line
+;;                       :background 'unspecified))
 
 (provide 'dired-config)
 ;;; dired-config.el ends here

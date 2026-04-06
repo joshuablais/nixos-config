@@ -32,9 +32,9 @@ sleep 0.5
 # 3. gsettings
 sleep 0.3
 if [[ "$MODE" == "dark" ]]; then
-    gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
-else
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+else
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
 fi
 
 # 4. Kitty

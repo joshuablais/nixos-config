@@ -151,16 +151,28 @@
       (load-theme 'compline t)
     (load-theme 'lauds t)))
 
-;; hl line for theme
 (defun my/set-hl-line-face (&rest _)
-  (when (facep 'hl-line)
-    (set-face-attribute 'hl-line nil
-                        :background (if (eq (frame-parameter nil 'background-mode) 'dark)
-                                        "#22262b"
-                                      "#e0dcd4")
-                        :foreground 'unspecified
-                        :extend t)))
+  (let ((bg (if (eq (frame-parameter nil 'background-mode) 'dark)
+                "#22262b"
+              "#e0dcd4")))
+    (when (facep 'hl-line)
+      (set-face-attribute 'hl-line nil
+                          :background bg
+                          :foreground 'unspecified
+                          :extend t))
+    (when (facep 'dirvish-hl-line)
+      (set-face-attribute 'dirvish-hl-line nil
+                          :background bg
+                          :foreground 'unspecified
+                          :extend t))
+    (when (facep 'dirvish-hl-line-inactive)
+      (set-face-attribute 'dirvish-hl-line-inactive nil
+                          :background bg
+                          :foreground 'unspecified
+                          :extend t))))
 
+(add-hook 'enable-theme-functions #'my/set-hl-line-face)
+(add-hook 'hl-line-mode-hook #'my/set-hl-line-face)
 (add-hook 'enable-theme-functions #'my/set-hl-line-face)
 (add-hook 'hl-line-mode-hook #'my/set-hl-line-face)
 
