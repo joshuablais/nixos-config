@@ -972,7 +972,8 @@ Examples:
           (minibuffer-with-setup-hook
               (lambda ()
                 ;; Allow any input, not just candidates
-                (setq-local completion-styles '(substring partial-completion basic))
+                (setq-local completion-styles '(orderless basic))
+                (setq-local completion-ignore-case t)
                 (setq-local completion-category-overrides nil))
             (completing-read prompt
                              ;; Use a function that always returns all candidates
