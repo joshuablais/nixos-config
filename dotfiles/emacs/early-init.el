@@ -28,9 +28,6 @@
       tool-bar-mode nil
       scroll-bar-mode nil)
 
-(setq epg-pinentry-mode 'loopback)
-(setq elpaca-core-date '(20260101))
-
 ;;; Performance
 (setq frame-resize-pixelwise t
       frame-inhibit-implied-resize t

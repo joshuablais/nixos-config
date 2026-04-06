@@ -1,4 +1,4 @@
-;;; universal-launcher.el --- Description -*- lexical-binding: t; -*-
+;;; universal-launcher.el --- Optimized universal launcher
 
 ;;; Commentary:
 ;; Simplified version that uses the existing Emacs frame
@@ -594,14 +594,14 @@ C-u prefix forces engine re-selection."
             ("Yandex" . "https://yandex.com/search/?text=")
             ("Emacs Docs" . "https://www.gnu.org/software/emacs/manual/html_node/emacs/index.html?search=")
             ))
-         (engine (if (or current-prefix-arg
-                         (not universal-launcher--last-search-engine))
-                     (completing-read
-                      (format "Search engine (default %s): "
-                              universal-launcher-default-search-engine)
-                      (mapcar #'car search-engines)
-                      nil t nil nil universal-launcher-default-search-engine)
-                   universal-launcher--last-search-engine))
+         (engine (completing-read
+                  (format "Search engine (default %s): "
+                          (or universal-launcher--last-search-engine
+                              universal-launcher-default-search-engine))
+                  (mapcar #'car search-engines)
+                  nil t nil nil
+                  (or universal-launcher--last-search-engine
+                      universal-launcher-default-search-engine)))
          (url-base (cdr (assoc engine search-engines)))
          (query (or query
                     (read-string (format "Search %s: " engine)

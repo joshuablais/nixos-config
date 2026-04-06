@@ -44,6 +44,7 @@
 ;; opens or yasnippet-capf serves nothing on first completion attempt.
 (use-package yasnippet
   :ensure t
+  :demand t
   :config
   (setq yas-snippet-dirs '("~/.config/emacs/snippets")
         yas-verbosity    0)
@@ -51,14 +52,16 @@
 
 (use-package yasnippet-snippets
   :ensure t
+  :demand t
   :after yasnippet)
-
-(elpaca-wait)
 
 (use-package yasnippet-capf
   :ensure t
+  :demand t
   :custom
   (yasnippet-capf-lookup-by 'key))
+
+(elpaca-wait)
 
 (add-hook 'org-mode-hook
           (lambda ()
@@ -69,18 +72,28 @@
                               #'pcomplete-completions-at-point
                               #'ispell-completion-at-point))))
 
+;; See go-mode snippets
+(add-hook 'go-ts-mode-hook #'(lambda () (yas-activate-extra-mode 'go-mode)))
+
 ;; EGLOT
 (use-package eglot
   :ensure nil
   :hook ((go-ts-mode     . eglot-ensure)
          (python-ts-mode . eglot-ensure)
          (js-ts-mode     . eglot-ensure)
+         (nix-ts-mode     . eglot-ensure)
          (templ-ts-mode  . eglot-ensure))
   :custom
   (eglot-autoshutdown       t)
   (eglot-events-buffer-size 0)   ; no event log
   (eglot-sync-connect       nil) ; non-blocking LSP connect
   (eglot-extend-to-xref     t))  ; LSP context follows xref jumps
+
+;; auto fromat on save
+(add-hook 'before-save-hook
+          (lambda ()
+            (when (bound-and-true-p eglot--managed-mode)
+              (eglot-format-buffer))))
 
 ;; ELDOC BOX
 (use-package eldoc-box
@@ -112,26 +125,21 @@
 
 (add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
 
-;; EVIL TREE-SITTER TEXT OBJECTS
-(use-package evil-textobj-tree-sitter
-  :ensure t
-  :after evil
-  :vc (:url "https://github.com/meain/evil-textobj-tree-sitter"
-            :rev :newest
-            :files (:defaults "queries" "treesit-queries"))
-  :config
-  (define-key evil-outer-text-objects-map "f"
-              (evil-textobj-tree-sitter-get-textobj "function.outer"))
-  (define-key evil-inner-text-objects-map "f"
-              (evil-textobj-tree-sitter-get-textobj "function.inner"))
-  (define-key evil-outer-text-objects-map "c"
-              (evil-textobj-tree-sitter-get-textobj "class.outer"))
-  (define-key evil-inner-text-objects-map "c"
-              (evil-textobj-tree-sitter-get-textobj "class.inner"))
-  (define-key evil-outer-text-objects-map "a"
-              (evil-textobj-tree-sitter-get-textobj "parameter.outer"))
-  (define-key evil-inner-text-objects-map "a"
-              (evil-textobj-tree-sitter-get-textobj "parameter.inner")))
+;; (with-eval-after-load 'meow
+;;   (meow-thing-register 'function
+;;                        '(treesit "function.inner")
+;;                        '(treesit "function.outer"))
+;;   (meow-thing-register 'class
+;;                        '(treesit "class.inner")
+;;                        '(treesit "class.outer"))
+;;   (meow-thing-register 'parameter
+;;                        '(treesit "parameter.inner")
+;;                        '(treesit "parameter.outer"))
+;;   (setq meow-char-thing-table
+;;         (append meow-char-thing-table
+;;                 '((?f . function)
+;;                   (?c . class)
+;;                   (?a . parameter)))))
 
 ;; KIND-ICON
 (use-package kind-icon

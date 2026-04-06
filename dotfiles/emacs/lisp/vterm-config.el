@@ -1,24 +1,4 @@
-;;; vterm.el --- Description -*- lexical-binding: t; -*-
-;;
-;; Copyright (C) 2026 joshuablais
-;;
-;; Author: joshuablais <josh@joshblais.com>
-;; Maintainer: joshuablais <josh@joshblais.com>
-;; Created: March 23, 2026
-;; Modified: March 23, 2026
-;; Version: 0.0.1
-;; Keywords: abbrev bib c calendar comm convenience data docs emulations extensions faces files frames games hardware help hypermedia i18n internal languages lisp local maint mail matching mouse multimedia news outlines processes terminals tex text tools unix vc wp
-;; Homepage: https://github.com/joshuablais/vterm
-;; Package-Requires: ((emacs "24.3"))
-;;
-;; This file is not part of GNU Emacs.
-;;
-;;; Commentary:
-;;
-;;  Description
-;;
-;;; Code:
-;;; vterm-config.el -*- lexical-binding: t; -*-
+;;; vterm-config.el --- vterm configuration -*- lexical-binding: t; -*-
 
 (use-package vterm
   :ensure t
@@ -55,6 +35,53 @@
   (define-key vterm-mode-map (kbd "C-<up>")    #'windmove-up)
   (define-key vterm-mode-map (kbd "C-<down>")  #'windmove-down))
 
+(with-eval-after-load 'vterm
+  ;; Meow integration
+  (add-hook 'vterm-mode-hook #'meow-insert-mode)
+
+  (define-key vterm-mode-map (kbd "<escape>")
+              (lambda () (interactive)
+                (meow-normal-mode)
+                (vterm-copy-mode 1)))
+
+  (define-key vterm-copy-mode-map (kbd "i")
+              (lambda () (interactive)
+                (vterm-copy-mode -1)
+                (meow-insert-mode)))
+
+  (define-key vterm-copy-mode-map (kbd "y") #'meow-clipboard-save)
+  (define-key vterm-copy-mode-map (kbd "l") #'meow-line)
+  (define-key vterm-copy-mode-map (kbd "L")
+              (lambda () (interactive) (meow-line 1) (meow-reverse)))
+  (define-key vterm-copy-mode-map (kbd "m") #'meow-mark-word)
+  (define-key vterm-copy-mode-map (kbd "f") #'flash-jump)
+  (define-key vterm-copy-mode-map (kbd "/") #'consult-line)
+  (define-key vterm-copy-mode-map (kbd "n") #'meow-next)
+  (define-key vterm-copy-mode-map (kbd "e") #'meow-prev)
+  (define-key vterm-copy-mode-map (kbd "h") #'meow-left)
+  (define-key vterm-copy-mode-map (kbd "w") #'meow-next-word)
+  (define-key vterm-copy-mode-map (kbd "b") #'meow-back-word)
+  (define-key vterm-copy-mode-map (kbd ";") #'meow-reverse)
+  (define-key vterm-copy-mode-map (kbd "v") #'meow-search)
+  (define-key vterm-copy-mode-map (kbd "V") #'meow-visit)
+  (define-key vterm-copy-mode-map (kbd "g") #'meow-cancel-selection)
+  (define-key vterm-copy-mode-map (kbd "<escape>")
+              (lambda () (interactive)
+                (vterm-copy-mode -1)
+                (meow-insert-mode)))
+
+  ;; Auto-spawn vterm in any new frame that isn't main or explicitly handled
+  (defun my/vterm-in-new-frame (frame)
+    "Open vterm only in additional frames, not the main frame or explicit frames."
+    (unless (or (frame-parameter frame 'main-frame)
+                (frame-parameter frame 'explicit-vterm))
+      (with-selected-frame frame
+        (delete-other-windows)
+        (let ((vterm-buffer (vterm (format "*vterm-%s*" (frame-parameter frame 'name)))))
+          (switch-to-buffer vterm-buffer)
+          (delete-other-windows)))))
+  (add-hook 'after-make-frame-functions #'my/vterm-in-new-frame))
+
 (defun my/vterm ()
   "Open vterm buffer as a bottom popup at 30% height."
   (interactive)
@@ -72,8 +99,6 @@
         (slot . 0)
         (window-height . 0.3)
         (window-parameters . ((no-delete-other-windows . t))))))))
-
-(define-key leader (kbd "o t") #'my/vterm)
 
 ;; Tag initial frame as main so hooks can skip it
 (defun my/tag-initial-frame ()
@@ -93,19 +118,6 @@
       (switch-to-buffer vterm-buffer)
       (delete-other-windows))))
 
-;; Auto-spawn vterm in any new frame that isn't main or explicitly handled
-(with-eval-after-load 'vterm
-  (defun my/vterm-in-new-frame (frame)
-    "Open vterm only in additional frames, not the main frame or explicit frames."
-    (unless (or (frame-parameter frame 'main-frame)
-                (frame-parameter frame 'explicit-vterm))
-      (with-selected-frame frame
-        (delete-other-windows)
-        (let ((vterm-buffer (vterm (format "*vterm-%s*" (frame-parameter frame 'name)))))
-          (switch-to-buffer vterm-buffer)
-          (delete-other-windows)))))
-  (add-hook 'after-make-frame-functions #'my/vterm-in-new-frame))
-
 (defun my/open-vterm-at-point ()
   "Open vterm in the directory of the currently selected window's buffer."
   (interactive)
@@ -120,7 +132,6 @@
     (let ((default-directory dir))
       (vterm))))
 
-;; Running commands async
 (defun jb/run-command ()
   "Unified interface: shell history + async/output options."
   (interactive)
@@ -138,7 +149,5 @@
       ("async-shell-command" (async-shell-command cmd))
       ("eshell-command" (eshell-command cmd)))))
 
-(define-key leader (kbd "!") #'jb/run-command)
-
 (provide 'vterm-config)
-;;; vterm.el ends here
+;;; vterm-config.el ends here

@@ -28,8 +28,6 @@ Music player settings. You will require MPD/MPC running on your machine to get a
 IRC in emacs.
 *** everywhere.el
 Emacs everywhere using thanos' implementation for wayland.
-*** evil-config.el
-Evil mode globally configured with evil-collection
 *** gnus-config.el
 GNUs for usenet usage.
 *** grammars.el

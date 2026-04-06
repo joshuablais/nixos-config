@@ -7,9 +7,14 @@
   :config
   (easysession-setup))
 
-(define-key leader (kbd "<TAB> s") #'easysession-save)
-(define-key leader (kbd "<TAB> l") #'easysession-switch-to)
-(define-key leader (kbd "<TAB> R") #'easysession-rename)
-(define-key leader (kbd "<TAB> D") #'easysession-delete)
+;; undo tree across sessions
+(use-package undo-tree
+  :ensure t
+  :demand t
+  :config
+  (setq undo-tree-auto-save-history t
+        undo-tree-history-directory-alist
+        `(("." . ,(expand-file-name "undo-tree-history" user-emacs-directory))))
+  (global-undo-tree-mode 1))
 
 (provide 'persist)

@@ -15,10 +15,7 @@
   (erc-save-queries-on-quit t)
   (erc-interpret-mirc-color t)
   :config
-  (add-hook 'erc-text-matched-hook #'my/erc-notify-on-mention)
-  (with-eval-after-load 'evil
-    (evil-define-key '(normal motion) erc-mode-map
-      (kbd "SPC") 'leader)))
+  (add-hook 'erc-text-matched-hook #'my/erc-notify-on-mention))
 
 (defun my/erc-connect ()
   "Connect to irc.joshblais.com via TLS using auth-source for password."

@@ -3,14 +3,7 @@
 ;; code folding
 (use-package kirigami
   :ensure t
-  :after evil
-  :config
-  (define-key evil-normal-state-map "zo" #'kirigami-open-fold)
-  (define-key evil-normal-state-map "zO" #'kirigami-open-fold-rec)
-  (define-key evil-normal-state-map "zc" #'kirigami-close-fold)
-  (define-key evil-normal-state-map "za" #'kirigami-toggle-fold)
-  (define-key evil-normal-state-map "zr" #'kirigami-open-folds)
-  (define-key evil-normal-state-map "zm" #'kirigami-close-folds))
+  :config)
 
 ;; global formatting
 (use-package apheleia
@@ -76,13 +69,6 @@
 
 (use-package elisp-refs
   :ensure t)
-
-(use-package combobulate
-  :vc (:url "https://github.com/mickeynp/combobulate" :rev :newest)
-  :hook ((go-ts-mode . combobulate-mode))
-  :defer t
-  :custom
-  (combobulate-key-prefix "C-c o"))
 
 (provide 'editing)
 ;;; editing.el ends here

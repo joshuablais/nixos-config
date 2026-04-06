@@ -10,10 +10,18 @@
   :ensure t
   :hook (prog-mode . hl-todo-mode))
 
-;; Direnv
+(use-package agenix
+  :demand t
+  :config
+  (setq agenix-age-program "/run/current-system/sw/bin/age"
+        agenix-key-files '("~/.config/age/keys.txt"))
+  (defun agenix--identity-protected-p (_identity-path)
+    nil))
+
 (use-package envrc
-  :ensure t
-  :hook (after-init . envrc-global-mode))
+  :demand t
+  :config
+  (envrc-global-mode))
 
 (provide 'development)
 ;;; development.el ends here

@@ -73,7 +73,7 @@
     full-url))
 
 ;; Keybinding
-(define-key leader (kbd "j c") #'my/jitsi-create-room)
+;; (define-key my-leader-map (kbd "j c") #'my/jitsi-create-room)
 
 (provide 'jitsi-meeting)
 ;;; jitsi-meeting.el ends here

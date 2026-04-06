@@ -152,14 +152,6 @@
 (setq tab-bar-show nil)
 
 ;;; Keybindings
-(define-key leader (kbd "TAB TAB") #'+workspace/display)
-(define-key leader (kbd "TAB n")   #'+workspace/new)
-(define-key leader (kbd "TAB d")   #'+workspace/delete)
-(define-key leader (kbd "TAB r")   #'+workspace/rename)
-(define-key leader (kbd "TAB .")   #'+workspace/switch-to)
-(define-key leader (kbd "TAB [")   #'tab-bar-switch-to-prev-tab)
-(define-key leader (kbd "TAB ]")   #'tab-bar-switch-to-next-tab)
-(define-key leader (kbd "p p")     #'+workspace/switch-to-project)
 
 (when (featurep 'consult)
   (setq consult-buffer-sources

@@ -89,9 +89,9 @@
                     ('todo)))))))
       (when (org-invisible-p)
         (org-show-hidden-entry))
-      (when (and (bound-and-true-p evil-local-mode)
-                 (not (evil-emacs-state-p)))
-        (evil-insert 1))))
+      (when (and (bound-and-true-p meow-mode)
+                 (not (meow-insert-mode-p)))
+        (meow-insert))))
 
   (defun +org/insert-item-below (count)
     "Insert new heading, table cell or item below current."
@@ -103,11 +103,18 @@
     (interactive "p")
     (dotimes (_ count) (+org--insert-item 'above)))
 
-  (with-eval-after-load 'evil
-    (evil-define-key '(normal insert) org-mode-map
-      (kbd "M-RET")        #'+org/insert-item-below
-      (kbd "C-<return>")   #'+org/insert-item-below
-      (kbd "C-S-<return>") #'+org/insert-item-above)))
+  (with-eval-after-load 'org
+    (defun +org/smart-return ()
+      "Dwim in normal state, org-return in insert."
+      (interactive)
+      (if (meow-insert-mode-p)
+          (org-return)
+        (+org/dwim-at-point)))
+
+    (define-key org-mode-map (kbd "M-RET")        #'+org/insert-item-below)
+    (define-key org-mode-map (kbd "C-<return>")   #'+org/insert-item-below)
+    (define-key org-mode-map (kbd "C-S-<return>") #'+org/insert-item-above)
+    (define-key org-mode-map (kbd "RET")          #'+org/smart-return)))
 
 (defun my/org-clock-in-if-starting ()
   "Clock in when task state changes to STRT."
@@ -552,8 +559,8 @@
            (org-table-blank-field)
            (org-table-recalculate arg)
            (when (and (string-empty-p (string-trim (org-table-get-field)))
-                      (bound-and-true-p evil-local-mode))
-             (evil-change-state 'insert)))
+                      (bound-and-true-p meow-mode))
+             (meow-insert-mode)))
 
           (`babel-call
            (org-babel-lob-execute-maybe))
@@ -590,10 +597,7 @@
                (call-interactively #'org-open-at-point)
              (+org--toggle-inline-images-in-subtree
               (org-element-property :begin context)
-              (org-element-property :end context))))))))
-
-  (with-eval-after-load 'evil
-    (evil-define-key 'normal org-mode-map (kbd "RET") #'+org/dwim-at-point)))
+              (org-element-property :end context)))))))))
 
 (use-package ob-go :demand t)
 (elpaca-wait)

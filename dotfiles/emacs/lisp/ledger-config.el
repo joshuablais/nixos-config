@@ -35,13 +35,6 @@
   :config
   (add-to-list 'flycheck-checkers 'ledger))
 
-;;; Evil bindings for ledger
-(use-package evil-ledger
-  :after ledger-mode
-  :hook (ledger-mode . evil-ledger-mode)
-  :config
-  (setq evil-ledger-sort-key "S"))
-
 ;;; Completion: hook into corfu/company for account and payee completion
 (with-eval-after-load 'ledger-mode
   ;; ledger-mode has built-in pcomplete; wire it to cape if you use corfu

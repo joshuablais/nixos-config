@@ -40,9 +40,8 @@
 
 ;; Keybindings — match Doom's defaults
 (with-eval-after-load 'centaur-tabs
-  (evil-define-key 'normal centaur-tabs-mode-map
-    (kbd "<C-tab>")           #'centaur-tabs-forward
-    (kbd "<C-iso-lefttab>")   #'centaur-tabs-backward))
+  (define-key centaur-tabs-mode-map (kbd "<C-tab>")         #'centaur-tabs-forward)
+  (define-key centaur-tabs-mode-map (kbd "<C-iso-lefttab>") #'centaur-tabs-backward))
 
 (provide 'tabs)
 ;;; tabs.el ends here

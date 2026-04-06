@@ -29,10 +29,7 @@
 
 ;; link hint search and jump
 (use-package link-hint
-  :ensure t
-  :bind
-  (:map evil-normal-state-map
-        ("SPC s l" . link-hint-open-link)))
+  :ensure t)
 
 ;; scratch buffer
 (use-package persistent-scratch
@@ -58,8 +55,6 @@
       (window-height . 0.3)
       (window-parameters . ((no-delete-other-windows . t)))))))
 
-(define-key leader (kbd "X") #'my/scratch-popup)
-(which-key-add-key-based-replacements "SPC X" "scratch popup")
 
 ;; Messages buffer
 (defun my/messages-popup ()

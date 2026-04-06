@@ -1,4 +1,4 @@
-;;; task-runner.el --- Description -*- lexical-binding: t; -*-
+;;; test-runner.el — language-agnostic test/benchmark dispatch
 
 ;;; ── Configuration table ──────────────────────────────────────
 (defvar my/test-runner-alist
@@ -141,16 +141,16 @@ Tokens: %f current file, %t test name at point, %d project root.")
   (my/test--run :bench-at-point))
 
 ;; keybinds
-(defun my/test--install-bindings ()
-  (define-key leader (kbd "m t a") #'my/test-all)
-  (define-key leader (kbd "m t f") #'my/test-file)
-  (define-key leader (kbd "m t t") #'my/test-at-point)
-  (define-key leader (kbd "m t s") #'my/test-single)
-  (define-key leader (kbd "m t r") #'my/test-rerun)
-  (define-key leader (kbd "m t b") #'my/bench-all)
-  (define-key leader (kbd "m t p") #'my/bench-at-point))
+;; (defun my/test--install-bindings ()
+;;   (define-key my-leader-map (kbd "m t a") #'my/test-all)
+;;   (define-key my-leader-map (kbd "m t f") #'my/test-file)
+;;   (define-key my-leader-map (kbd "m t t") #'my/test-at-point)
+;;   (define-key my-leader-map (kbd "m t s") #'my/test-single)
+;;   (define-key my-leader-map (kbd "m t r") #'my/test-rerun)
+;;   (define-key my-leader-map (kbd "m t b") #'my/bench-all)
+;;   (define-key my-leader-map (kbd "m t p") #'my/bench-at-point))
 
-(my/test--install-bindings)
+;; (my/test--install-bindings)
 
 (provide 'test-runner)
 

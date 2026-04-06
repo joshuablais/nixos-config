@@ -1,51 +1,9 @@
-;; init.el -*- lexical-binding: t; -*-
+;;; init.el -*- lexical-binding: t; -*-
 
-;; EMACS 31 REGRESSION: epa-file-insert-file-contents passes nil to
-;; set-visited-file-modtime when visit is nil (auth-source case), and
-;; file-local-copy returns nil for local files which then propagates
-;; incorrectly. Patch until upstream fixes it.
-;; Ref: bug# — check if resolved before removing on 31 stable release.
-(require 'epa-file)
-(epa-file-enable)
-
-(define-advice epa-file-insert-file-contents
-    (:override (file &optional visit beg end replace) fix-emacs31-nil)
-  (barf-if-buffer-read-only)
-  (if (and visit (or beg end))
-      (error "Attempt to visit less than an entire file"))
-  (setq file (expand-file-name file))
-  (let* ((local-file (or (file-local-copy file) file))
-         (context (epg-make-context))
-         (buf (current-buffer))
-         (tmp-file (make-temp-file "epa-decrypt-"))
-         string)
-    (epg-context-set-passphrase-callback
-     context (cons #'epa-file-passphrase-callback-function file))
-    (epg-context-set-progress-callback
-     context (cons #'epa-progress-callback-function
-                   (format "Decrypting %s" file)))
-    (unwind-protect
-        (progn
-          (epg-decrypt-file context local-file tmp-file)
-          (setq string (with-temp-buffer
-                         (insert-file-contents-literally tmp-file)
-                         (buffer-string))))
-      (when (file-exists-p tmp-file)
-        (delete-file tmp-file))
-      (unless (equal file local-file)
-        (delete-file local-file)))
-    (with-current-buffer buf
-      (let ((inhibit-read-only t))
-        (insert (decode-coding-string string 'utf-8))))
-    (when visit
-      (setq buffer-file-name file)
-      (set-visited-file-modtime))
-    (list file (length string))))
-;; REGRESSION for 31
-
+;; Username setup
 (setq user-full-name "Joshua Blais"
       user-mail-address "josh@joshblais.com")
-(setq auth-sources '("~/.authinfo.gpg")
+(setq auth-sources '("~/.authinfo.gpg" "~/.authinfo")
       auth-source-cache-expiry nil)
 
 ;; Elpaca bootstrap
@@ -89,7 +47,8 @@
 (elpaca `(,@elpaca-order))
 
 (elpaca elpaca-use-package
-        (elpaca-use-package-mode))
+  (elpaca-use-package-mode))
+
 (elpaca-wait)
 
 (setq use-package-always-defer t
@@ -109,7 +68,9 @@
   :config
   (setq auto-save-file-name-transforms
         `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))))
-  (elpaca-wait) ; block until no-littering is fully built and configured
+
+(elpaca-wait)
+
 (when (file-exists-p custom-file)
   (load custom-file))
 
@@ -125,6 +86,8 @@
 (setq-default
  delete-by-moving-to-trash t
  window-combination-resize t
+ ;; Set global kill-ring
+ save-interprogram-paste-before-kill t
  x-stretch-cursor t)
 
 (setq
@@ -157,37 +120,6 @@
       auto-save-interval 300
       auto-save-timeout 30)
 
-;; UI
-(set-fringe-mode 10)
-(add-to-list 'custom-theme-load-path
-             (expand-file-name "themes/" user-emacs-directory))
-(use-package doom-themes
-  :demand t
-  :config
-  (load-theme 'compline t))
-
-(with-eval-after-load 'hl-line
-  (set-face-attribute 'hl-line nil
-                      :background "#22262b"
-                      :foreground 'unspecified
-                      :extend t))
-
-(use-package which-key
-  :config
-  (setq which-key-idle-delay 0.2)
-  (which-key-mode 1))
-
-(use-package recentf
-  :ensure nil
-  :config
-  (setq recentf-max-menu-items 25
-        recentf-max-saved-items 100)
-  (dolist (path '("\\.git/" "/tmp/" "/nix/store/"))
-    (add-to-list 'recentf-exclude path))
-  (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-var-directory))
-  (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-etc-directory))
-  (add-hook 'kill-emacs-hook #'recentf-cleanup -90))
-
 (use-package savehist
   :ensure nil
   :config
@@ -203,14 +135,50 @@
 
 (elpaca-wait)
 
+;; UI
+(set-fringe-mode 10)
+(add-to-list 'custom-theme-load-path
+             (expand-file-name "themes/" user-emacs-directory))
+
+(use-package doom-themes
+  :demand t
+  :config
+  (load-theme 'compline t))
+
+(defun my/set-theme (variant)
+  (mapc #'disable-theme custom-enabled-themes)
+  (if (string= variant "dark")
+      (load-theme 'compline t)
+    (load-theme 'lauds t)))
+
+(with-eval-after-load 'hl-line
+  (set-face-attribute 'hl-line nil
+                      :background "#22262b"
+                      :foreground 'unspecified
+                      :extend t))
+
+(use-package which-key
+  :demand t
+  :config
+  (setq which-key-idle-delay 0.1)
+  (which-key-mode 1))
+
+(use-package recentf
+  :ensure nil
+  :config
+  (setq recentf-max-menu-items 25
+        recentf-max-saved-items 100)
+  (dolist (path '("\\.git/" "/tmp/" "/nix/store/"))
+    (add-to-list 'recentf-exclude path))
+  (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-var-directory))
+  (add-to-list 'recentf-exclude (recentf-expand-file-name no-littering-etc-directory))
+  (add-hook 'kill-emacs-hook #'recentf-cleanup -90))
+
 ;; Modules
 (add-to-list 'load-path (expand-file-name "lisp/" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "lisp/custom/" user-emacs-directory))
 
-;;(require 'meow-setup)
-;;(require 'meow-keys)
-(require 'evil-config)
-(require 'keys)
+(require 'meow-setup)
 (require 'dashboard)
 (require 'magit-config)
 (require 'mail)

@@ -104,7 +104,7 @@
     (message "message-sendmail-extra-arguments: %s"
              message-sendmail-extra-arguments)))
 
-(define-key leader (kbd "o m") #'mu4e)
-(define-key leader (kbd "y m") #'mu4e-org-mode)
+;; (define-key my-leader-map (kbd "o m") #'mu4e)
+;; (define-key my-leader-map (kbd "y m") #'mu4e-org-mode)
 
 (provide 'mail)

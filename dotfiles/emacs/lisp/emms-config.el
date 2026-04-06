@@ -142,16 +142,16 @@
                 (emms-center-buffer-in-frame)))))
 
 ;; Keybinds
-(with-eval-after-load 'emms
-  (define-key leader (kbd "m u") #'my/update-emms-from-mpd)
-  (define-key leader (kbd "m d") #'emms-play-directory-tree)
-  (define-key leader (kbd "m p") #'emms-playlist-mode-go)
-  (define-key leader (kbd "m h") #'emms-shuffle)
-  (define-key leader (kbd "m x") #'emms-pause)
-  (define-key leader (kbd "m s") #'emms-stop)
-  (define-key leader (kbd "m b") #'emms-previous)
-  (define-key leader (kbd "m n") #'emms-next)
-  (define-key leader (kbd "m o") #'emms-browser))
+;; (with-eval-after-load 'emms
+;;   (define-key my-leader-map (kbd "m u") #'my/update-emms-from-mpd)
+;;   (define-key my-leader-map (kbd "m d") #'emms-play-directory-tree)
+;;   (define-key my-leader-map (kbd "m p") #'emms-playlist-mode-go)
+;;   (define-key my-leader-map (kbd "m h") #'emms-shuffle)
+;;   (define-key my-leader-map (kbd "m x") #'emms-pause)
+;;   (define-key my-leader-map (kbd "m s") #'emms-stop)
+;;   (define-key my-leader-map (kbd "m b") #'emms-previous)
+;;   (define-key my-leader-map (kbd "m n") #'emms-next)
+;;   (define-key my-leader-map (kbd "m o") #'emms-browser))
 
 (provide 'emms-config)
 ;;; emms-config.el ends here

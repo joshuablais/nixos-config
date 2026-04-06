@@ -1,6 +1,3 @@
-;;; clipboard-manager.el --- Description -*- lexical-binding: t; -*-
-
-
 (defun jb/get-cliphist-entries ()
   "Get the 50 most recent clipboard entries from cliphist, fully decoded."
   (when (executable-find "cliphist")
@@ -50,6 +47,6 @@ The full, untruncated text is always copied - truncation is only for display."
       (message "Copied to clipboard: %s"
                (truncate-string-to-width selected 50 nil nil "...")))))
 
-(define-key leader (kbd "y y") #'jb/clipboard-manager)
+;; (define-key my-leader-map (kbd "y y") #'jb/clipboard-manager)
 
 (provide 'jb-clipboard-manager)
