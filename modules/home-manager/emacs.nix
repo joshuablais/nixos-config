@@ -3,12 +3,13 @@
   programs.emacs = {
     enable = true;
     package = pkgs.emacs;
-    extraPackages = epkgs: with epkgs; [
-      vterm
-      pdf-tools
-      treesit-grammars.with-all-grammars
-      mu4e
-    ];
+    extraPackages =
+      epkgs: with epkgs; [
+        vterm
+        pdf-tools
+        treesit-grammars.with-all-grammars
+        mu4e
+      ];
   };
 
   home.packages = with pkgs; [
@@ -36,17 +37,16 @@
     # --- org-mode / export ---
     # texlive.combined.scheme-full
     graphviz
-    sqlite        # org-roam, forge
+    sqlite # org-roam, forge
 
     # --- image handling ---
     imagemagick
     vips
 
     # --- window management ---
-    wmctrl        # emacs frame focus from CLI / scripts
+    wmctrl # emacs frame focus from CLI / scripts
 
     # --- linters / formatters (flycheck, apheleia, etc.) ---
-    # nodePackages.js-beautify
     shellcheck
     html-tidy
     stylelint

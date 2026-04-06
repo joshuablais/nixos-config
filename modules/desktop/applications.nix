@@ -11,7 +11,6 @@
     libavif
     mozjpeg
     oxipng
-    nodePackages.svgo
 
     # KDE connect
     kdePackages.kdeconnect-kde
