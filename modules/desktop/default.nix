@@ -21,6 +21,7 @@
     ./networking.nix
     ./power.nix
     ./printing.nix
+    ./usb.nix
     ./storage.nix
     ./theming.nix
   ];
