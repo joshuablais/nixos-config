@@ -228,13 +228,12 @@
 (require 'spelling)
 (require 'workspaces)
 (require 'everywhere)
-;;(require 'elpher-config)
+(require 'elpher-config)
 (require 'gnus-config)
 (require 'tools)
-
 (with-eval-after-load 'org
   (require 'org-config))
-
+(require 'agenda-custom)
 (require 'jitsi-meeting)
 (require 'universal-launcher)
 (require 'jb-0x0)
