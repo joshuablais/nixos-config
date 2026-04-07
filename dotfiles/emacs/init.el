@@ -217,6 +217,7 @@
 (require 'test-runner)
 (require 'persist)
 (require 'dired-config)
+(require 'jabber-config)
 (require 'vterm-config)
 (require 'elfeed-config)
 (require 'reading)

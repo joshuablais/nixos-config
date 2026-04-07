@@ -18,6 +18,10 @@
     gnumake
     libtool
 
+    # For OMEMO in jabber.el
+    mbedtls
+    pkg-config
+
     # --- search / navigation ---
     ripgrep
     fd
