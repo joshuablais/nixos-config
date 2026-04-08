@@ -232,7 +232,8 @@
 (require 'gnus-config)
 (require 'tools)
 (with-eval-after-load 'org
-  (require 'org-config))
+  (require 'org-config)
+  (require 'org-roam-config))
 (require 'agenda-custom)
 (require 'jitsi-meeting)
 (require 'universal-launcher)

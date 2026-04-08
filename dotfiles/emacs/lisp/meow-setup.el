@@ -48,6 +48,7 @@
    '("X" . org-capture)
    '("n r i" . org-roam-capture)
    '("n r f" . org-roam-node-find)
+   '("n j" . org-roam-dailies-capture-today)
 
    ;; Magit
    '("g" . (lambda () (interactive) (require 'magit) (magit-status)))

@@ -42,15 +42,17 @@
   "Contacts with empty LAST_CONTACTED."
   (interactive)
   (org-ql-search "~/org/contacts.org"
-                 '(property "LAST_CONTACTED" "")))
+    '(property "LAST_CONTACTED" "")))
 
 
 (defun jb/stale-contacts (days)
   "Show contacts not reached in DAYS days."
   (interactive "nDays since last contact: ")
-  (org-ql-search "~/org/contacts.org"
-                 `(and (property "LAST_CONTACTED")
-                       (property-ts< "LAST_CONTACTED" ,(format-time-string "%Y-%m-%d"
-                                                                         (time-subtract (current-time) (days-to-time days)))))))
+  (let ((cutoff (format-time-string "%Y-%m-%d"
+                                    (time-subtract (current-time) (days-to-time days)))))
+    (org-ql-search "~/org/contacts.org"
+      `(and (property "LAST_CONTACTED")
+            (pred (lambda ()
+                    (string< (org-entry-get (point) "LAST_CONTACTED") ,cutoff)))))))
 
 (provide 'agenda-custom)
