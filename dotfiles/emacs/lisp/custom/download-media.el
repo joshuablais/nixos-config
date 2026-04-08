@@ -209,5 +209,4 @@ With prefix argument, prompts for media type override."
       ('article (jb/media--download-article url))
       (_ (error "Unknown media type: %s" type)))))
 
-(map! :leader
-      :desc "Download media locally" "o D" #'jb/download-media)
+(provide 'download-media)

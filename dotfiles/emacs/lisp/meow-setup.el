@@ -57,6 +57,7 @@
    '("!" . jb/run-command)
    '("o t" . my/vterm)
    '("o T" . vterm)
+   '("o D" . jb/download-media)
    '("s T" . powerthesaurus-lookup-synonyms-dwim)
    '("s t" . dictionary-search)
    '("t z" . my/zen-mode)

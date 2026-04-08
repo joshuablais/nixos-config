@@ -24,7 +24,7 @@
         org-roam-db-location (expand-file-name "org-roam.db" "~/org/roam")
         org-roam-v2-ack t)
   :config
-  (setq org-roam-db-update-on-save nil)
+  (setq org-roam-db-update-on-save t)
 
   (unless (file-exists-p org-roam-directory)
     (make-directory org-roam-directory t))

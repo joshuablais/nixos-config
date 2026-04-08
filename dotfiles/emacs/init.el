@@ -235,7 +235,9 @@
   (require 'org-config)
   (require 'org-roam-config))
 (require 'agenda-custom)
+;; Custom
 (require 'jitsi-meeting)
+(require 'download-media)
 (require 'universal-launcher)
 (require 'jb-0x0)
 (require 'jb-clipboard-manager)
@@ -245,3 +247,4 @@
 (require 'done-refile)
 (require 'create-daily)
 (require 'nm)
+(put 'narrow-to-region 'disabled nil)
