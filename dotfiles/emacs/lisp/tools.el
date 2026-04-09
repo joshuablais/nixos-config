@@ -75,4 +75,10 @@
 (global-set-key (kbd "C-h C-m") #'my/messages-popup)
 (which-key-add-key-based-replacements "C-h C-m" "messages popup")
 
+(defun jb/checks ()
+  "Execute my bash script."
+  (interactive)
+  (shell-command "~/.config/scripts/Misc/checks"))
+
+
 (provide 'tools)

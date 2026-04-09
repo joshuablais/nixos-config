@@ -82,7 +82,7 @@
           (delete-other-windows)))))
   (add-hook 'after-make-frame-functions #'my/vterm-in-new-frame))
 
-(defun my/vterm ()
+(defun jb/vterm ()
   "Open vterm buffer as a bottom popup at 30% height."
   (interactive)
   (require 'vterm)
