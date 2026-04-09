@@ -1,5 +1,7 @@
 ;;; ../../dotfiles/doom/.config/doom/lisp/post-to-blog.el -*- lexical-binding: t; -*-
 
+(require 'ox-md)
+
 (defun my/get-org-property (property)
   "Get an org property from the current buffer."
   (save-excursion
