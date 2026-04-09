@@ -797,6 +797,11 @@ in
     # Tailscale service
     services.tailscale.enable = true;
 
+    networking.nameservers = [
+      "9.9.9.9"
+      "149.112.112.112"
+    ];
+
     # Firewall: Allow access on LAN
     networking.firewall = {
       allowedTCPPorts = [
