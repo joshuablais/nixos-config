@@ -7,6 +7,7 @@
   (flash-backdrop t)
   (flash-autojump t)
   (flash-rainbow nil)
+  (flash-search-folds t)
   (flash-char-jump-labels t)
   (flash-char-multi-line t)
   :config

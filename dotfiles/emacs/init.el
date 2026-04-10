@@ -242,7 +242,7 @@
 (require 'jb-0x0)
 (require 'jb-clipboard-manager)
 (require 'pomodoro)
-(require 'crm)
+(require 'crm-config)
 (require 'posse-twitter)
 (require 'post-to-blog)
 (require 'done-refile)

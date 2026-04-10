@@ -35,4 +35,4 @@
             (message "SMS Sent to %s" phone-number))
         (error "Operation cancelled or missing data")))))
 
-(provide 'crm)
+(provide 'crm-config)
