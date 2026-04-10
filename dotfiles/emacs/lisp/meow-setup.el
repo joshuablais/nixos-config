@@ -82,7 +82,7 @@
    '("<TAB> s" . easysession-save)
    '("<TAB> l" . easysession-switch-to)
    '("<TAB> R" . easysession-rename)
-   '("<TAB> D" . easysession-rename)
+   '("<TAB> D" . easysession-delete)
    '("<TAB> <TAB>" . +workspace/display)
    '("<TAB> n" . +workspace/new)
    '("<TAB> d" . +workspace/delete)

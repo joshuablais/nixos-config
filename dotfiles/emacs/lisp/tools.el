@@ -31,17 +31,6 @@
 (use-package link-hint
   :ensure t)
 
-;; scratch buffer
-(use-package persistent-scratch
-  :ensure t
-  :custom
-  (persistent-scratch-save-file (expand-file-name "persistent-scratch" user-emacs-directory))
-  (persistent-scratch-autosave-interval 60)
-  (persistent-scratch-what-to-save '(major-mode point narrowing))
-  :config
-  (persistent-scratch-setup-default)
-  (persistent-scratch-autosave-mode 1))
-
 (defun my/scratch-popup ()
   "Open scratch buffer as a bottom popup at 30% height."
   (interactive)
@@ -54,7 +43,6 @@
       (slot . 0)
       (window-height . 0.3)
       (window-parameters . ((no-delete-other-windows . t)))))))
-
 
 ;; Messages buffer
 (defun my/messages-popup ()
