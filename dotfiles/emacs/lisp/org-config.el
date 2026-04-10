@@ -524,6 +524,12 @@
 
 (use-package ob-go :demand t)
 
+;; Refile to org-agenda nodes
+(setq org-refile-targets
+      '((org-agenda-files :maxlevel . 4)))
+(setq org-refile-use-outline-path 'file
+      org-outline-path-complete-in-steps nil)
+
 (elpaca-wait)
 
 ;; set babel languages, add go
