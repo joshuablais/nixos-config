@@ -79,16 +79,16 @@
         "widgets": {
             "center": [
                 {
-                    "compactMode": false,
+                    "compactMode": true,
                     "hideMode": "hidden",
                     "hideWhenIdle": false,
                     "id": "MediaMini",
                     "maxWidth": 300,
                     "panelShowAlbumArt": true,
                     "scrollingMode": "hover",
-                    "showAlbumArt": true,
+                    "showAlbumArt": false,
                     "showArtistFirst": true,
-                    "showProgressRing": true,
+                    "showProgressRing": false,
                     "showVisualizer": true,
                     "textColor": "none",
                     "useFixedWidth": false,
