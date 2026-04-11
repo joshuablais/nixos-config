@@ -8,7 +8,7 @@
   # Enable Ollama as a systemd service with CUDA
   services.ollama = {
     enable = true;
-    package = pkgs.ollama-cuda;
+    acceleration = "cuda";
     host = "0.0.0.0";
     port = 11434;
     environmentVariables = {
@@ -25,7 +25,6 @@
 
   # You likely still want the CLI tools
   environment.systemPackages = [
-    pkgs.ollama # The service includes this, but explicit is fine
     pkgs.gemini-cli
   ];
 
