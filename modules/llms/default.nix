@@ -8,7 +8,7 @@
   # Enable Ollama as a systemd service with CUDA
   services.ollama = {
     enable = true;
-    acceleration = "cuda";
+    package = pkgs.ollama-cuda;
     host = "0.0.0.0";
     port = 11434;
     environmentVariables = {
