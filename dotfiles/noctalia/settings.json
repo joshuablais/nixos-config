@@ -83,25 +83,16 @@
                     "hideMode": "hidden",
                     "hideWhenIdle": false,
                     "id": "MediaMini",
-                    "maxWidth": 145,
+                    "maxWidth": 300,
                     "panelShowAlbumArt": true,
                     "scrollingMode": "hover",
                     "showAlbumArt": true,
                     "showArtistFirst": true,
                     "showProgressRing": true,
-                    "showVisualizer": false,
+                    "showVisualizer": true,
                     "textColor": "none",
                     "useFixedWidth": false,
                     "visualizerType": "linear"
-                },
-                {
-                    "defaultSettings": {
-                        "leftButton": "next",
-                        "middleButton": "shuffle",
-                        "rightButton": "toggle",
-                        "shuffleStopsPlayback": true
-                    },
-                    "id": "plugin:mpd"
                 }
             ],
             "left": [
