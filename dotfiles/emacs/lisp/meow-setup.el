@@ -475,6 +475,15 @@
 (global-set-key (kbd "C-S-<up>") #'studium/increment-number)
 (global-set-key (kbd "C-S-<down>") #'studium/decrement-number)
 
+(defun my/replace-string-smart (from to)
+  "Replace string from point to end, or within region if active."
+  (interactive "sReplace: \nsReplace %s with: ")
+  (let ((start (if (use-region-p) (region-beginning) (point)))
+        (end (if (use-region-p) (region-end) (point-max))))
+    (replace-string from to nil start end)))
+
+(global-set-key (kbd "M-#") #'my/replace-string-smart)
+
 ;; Reload config
 (defun my/reload-config ()
   (interactive)
