@@ -3,6 +3,7 @@
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
+      "inode/directory" = [ "emacs-dir-manager.desktop" ];
       "video/mp4" = "mpv.desktop";
       "video/x-msvideo" = "mpv.desktop";
       "video/x-matroska" = "mpv.desktop";
@@ -20,6 +21,22 @@
         "libreoffice-writer.desktop";
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" = "libreoffice-calc.desktop";
       "x-scheme-handler/mailto" = "emacsclient-mail.desktop";
+    };
+  };
+
+  xdg.desktopEntries = {
+    emacs-dir-manager = {
+      name = "Emacs Dirvish";
+      genericName = "File Manager";
+      exec = "emacsclient -c -a \"\" %u";
+      terminal = false;
+      # "FileManager" is the spec-compliant category
+      categories = [
+        "System"
+        "FileManager"
+      ];
+      mimeType = [ "inode/directory" ];
+      icon = "emacs";
     };
   };
 
