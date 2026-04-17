@@ -7,7 +7,7 @@
       user = {
         name = "Joshua Blais";
         email = "josh@joshblais.com";
-        signingkey = "30921BCE1F9F0A8C";
+        signingkey = "3BCEFE7AE837AFD7";
       };
       commit.gpgsign = true;
       tag.gpgsign = true;
