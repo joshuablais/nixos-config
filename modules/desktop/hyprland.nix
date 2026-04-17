@@ -1,14 +1,7 @@
-# ~/nixos-config/modules/desktop/hyprland.nix
+{ config, pkgs, ... }:
+
 {
-  config,
-  pkgs,
-  lib,
-  ...
-}:
-let
-  emacsPortal = import ./emacs-filechooser.nix { inherit pkgs lib; };
-in
-{
+  # Enable Hyprland at system level
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -16,30 +9,18 @@ in
 
   xdg.portal = {
     enable = true;
-    xdgOpenUsePortal = true;
     extraPortals = [
       pkgs.xdg-desktop-portal-hyprland
-      emacsPortal
+      pkgs.xdg-desktop-portal-gtk
     ];
     config = {
-      common = {
-        "org.freedesktop.impl.portal.FileChooser" = [ "emacs" ];
-      };
-      hyprland = {
-        default = [
-          "emacs"
-          "hyprland"
-          "gtk"
-        ];
-        "org.freedesktop.impl.portal.FileChooser" = [ "emacs" ];
-        "org.freedesktop.impl.portal.Screenshot" = [ "hyprland" ];
-        "org.freedesktop.impl.portal.Screencast" = [ "hyprland" ];
-      };
+      common.default = "*";
+      hyprland.default = [
+        "hyprland"
+        "gtk"
+      ];
     };
   };
-
-  # Ensure DBus knows about the new service
-  services.dbus.packages = [ emacsPortal ];
 
   environment.sessionVariables = {
     MOZ_ENABLE_WAYLAND = "1";

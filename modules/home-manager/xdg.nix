@@ -1,3 +1,4 @@
+# ~/nixos-config/modules/home-manager/xdg.nix
 { config, ... }: # Add 'config' here
 {
   xdg.mimeApps = {

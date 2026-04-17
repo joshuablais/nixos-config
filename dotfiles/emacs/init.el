@@ -208,7 +208,8 @@
 (require 'markdown)
 (require 'development)
 (require 'ledger-config)
-(require 'filechooser-config)
+;; Not working
+;; (require 'filechooser-config)
 (require 'grammars)
 (require 'modeline)
 (require 'editing)
