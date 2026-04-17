@@ -71,4 +71,37 @@
                              (call-process-region (point-min) (point-max) "wl-copy")))
                          (message "  %s   copied to clipboard" url)))))))))
 
+(defun jb/upload-to-snips (file)
+  "Upload FILE to snips.sh via SSH and yank the returned URL."
+  (interactive (list (read-file-name "Upload to snips.sh: ")))
+  (let* ((file (expand-file-name file))
+         (buf  (generate-new-buffer " *snips-upload*")))
+    (unless (file-readable-p file)
+      (error "File not readable: %s" file))
+    (message "Uploading %s to snips.sh..." (file-name-nondirectory file))
+    (make-process
+     :name     "snips-upload"
+     :buffer   buf
+     :command  (list "sh" "-c"
+                     (format "ssh snips.sh < %s"
+                             (shell-quote-argument file)))
+     :sentinel (lambda (proc event)
+                 (when (string-prefix-p "finished" event)
+                   (with-current-buffer (process-buffer proc)
+                     (let* ((raw  (buffer-string))
+                            (clean (replace-regexp-in-string
+                                    "\x1b\\[[0-9;]*[mKHF]" "" raw))
+                            (url  (when (string-match
+                                         "https://snips\\.sh/f/[A-Za-z0-9_-]+"
+                                         clean)
+                                    (match-string 0 clean))))
+                       (if url
+                           (progn
+                             (kill-new url)
+                             (message "snips.sh → %s (killed)" url))
+                         (message "snips.sh upload failed: couldn't parse URL"))))
+                   (kill-buffer (process-buffer proc)))
+                 (when (string-prefix-p "exited" event)
+                   (message "snips.sh upload failed")
+                   (kill-buffer (process-buffer proc)))))))
 (provide 'jb-0x0)
