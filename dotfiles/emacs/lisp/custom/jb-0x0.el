@@ -104,4 +104,41 @@
                  (when (string-prefix-p "exited" event)
                    (message "snips.sh upload failed")
                    (kill-buffer (process-buffer proc)))))))
+
+(defun jb/post-to-uguu (file)
+  "Upload FILE to uguu.se via curl. Copies URL to wl-clipboard and kill-ring."
+  (interactive
+   (list (read-file-name "Upload file: "
+                         (expand-file-name "~/Pictures/")
+                         nil t)))
+  (unless (file-exists-p file)
+    (user-error "File does not exist: %s" file))
+  (let* ((file (expand-file-name file))
+         (buf (generate-new-buffer " *uguu-upload*")))
+    (message "Uploading %s..." (file-name-nondirectory file))
+    (make-process
+     :name "uguu-upload"
+     :buffer buf
+     :stderr buf
+     :command (list "curl" "-sS" "--max-time" "60"
+                    "-F" (format "files[]=@%s" file)
+                    "https://uguu.se/upload?output=text")
+     :sentinel (lambda (proc event)
+                 (let ((proc-buf (process-buffer proc)))
+                   (when (string-match-p "finished" event)
+                     (let* ((raw (with-current-buffer proc-buf
+                                   (string-trim (buffer-string))))
+                            (url (when (string-match "https://[^\n\r]+" raw)
+                                   (match-string 0 raw))))
+                       (when (buffer-live-p proc-buf)
+                         (kill-buffer proc-buf))
+                       (if (not url)
+                           (message "uguu upload failed: %s" raw)
+                         (kill-new url)
+                         (ignore-errors
+                           (with-temp-buffer
+                             (insert url)
+                             (call-process-region (point-min) (point-max) "wl-copy")))
+                         (message "uguu.se → %s — copied to clipboard" url)))))))))
+
 (provide 'jb-0x0)
