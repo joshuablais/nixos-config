@@ -1,3 +1,4 @@
+# ~/nixos-config/modules/home-manager/emacs.nix
 { config, pkgs, ... }:
 {
   programs.emacs = {

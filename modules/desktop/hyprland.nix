@@ -1,3 +1,4 @@
+# ~/nixos-config/modules/desktop/hyprland.nix
 {
   config,
   pkgs,
