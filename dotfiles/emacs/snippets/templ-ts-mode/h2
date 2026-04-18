@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: h2
+# key: h2
+# --
+<h2 class="${1}">${2}</h2>

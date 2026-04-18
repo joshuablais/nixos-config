@@ -224,8 +224,6 @@
    '(">" . my/indent-right)
    '("<" . my/indent-left)
    '("'" . repeat)
-   '("<tab>" . my/smart-tab)
-   '("TAB" . my/smart-tab)
    '("<escape>" . ignore))
 
   (setq meow-mode-state-list
@@ -296,30 +294,7 @@
   (interactive)
   (kill-region (point) (1+ (point))))
 
-(defun my/smart-tab ()
-  "Smart tab: minibuffer complete, org-cycle, corfu, region indent, or indent to mode."
-  (interactive)
-  (cond
-   ((and (minibufferp) (bound-and-true-p vertico-mode))
-    (vertico-insert))
-   ((minibufferp)
-    (minibuffer-complete))
-   ((derived-mode-p 'org-mode)
-    (org-cycle))
-   ((and (derived-mode-p 'magit-mode)
-         (fboundp 'magit-section-toggle))
-    (call-interactively #'magit-section-toggle))
-   ((and (derived-mode-p 'dired-mode)
-         (fboundp 'dirvish-subtree-toggle))
-    (dirvish-subtree-toggle))
-   ((and (bound-and-true-p corfu-mode)
-         (frame-live-p (bound-and-true-p corfu--frame)))
-    (corfu-next))
-   ((use-region-p) (indent-region (region-beginning) (region-end)))
-   (t (indent-according-to-mode))))
-
-(global-set-key (kbd "TAB") #'my/smart-tab)
-(global-set-key (kbd "<tab>") #'my/smart-tab)
+(setq tab-always-indent 'complete)
 
 (defun studium/paste-below ()
   "Vim p: paste after cursor (characterwise) or below current line (linewise)."

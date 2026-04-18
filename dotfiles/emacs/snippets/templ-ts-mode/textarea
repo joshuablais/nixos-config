@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: textarea
+# key: ta
+# --
+<textarea id="${1}" name="${2}" rows="${3:4}" class="${4}" placeholder="${5}"></textarea>
