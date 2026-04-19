@@ -22,4 +22,9 @@
                              :follow (lambda (path)
                                        (elpher-go (concat "gopher://" path))))))
 
+;; Keybinds
+(with-eval-after-load 'elpher
+  (define-key elpher-mode-map (kbd "b") #'elpher-back)
+  (define-key elpher-mode-map (kbd "a") #'elpher-bookmark-link))
+
 (provide 'elpher-config)

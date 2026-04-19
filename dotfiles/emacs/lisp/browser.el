@@ -45,9 +45,22 @@
 (setq shr-max-image-size '(800 . 600))  ;; cap image dimensions
 (setq shr-image-animate t)             ;; kill animated gifs entirely
 
+(defun my/eww-download-image-at-point ()
+  "Download image at point to `eww-download-directory'."
+  (interactive)
+  (let ((url (or (get-text-property (point) 'image-url)
+                 (get-text-property (point) 'shr-url))))
+    (if (not url)
+        (message "No image at point")
+      (let* ((filename (file-name-nondirectory (url-filename (url-generic-parse-url url))))
+             (dest (expand-file-name filename eww-download-directory)))
+        (url-copy-file url dest t)
+        (message "Saved: %s" dest)))))
+
 ;; Keybinds
 (with-eval-after-load 'eww
   (define-key eww-mode-map (kbd "b") #'eww-back-url)
-  (define-key eww-mode-map (kbd "a") #'eww-add-bookmark))
+  (define-key eww-mode-map (kbd "a") #'eww-add-bookmark)
+  (define-key eww-mode-map (kbd "D") #'my/eww-download-image-at-point))
 
 (provide 'browser)
