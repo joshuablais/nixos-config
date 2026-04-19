@@ -6,6 +6,10 @@
 ;; (setq browse-url-browser-function 'browse-url-generic)
 ;; (setq browse-url-generic-program "chromium")
 
+;; set searx instance
+(setq eww-search-prefix "https://searx.labrynth.org/search?q=")
+(setq eww-download-directory (expand-file-name "~/Downloads/"))
+
 (defun my-browse-url-mpv (url &rest _args)
   "Open URL in mpv."
   (start-process "mpv" nil "mpv" url))
@@ -40,5 +44,10 @@
 (setq shr-use-fonts nil) ;; fix font zoom
 (setq shr-max-image-size '(800 . 600))  ;; cap image dimensions
 (setq shr-image-animate t)             ;; kill animated gifs entirely
+
+;; Keybinds
+(with-eval-after-load 'eww
+  (define-key eww-mode-map (kbd "b") #'eww-back-url)
+  (define-key eww-mode-map (kbd "a") #'eww-add-bookmark))
 
 (provide 'browser)
