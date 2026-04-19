@@ -6,9 +6,10 @@
   :custom
   (olivetti-body-width 100))
 
-(use-package focus
-  :ensure t
-  :defer t)
+;; If you want hilighting/dimming
+;; (use-package focus
+;;   :ensure t
+;;   :defer t)
 
 (defvar my/zen--saved-cursor-type nil
   "Cursor type before zen mode was activated.")
@@ -20,11 +21,10 @@
   "Toggle a distraction-free writing environment."
   (interactive)
   (require 'olivetti)
-  (require 'focus)
+  ;; (require 'focus)
   (if (bound-and-true-p olivetti-mode)
       (progn
         (olivetti-mode -1)
-        (focus-mode -1)
         (display-line-numbers-mode 1)
         (hl-line-mode 1)
         (text-scale-set 0)
@@ -41,7 +41,7 @@
                                      :family "Alegreya"
                                      :height 1.2))
       (olivetti-mode 1)
-      (focus-mode 1)
+      ;; (focus-mode 1)
       (display-line-numbers-mode -1)
       (hl-line-mode -1)
       (text-scale-set 1)
