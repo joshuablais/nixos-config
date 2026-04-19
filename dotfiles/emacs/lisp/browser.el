@@ -10,12 +10,35 @@
   "Open URL in mpv."
   (start-process "mpv" nil "mpv" url))
 
+(defun my-browse-url-pdf (url &rest _args)
+  "Fetch remote PDF and open in pdf-tools within Emacs."
+  (let ((tmp (make-temp-file "emacs-pdf-" nil ".pdf")))
+    (url-copy-file url tmp t)
+    (find-file-other-window tmp)
+    (pdf-view-mode)))
+
 (setq browse-url-handlers
-      '(("\\(youtube\\.com\\|youtu\\.be\\)" . my-browse-url-mpv)
+      '(("\\(youtube\\.com\\|youtu\\.be\\|vimeo\\.com\\|twitch\\.tv\\)" . my-browse-url-mpv)
+        ("\\.pdf$" . my-browse-url-pdf)
+        ("^gemini://" . elpher-browse-url-elpher)
+        ("^gopher://" . elpher-browse-url-elpher)
         ("." . eww-browse-url)))
 
 ;; Keep your fallback setting
 (setq browse-url-secondary-browser-function 'browse-url-generic
       browse-url-generic-program "chromium")
+
+(with-eval-after-load 'eww
+  (define-key eww-mode-map (kbd "=") #'text-scale-increase)
+  (define-key eww-mode-map (kbd "-") #'text-scale-decrease)
+  (define-key eww-mode-map (kbd "0") #'text-scale-adjust))
+
+(setq shr-width 100)          ;; hard column limit, tune to your frame width
+(setq shr-max-width 120)      ;; absolute ceiling
+(setq shr-indentation 4)      ;; left margin breathing room
+
+(setq shr-use-fonts nil) ;; fix font zoom
+(setq shr-max-image-size '(800 . 600))  ;; cap image dimensions
+(setq shr-image-animate t)             ;; kill animated gifs entirely
 
 (provide 'browser)
