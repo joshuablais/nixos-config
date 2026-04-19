@@ -294,7 +294,10 @@
   (interactive)
   (kill-region (point) (1+ (point))))
 
+;; Tab behaviour
 (setq tab-always-indent 'complete)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
 
 (defun studium/paste-below ()
   "Vim p: paste after cursor (characterwise) or below current line (linewise)."
