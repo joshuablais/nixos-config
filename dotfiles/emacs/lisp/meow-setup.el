@@ -67,6 +67,7 @@
    '("o d" . dirvish)
    '("e r" . my/erc-connect)
    '("e w" . eww)
+   '("e l" . elpher)
    '("e e" . elfeed)
    '("e u" . elfeed-update)
    '("e v" . elfeed-tube-mpv)
