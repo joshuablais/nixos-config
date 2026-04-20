@@ -23,6 +23,7 @@
 
 (setq browse-url-handlers
       '(("\\(youtube\\.com\\|youtu\\.be\\|vimeo\\.com\\|twitch\\.tv\\)" . my-browse-url-mpv)
+        ("\\.mp4$" . my-browse-url-mpv)
         ("\\.pdf$" . my-browse-url-pdf)
         ("^gemini://" . elpher-browse-url-elpher)
         ("^gopher://" . elpher-browse-url-elpher)
