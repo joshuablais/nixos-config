@@ -45,7 +45,7 @@
    '("o b" . browse-url-of-file)
 
    ;; Org
-   '("X" . org-capture)
+   '("C" . org-capture)
    '("n r i" . org-roam-capture)
    '("n r f" . org-roam-node-find)
    '("n j" . org-roam-dailies-capture-today)
@@ -133,7 +133,7 @@
 
   (meow-motion-define-key
    ;; Navigation
-   '("W" . meow-next-work)
+   '("W" . meow-next-word)
    '("B" . meow-back-word)
    '("^" . back-to-indentation)
    '("L" . (lambda () (interactive) (meow-line 1) (meow-reverse)))
