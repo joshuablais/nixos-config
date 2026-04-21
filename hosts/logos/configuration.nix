@@ -30,6 +30,9 @@
       "networkmanager"
       "wheel"
     ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBHOhKWVw7qSIftvEZzjPkbxbRizHe3LVmmQ/xaT78F8 joshua@logos-202604"
+    ];
   };
 
   # Create the user group

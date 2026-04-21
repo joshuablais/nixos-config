@@ -43,5 +43,5 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII7upEnqqvZMGYQVkwnQRogLIJZ814TNjfdGqP1zJ4En josh@joshblais.com"
   ];
 
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 }

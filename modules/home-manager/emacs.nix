@@ -46,6 +46,7 @@
 
     # --- image handling ---
     imagemagick
+    ghostscript
     vips
 
     # --- window management ---
