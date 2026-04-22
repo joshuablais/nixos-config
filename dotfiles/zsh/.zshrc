@@ -26,6 +26,21 @@ SAVEHIST=10000
 HISTFILE=~/.zsh_history
 bindkey -e
 
+# Clipboard-aware kill-line
+x-kill-line() {
+  zle kill-line
+  echo -n $CUTBUFFER | wl-copy
+}
+zle -N x-kill-line
+bindkey '^K' x-kill-line
+
+# Paste from Wayland
+x-yank() {
+  LBUFFER+="$(wl-paste --no-newline)"
+}
+zle -N x-yank
+bindkey '^Y' x-yank
+
 # FZF FUNCTIONS
 fcd() {
   cd "$(find -type d | fzf --preview 'tree -C {} | head -200' --preview-window 'up:60%')"
