@@ -134,7 +134,6 @@
   (meow-motion-define-key
    ;; Navigation
    '("W" . meow-next-word)
-   '("B" . meow-back-word)
    '("^" . back-to-indentation)
    '("L" . (lambda () (interactive) (meow-line 1) (meow-reverse)))
    '("l" . meow-line)
@@ -177,7 +176,6 @@
    '("a" . meow-append)
    '("A" . (lambda () (interactive) (end-of-line) (meow-insert)))
    '("b" . meow-back-word)
-   '("B" . meow-back-symbol)
    '("c" . meow-change)
    '("C" . (lambda () (interactive) (meow-kill) (meow-insert)))
    '("d" . studium/clipboard-kill-line-or-fold)
@@ -199,7 +197,7 @@
    '("O" . meow-open-above)
    '("p" . studium/paste-below)
    '("P" . studium/paste-above)
-   '("C-v" . my/meow-paste)
+   ;; '("C-v" . my/meow-paste)
    '("q" . meow-quit)
    '("Q" . kmacro-start-macro-or-insert-counter)
    '("@" . kmacro-end-or-call-macro)
@@ -404,7 +402,7 @@
 (global-set-key (kbd "C-c J") #'consult-register)
 
 ;; Window movement
-(global-set-key (kbd "C-w") #'backward-kill-word)
+;; (global-set-key (kbd "C-w") #'backward-kill-word)
 (global-set-key (kbd "C-<left>")  #'windmove-left)
 (global-set-key (kbd "C-<right>") #'windmove-right)
 (global-set-key (kbd "C-<down>")  #'windmove-down)
@@ -432,8 +430,8 @@
 (global-set-key (kbd "C--") #'text-scale-decrease)
 
 ;; Save
-(global-set-key (kbd "C-v") #'clipboard-yank)
-(define-key minibuffer-local-map (kbd "C-v") #'yank)
+;; (global-set-key (kbd "C-v") #'clipboard-yank)
+;; (define-key minibuffer-local-map (kbd "C-v") #'yank)
 (global-set-key (kbd "C-s") #'save-buffer)
 (global-set-key (kbd "C-r") #'undo-tree-redo)
 

@@ -1,0 +1,20 @@
+unmap j
+unmap k
+unmap d
+unmap u
+unmap G
+unmap gg
+unmap B
+unmap F
+
+map <c-v> scrollPageDown
+map <a-v> scrollPageUp
+map <a-<> scrollToTop
+map <a->> scrollToBottom
+
+map B goBack
+map F goForward
+
+map <c-g>< goUp
+
+map <c-f> LinkHints.activateOpenInNewTab
