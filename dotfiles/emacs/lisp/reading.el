@@ -4,18 +4,27 @@
   :ensure t
   :defer t
   :init
+  (setq large-file-warning-threshold (* 50 1024 1024))
   (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
   :config
-  (setq nov-unzip-program (executable-find "bsdtar")
-        nov-unzip-args '("-xC" directory "-f" filename))
-  (add-hook 'nov-mode-hook
-            (lambda ()
-              (face-remap-add-relative 'variable-pitch
-                                       :family "ETBembo"
-                                       :height 1.4)
-              (setq-local line-spacing 0.3)
-              (visual-line-mode 1)
-              (olivetti-mode 1))))
+  ;; Double-check if bsdtar exists, otherwise fallback to standard unzip
+  (let ((bsdtar (executable-find "bsdtar")))
+    (if bsdtar
+        (setq nov-unzip-program bsdtar
+              nov-unzip-args '("-xC" directory "-f" filename))
+      (setq nov-unzip-program (executable-find "unzip"))))
+
+  (defun my-nov-setup ()
+    (face-remap-add-relative 'variable-pitch
+                             :family "ETBembo"
+                             :height 1.4)
+    (buffer-face-mode 1)
+    (setq-local line-spacing 0.3)
+    (setq-local olivetti-body-width 85)
+    (visual-line-mode 1)
+    (olivetti-mode 1))
+
+  (add-hook 'nov-mode-hook #'my-nov-setup))
 
 (use-package calibredb
   :ensure t
