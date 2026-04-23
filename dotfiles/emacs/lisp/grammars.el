@@ -34,8 +34,7 @@
 
 (use-package zig-mode
   :ensure t
-  :mode "\\.zig\\'"
-  :hook (zig-mode . eglot-ensure))
+  :mode "\\.zig\\'")
 
 (use-package templ-ts-mode
   :mode "\\.templ\\'")
@@ -85,15 +84,21 @@
   :hook ((go-ts-mode     . eglot-ensure)
          (python-ts-mode . eglot-ensure)
          (js-ts-mode     . eglot-ensure)
-         (nix-ts-mode     . eglot-ensure)
-         (templ-ts-mode  . eglot-ensure))
+         (css-ts-mode    . eglot-ensure)
+         (html-ts-mode   . eglot-ensure)
+         (c-ts-mode      . eglot-ensure)
+         (nix-ts-mode    . eglot-ensure)
+         (templ-ts-mode  . eglot-ensure)
+         (zig-mode       . eglot-ensure))
   :custom
   (eglot-autoshutdown       t)
-  (eglot-events-buffer-size 0)   ; no event log
-  (eglot-sync-connect       nil) ; non-blocking LSP connect
-  (eglot-extend-to-xref     t))  ; LSP context follows xref jumps
+  (eglot-events-buffer-size 0)
+  (eglot-sync-connect       nil)
+  (eglot-extend-to-xref     t)
+  :config
+  (add-to-list 'eglot-server-programs
+               '(templ-ts-mode . ("templ" "lsp"))))
 
-;; auto fromat on save
 (add-hook 'before-save-hook
           (lambda ()
             (when (bound-and-true-p eglot--managed-mode)
