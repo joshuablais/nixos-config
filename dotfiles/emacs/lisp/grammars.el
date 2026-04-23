@@ -29,9 +29,11 @@
                  ("go\\.mod\\'"  . go-mod-ts-mode)
                  ("go\\.sum\\'"  . go-mod-ts-mode)
                  ("\\.c\\'"      . c-ts-mode)
-                 ("\\.h\\'"      . c-ts-mode)
-                 ("\\.zig\\'"    . zig-ts-mode)))
+                 ("\\.h\\'"      . c-ts-mode)))
   (add-to-list 'auto-mode-alist entry))
+
+(use-package zig-mode
+  :mode "\\.zig\\'")
 
 (use-package templ-ts-mode
   :mode "\\.templ\\'")
