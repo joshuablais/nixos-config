@@ -33,7 +33,9 @@
   (add-to-list 'auto-mode-alist entry))
 
 (use-package zig-mode
-  :mode "\\.zig\\'")
+  :ensure t
+  :mode "\\.zig\\'"
+  :hook (zig-mode . eglot-ensure))
 
 (use-package templ-ts-mode
   :mode "\\.templ\\'")
