@@ -6,6 +6,22 @@
   (erc-server "irc.joshblais.com")
   (erc-port 6697)
   (erc-nick "joshuablais")
+  (erc-modules '(autojoin
+                 button
+                 completion
+                 fill
+                 irccontrols
+                 list
+                 match
+                 menu
+                 move-to-prompt
+                 netsplit
+                 networks
+                 noncommands
+                 readonly
+                 ring
+                 stamp
+                 track))
   (erc-autojoin-channels-alist
    '(("libera" "#technicalrenaissance" "#emacs" "#go-nuts" "#systemcrafters" "#nixos" "#librephone")))
   (erc-track-shorten-start 8)
@@ -42,6 +58,12 @@
      (format "ERC: %s" (buffer-name))
      (format "%s: %s" nick message))))
 
+(use-package erc-image
+  :after erc
+  :demand t
+  :config
+  (setq erc-image-inline-rescale 400)
+  (add-hook 'erc-insert-modify-hook #'erc-image-show-url))
 
 (provide 'erc-config)
 ;;; erc-config.el ends here
