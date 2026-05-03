@@ -24,5 +24,6 @@
     ./usb.nix
     ./storage.nix
     ./theming.nix
+    ./virtualisation.nix
   ];
 }
