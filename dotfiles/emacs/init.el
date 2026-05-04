@@ -60,6 +60,12 @@
 ;; no-littering must run before anything writes files
 (setq custom-file (expand-file-name "etc/custom.el" user-emacs-directory))
 
+(with-eval-after-load 'bookmark
+  (setq bookmark-default-file (expand-file-name "bookmarks" user-emacs-directory)))
+
+;; Force save frequently so you can see if it's working
+(setq bookmark-save-flag 1)
+
 (use-package no-littering
   :demand t
   :init

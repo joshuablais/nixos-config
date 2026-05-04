@@ -28,6 +28,7 @@ in
     ".tmux.conf".source = mkOutOfStoreSymlink "${configDir}/tmux/.tmux.conf";
     ".tridactylrc".source = mkOutOfStoreSymlink "${configDir}/tridactyl/tridactylrc";
     ".zshrc".source = mkOutOfStoreSymlink "${configDir}/zsh/.zshrc";
+    ".zprofile".source = mkOutOfStoreSymlink "${configDir}/zsh/.zprofile";
     # Thunderbird theming
     ".thunderbird/w2wlpdok.default/chrome".source =
       mkOutOfStoreSymlink "${configDir}/thunderbird/chrome";
