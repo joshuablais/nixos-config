@@ -39,6 +39,9 @@
   # Android tooling
   users.users.joshua.extraGroups = [ "adbusers" ];
 
+  # Guix
+  services.guix.enable = true;
+
   services.resolved.enable = true;
   services.mullvad-vpn.enable = true;
   programs.kdeconnect.enable = true;
