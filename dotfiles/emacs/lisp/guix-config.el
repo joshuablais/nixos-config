@@ -16,8 +16,9 @@
 
 (use-package guix
   :ensure t
-  :config
-  (setq guix-guile-program
-        (list (expand-file-name "~/.config/guix/current/bin/guile"))))
+  :init
+  (setq guix-state-directory "/var/guix"
+        guix-user-profiles-directory "~/.guix-profile"
+        guix-config-guile-program "~/.guix-profile/bin/guile"))
 
 (provide 'guix-config)
