@@ -4,7 +4,8 @@
     packages = with pkgs; [
       alegreya
       nerd-fonts.geist-mono
-      ioskeley-mono.normal-NF
+      nerd-fonts.iosevka
+      # ioskeley-mono.normal-NF
       montserrat
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
