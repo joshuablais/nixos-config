@@ -358,8 +358,13 @@ Item {
         const browser = root.fileBrowser || "yazi"
         if (browser === "yazi" || browser === "ranger" || browser === "lf" || browser === "nnn") {
             // Terminal file managers need a terminal emulator
-                const term = root.terminalCommand || "kitty"
-            Quickshell.execDetached([term, "-e", browser, mountpoint])
+            const term = root.terminalCommand || "kitty"
+            const termLower = term.toLowerCase()
+            // Ptyxis, GNOME Terminal, and WezTerm prefer `--` instead of `-e`
+            const flag = (termLower.indexOf("ptyxis") !== -1
+                       || termLower.indexOf("gnome-terminal") !== -1
+                       || termLower.indexOf("wezterm") !== -1) ? "--" : "-e"
+            Quickshell.execDetached([term, flag, browser, mountpoint])
         } else {
             Quickshell.execDetached([browser, mountpoint])
         }

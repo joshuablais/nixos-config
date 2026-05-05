@@ -14,6 +14,7 @@
   },
   "device": {
     "mounted": "Mounted",
+    "loading": "Loading...",
     "used": "{size} used",
     "free": "{size} free",
     "action-open": "Open",
@@ -26,6 +27,7 @@
     "open": "Open USB Manager",
     "refresh": "Refresh Devices",
     "unmount-all": "Unmount All",
+    "eject-all": "Eject All",
     "settings": "Settings"
   },
   "notifications": {

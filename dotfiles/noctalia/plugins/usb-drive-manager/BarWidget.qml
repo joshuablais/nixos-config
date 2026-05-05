@@ -51,8 +51,8 @@ NIconButton {
     applyUiScale: false
     customRadius: Style.radiusL
 
-    colorBg: hasMountedDevices ? Color.mPrimaryContainer : Style.capsuleColor
-    colorFg: hasMountedDevices ? Color.mOnPrimaryContainer : root.iconColor !== "transparent" ? root.iconColor : Color.mOnSurface
+    colorBg: hasMountedDevices ? Color.mPrimary : Style.capsuleColor
+    colorFg: hasMountedDevices ? Color.mOnPrimary : root.iconColor !== "transparent" ? root.iconColor : Color.mOnSurface
     colorBgHover: Color.mHover
     colorFgHover: Color.mOnHover
     colorBorder: "transparent"
@@ -118,6 +118,11 @@ NIconButton {
                 "icon": "plug-connected-x"
             },
             {
+                "label": pluginApi?.tr("context.eject-all"),
+                "action": "eject-all",
+                "icon": "player-eject"
+            },
+            {
                 "label": pluginApi?.tr("context.settings"),
                 "action": "settings",
                 "icon": "settings"
@@ -135,6 +140,8 @@ NIconButton {
                 mainInstance?.refreshDevices()
             } else if (action === "unmount-all") {
                 mainInstance?.unmountAll()
+            } else if (action === "eject-all") {
+                mainInstance?.ejectAll()
             } else if (action === "settings") {
                 if (pluginApi?.manifest) {
                     BarService.openPluginSettings(screen, pluginApi.manifest)

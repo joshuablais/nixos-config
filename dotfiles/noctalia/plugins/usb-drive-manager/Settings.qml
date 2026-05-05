@@ -164,7 +164,8 @@ ColumnLayout {
             { key: "foot",       name: "foot" },
             { key: "alacritty",  name: "alacritty" },
             { key: "wezterm",    name: "wezterm" },
-            { key: "ghostty",    name: "ghostty" }
+            { key: "ghostty",    name: "ghostty" },
+            { key: "ptyxis",     name: "ptyxis" }
         ]
         currentKey: root.editTerminalCommand
         onSelected: key => {

@@ -1,8 +1,4 @@
-# Guix
-if [ -f "$HOME/.guix-profile/etc/profile" ]; then
-  source "$HOME/.guix-profile/etc/profile"
-fi
+export GUIX_LOCPATH="$HOME/.guix-profile/lib/locale"
 
-if [ -f "$HOME/.config/guix/current/etc/profile" ]; then
-  source "$HOME/.config/guix/current/etc/profile"
-fi
+source "$HOME/.guix-profile/etc/profile"
+source "$HOME/.config/guix/current/etc/profile"

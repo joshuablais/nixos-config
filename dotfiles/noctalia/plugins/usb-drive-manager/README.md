@@ -39,7 +39,7 @@ A Noctalia bar widget for managing USB drives and removable storage devices.
 ## Usage
 
 1. **Left-click** the bar icon to open the device panel
-2. **Right-click** for quick actions (Refresh, Unmount All, Settings)
+2. **Right-click** for quick actions (Refresh, Unmount All, Eject All, Settings)
 3. In the panel, each device card shows:
    - Device label, size, filesystem type
    - Mountpoint path (when mounted)

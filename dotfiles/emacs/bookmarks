@@ -1,0 +1,142 @@
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("Media"
+ (filename . "~/Development/Media/")
+ (front-context-string . "acetheosce\n  drw")
+ (rear-context-string . "0K Jan  2 12:00 ")
+ (position . 75)
+ (last-modified 27128 52357 78591 255000))
+("init.el"
+ (filename . "~/nixos-config/dotfiles/emacs/init.el")
+ (front-context-string . "\n\n(use-package n")
+ (rear-context-string . "macs-directory))")
+ (position . 3133)
+ (last-modified 27128 42878 622868 411000))
+("GNU Guix Reference Manual"
+ (front-context-string . "----------------")
+ (rear-context-string . "U Distribution\n\n")
+ (position . 11020)
+ (last-modified 27127 63482 142791 400000)
+ (location . "https://guix.gnu.org/manual/1.5.0/en/guix.html")
+ (handler . eww-bookmark-jump))
+("Revere"
+ (filename . "~/Revere/")
+ (front-context-string)
+ (rear-context-string . "0K Jul 28  2025 ")
+ (position . 1428)
+ (last-modified 27126 16059 859805 468000))
+("11. Solene's % gemini capsule - a gemini tech blog (text/gemini • 502 Lines • 53 KiB)"
+ (position . 49)
+ (location . "gemini://perso.pw/blog/")
+ (handler . elpher-bookmark-jump))
+("Projects"
+ (filename . "~/Projects/")
+ (front-context-string . "Infrastructure\n ")
+ (rear-context-string . "0K Feb 28 10:26 ")
+ (position . 232)
+ (last-modified 27099 118 834883 875000))
+("mileage.org"
+ (filename . "~/Accounting/Revere/2026/Mileage/mileage.org")
+ (front-context-string . "\n** <2026-04-07 ")
+ (rear-context-string . "* Mileage Ledger")
+ (position . 35)
+ (last-modified 27093 23525 230523 818000))
+("notes.org"
+ (filename . "~/org/notes.org")
+ (front-context-string . "* Inbox\n** [2026")
+ (rear-context-string . "#+title: Notes\n\n")
+ (position . 17)
+ (last-modified 27093 3989 412918 639000))
+("contacts.org"
+ (filename . "~/org/contacts.org")
+ (front-context-string . "tle: Contacts\n\n*")
+ (rear-context-string)
+ (position . 5)
+ (last-modified 27093 3170 351329 144000))
+("Journal 2026"
+ (filename . "~/org/journal/2026/2026.org")
+ (front-context-string . "\n* Friday, 2026-")
+ (rear-context-string . "and propagating.")
+ (position . 622)
+ (last-modified 27088 32023 547415 984000))
+("org-refile-last-stored"
+ (filename . "~/org/done.org")
+ (front-context-string . "** DONE Pay pers")
+ (rear-context-string . "26-04-27 Monday\n")
+ (position . 103)
+ (last-modified 27120 8524 105294 235000))
+("org-capture-last-stored"
+ (filename . "~/org/inbox.org")
+ (front-context-string . "** TODO Call Mar")
+ (rear-context-string . "CAPTURED:\n:END:\n")
+ (position . 1990)
+ (last-modified 27124 41511 72630 655000))
+("calendar.org"
+ (filename . "~/org/calendar.org")
+ (front-context-string . "e\n:PROPERTIES:\n:")
+ (rear-context-string . " 101 9519 160 av")
+ (position . 111)
+ (last-modified 27080 34406 33769 121000))
+("roam"
+ (filename . "~/org/roam/")
+ (front-context-string . "accounting\n  drw")
+ (rear-context-string . "0K Jul 28  2025 ")
+ (position . 67)
+ (last-modified 27080 34400 463281 860000))
+("org"
+ (filename . "~/org/")
+ (front-context-string . "inbox.org\n  -rw-")
+ (rear-context-string . "6K Mar 28 15:28 ")
+ (position . 481)
+ (last-modified 27080 34397 152290 337000))
+("inbox.org"
+ (filename . "~/org/inbox.org")
+ (front-context-string . "#+title: Inbox\n\n")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 27128 42938 949897 724000))
+("joshuablais.com"
+ (filename . "~/Development/joshuablais.com/")
+ (front-context-string . "dist\n  drwxr-xr-")
+ (rear-context-string . "0K Aug  8  2025 ")
+ (position . 86)
+ (last-modified 27080 34381 991446 33000))
+("revereimaginative"
+ (filename . "~/Development/revereimaginative/")
+ (front-context-string . "cmd\n  drwxr-xr-x")
+ (rear-context-string . "0K Mar  7 11:26 ")
+ (position . 88)
+ (last-modified 27080 34362 943433 229000))
+("Development"
+ (filename . "~/Development/")
+ (front-context-string . "acetheosce\n  drw")
+ (rear-context-string . "0K Jan 12 20:00 ")
+ (position . 70)
+ (last-modified 27080 34351 260447 990000))
+("2026 Revere Ledger"
+ (filename . "~/Accounting/Revere/2026/Ledger/transactions.ledger")
+ (front-context-string . ";===============")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 27080 34335 201763 47000))
+("Ace the OSCE"
+ (filename . "~/Projects/Ace the OSCE/")
+ (front-context-string . "Exams\n  drwxr-xr")
+ (rear-context-string . "0K Feb 24 20:23 ")
+ (position . 79)
+ (last-modified 27080 34324 907791 60000))
+("writing"
+ (filename . "~/Projects/writing/")
+ (front-context-string . "Archived\n  drwxr")
+ (rear-context-string . "0K Jan 18 14:01 ")
+ (position . 75)
+ (last-modified 27080 34321 147993 822000))
+("nixos-config"
+ (filename . "~/nixos-config/")
+ (front-context-string . "dotfiles\n  drwxr")
+ (rear-context-string . "0K Mar 28 11:49 ")
+ (position . 119)
+ (last-modified 27080 14032 292472 364000))
+)
