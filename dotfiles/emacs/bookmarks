@@ -68,11 +68,11 @@
  (position . 103)
  (last-modified 27120 8524 105294 235000))
 ("org-capture-last-stored"
- (filename . "~/org/inbox.org")
- (front-context-string . "** TODO Call Mar")
- (rear-context-string . "CAPTURED:\n:END:\n")
- (position . 1990)
- (last-modified 27124 41511 72630 655000))
+ (filename . "~/org/bookmarks.org")
+ (front-context-string . "** [[https://tra")
+ (rear-context-string . "GS: music\n:END:\n")
+ (position . 21335)
+ (last-modified 27135 21049 963357 522000))
 ("calendar.org"
  (filename . "~/org/calendar.org")
  (front-context-string . "e\n:PROPERTIES:\n:")

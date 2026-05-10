@@ -238,6 +238,7 @@
 (require 'workspaces)
 (require 'everywhere)
 (require 'elpher-config)
+(require 'tramp-config)
 (require 'gnus-config)
 (require 'tools)
 (with-eval-after-load 'org
