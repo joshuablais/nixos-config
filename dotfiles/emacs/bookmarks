@@ -2,7 +2,13 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("Media"
+(("Library"
+ (filename . "~/Library/")
+ (front-context-string . "Abelson\n  drwxr-")
+ (rear-context-string . "0K Jul 28  2025 ")
+ (position . 66)
+ (last-modified 27131 35952 865875 718000))
+("Media"
  (filename . "~/Development/Media/")
  (front-context-string . "acetheosce\n  drw")
  (rear-context-string . "0K Jan  2 12:00 ")
@@ -27,7 +33,7 @@
  (rear-context-string . "0K Jul 28  2025 ")
  (position . 1428)
  (last-modified 27126 16059 859805 468000))
-("11. Solene's % gemini capsule - a gemini tech blog (text/gemini • 502 Lines • 53 KiB)"
+("11. Solene's % gemini capsule - a gemini tech blog (text/gemini   502 Lines   53 KiB)"
  (position . 49)
  (location . "gemini://perso.pw/blog/")
  (handler . elpher-bookmark-jump))
