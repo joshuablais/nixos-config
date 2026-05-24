@@ -2,7 +2,20 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("Library"
+(("guix reference"
+ (front-context-string . "    guix-devel@g")
+ (rear-context-string . "C network or on\n")
+ (position . 95811)
+ (last-modified 27154 63260 277568 47000)
+ (location . "https://guix.gnu.org/manual/1.5.0/en/guix.html#After-System-Installation")
+ (handler . eww-bookmark-jump))
+("snippets"
+ (filename . "~/nixos-config/dotfiles/emacs/snippets/")
+ (front-context-string . "emacs-lisp-mode\n")
+ (rear-context-string . "0K Mar 30 06:47 ")
+ (position . 94)
+ (last-modified 27148 37205 654287 621000))
+("Library"
  (filename . "~/Library/")
  (front-context-string . "Abelson\n  drwxr-")
  (rear-context-string . "0K Jul 28  2025 ")
@@ -74,11 +87,11 @@
  (position . 103)
  (last-modified 27120 8524 105294 235000))
 ("org-capture-last-stored"
- (filename . "~/org/bookmarks.org")
- (front-context-string . "** [[https://tra")
- (rear-context-string . "GS: music\n:END:\n")
- (position . 21335)
- (last-modified 27135 21049 963357 522000))
+ (filename . "~/org/roam/guix.org")
+ (front-context-string . "\n** Resources\nht")
+ (rear-context-string . "d Guile Scheme)\n")
+ (position . 293)
+ (last-modified 27152 62461 378944 399000))
 ("calendar.org"
  (filename . "~/org/calendar.org")
  (front-context-string . "e\n:PROPERTIES:\n:")
