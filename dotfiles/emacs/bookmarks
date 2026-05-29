@@ -2,7 +2,13 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("guix reference"
+(("guix"
+ (filename . "~/.config/guix/")
+ (front-context-string . "current -> /var/")
+ (rear-context-string . "47 May 25 07:24 ")
+ (position . 78)
+ (last-modified 27156 64454 871050 543000))
+("guix reference"
  (front-context-string . "    guix-devel@g")
  (rear-context-string . "C network or on\n")
  (position . 95811)
@@ -82,16 +88,16 @@
  (last-modified 27088 32023 547415 984000))
 ("org-refile-last-stored"
  (filename . "~/org/done.org")
- (front-context-string . "** DONE Pay pers")
- (rear-context-string . "26-04-27 Monday\n")
- (position . 103)
- (last-modified 27120 8524 105294 235000))
+ (front-context-string . "** DONE ledger u")
+ (rear-context-string . "5-25 Mon 08:43]\n")
+ (position . 161)
+ (last-modified 27156 24584 52861 887000))
 ("org-capture-last-stored"
- (filename . "~/org/roam/guix.org")
- (front-context-string . "\n** Resources\nht")
- (rear-context-string . "d Guile Scheme)\n")
- (position . 293)
- (last-modified 27152 62461 378944 399000))
+ (filename . "~/org/roam/daily/2026-05-28.org")
+ (front-context-string . "* 06:03: Good mo")
+ (rear-context-string . "letags: :daily:\n")
+ (position . 117)
+ (last-modified 27160 12201 979283 367000))
 ("calendar.org"
  (filename . "~/org/calendar.org")
  (front-context-string . "e\n:PROPERTIES:\n:")
