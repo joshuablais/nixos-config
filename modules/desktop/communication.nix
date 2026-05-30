@@ -9,6 +9,5 @@
   environment.systemPackages = with pkgs; [
     signal-desktop
     thunderbird
-    cinny-desktop
   ];
 }

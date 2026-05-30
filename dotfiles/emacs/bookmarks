@@ -93,11 +93,11 @@
  (position . 161)
  (last-modified 27156 24584 52861 887000))
 ("org-capture-last-stored"
- (filename . "~/org/roam/daily/2026-05-28.org")
- (front-context-string . "* 06:03: Good mo")
- (rear-context-string . "letags: :daily:\n")
- (position . 117)
- (last-modified 27160 12201 979283 367000))
+ (filename . "~/org/bookmarks.org")
+ (front-context-string . "** [[https://app")
+ (rear-context-string . "AGS: guix\n:END:\n")
+ (position . 21894)
+ (last-modified 27162 18019 908277 710000))
 ("calendar.org"
  (filename . "~/org/calendar.org")
  (front-context-string . "e\n:PROPERTIES:\n:")
