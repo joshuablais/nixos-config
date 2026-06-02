@@ -23,5 +23,9 @@
   :config
   (envrc-global-mode))
 
+(use-package devdocs
+  :ensure t
+  :bind ("C-h D" . devdocs-lookup))
+
 (provide 'development)
 ;;; development.el ends here

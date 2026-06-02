@@ -474,14 +474,14 @@
         "disableWallpaper": true
     },
     "notifications": {
-        "backgroundOpacity": 1,
+        "backgroundOpacity": 0.9500000000000001,
         "clearDismissed": true,
         "criticalUrgencyDuration": 15,
         "density": "default",
         "enableBatteryToast": true,
         "enableKeyboardLayoutToast": false,
         "enableMarkdown": false,
-        "enableMediaToast": true,
+        "enableMediaToast": false,
         "enabled": false,
         "location": "top_right",
         "lowUrgencyDuration": 3,

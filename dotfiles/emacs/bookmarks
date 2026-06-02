@@ -21,6 +21,18 @@
  (rear-context-string . "0K Mar 30 06:47 ")
  (position . 94)
  (last-modified 27148 37205 654287 621000))
+("scripts"
+ (filename . "~/.config/scripts/")
+ (front-context-string . "resolve.sh\n  -rw")
+ (rear-context-string . "42 Feb  5 12:16 ")
+ (position . 888)
+ (last-modified 27138 15848 197788 588000))
+("KennyLaw"
+ (filename . "~/Development/HWD Sites/KennyLaw/")
+ (front-context-string)
+ (rear-context-string . "0K May  7 14:08 ")
+ (position . 835)
+ (last-modified 27138 14763 900276 584000))
 ("Library"
  (filename . "~/Library/")
  (front-context-string . "Abelson\n  drwxr-")
