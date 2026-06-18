@@ -78,6 +78,12 @@
 (defvar pomodoro--mode-line ""
   "String to display in mode line.")
 
+(defvar pomodoro--paused nil
+  "Non-nil if the current period is paused.")
+
+(defvar pomodoro--remaining nil
+  "Remaining seconds when paused.")
+
 ;;; Mode Line Setup
 
 (unless (member 'pomodoro--mode-line global-mode-string)
@@ -107,7 +113,7 @@
              (remaining (max 0 remaining))
              (mins (floor (/ remaining 60)))
              (secs (floor (mod remaining 60)))
-             (icon (if (eq pomodoro--state 'work) "🍅" "☕"))
+             (icon (if (eq pomodoro--state 'work) " " " "))
              (task (if (and pomodoro--current-marker
                             (marker-buffer pomodoro--current-marker))
                        (org-with-point-at pomodoro--current-marker
@@ -117,7 +123,7 @@
               (format " %s %02d:%02d %s "
                       icon mins secs
                       (if (eq pomodoro--state 'work)
-                          (truncate-string-to-width task 20 nil nil "…")
+                          (truncate-string-to-width task 20 nil nil " ")
                         "Break"))))
     (setq pomodoro--mode-line ""))
   (force-mode-line-update t))
@@ -226,7 +232,7 @@ Returns alist of (display-string . marker)."
         (run-at-time (* pomodoro-work-minutes 60) nil
                      #'pomodoro--work-complete))
 
-  (message "🍅 Pomodoro started: %d minutes"
+  (message "  Pomodoro started: %d minutes"
            pomodoro-work-minutes))
 
 (defun pomodoro--work-complete ()
@@ -285,7 +291,7 @@ Returns alist of (display-string . marker)."
           (run-at-time (* break-mins 60) nil
                        #'pomodoro--break-complete))
 
-    (message "☕ Break started: %d minutes" break-mins)))
+    (message "  Break started: %d minutes" break-mins)))
 
 (defun pomodoro--break-complete ()
   "Handle completion of break period."
@@ -305,10 +311,12 @@ Use this when you finish a task before the pomodoro ends."
   (interactive)
   (unless (eq pomodoro--state 'work)
     (user-error "No active work period"))
+  (when pomodoro--paused
+    (user-error "Pomodoro is paused; resume first"))
 
   (let ((remaining (float-time (time-subtract pomodoro--end-time (current-time)))))
     (when (< remaining 60)
-      (user-error "Less than a minute remaining—let it finish"))
+      (user-error "Less than a minute remaining let it finish"))
 
     ;; Clock out and mark done
     (when (org-clocking-p)
@@ -326,6 +334,66 @@ Use this when you finish a task before the pomodoro ends."
       (message "Switched to new task. %.0f minutes remaining."
                (/ remaining 60.0)))))
 
+;;; Pause / Resume
+
+(defun pomodoro--pause ()
+  "Pause the current work or break period."
+  (unless pomodoro--state
+    (user-error "No active pomodoro"))
+  (when pomodoro--paused
+    (user-error "Already paused"))
+
+  (setq pomodoro--remaining
+        (float-time (time-subtract pomodoro--end-time (current-time))))
+
+  (pomodoro--cancel-timers)
+
+  (when (and (eq pomodoro--state 'work) (org-clocking-p))
+    (org-clock-out))
+
+  (setq pomodoro--paused t)
+  (setq pomodoro--mode-line
+        (format " ⏸ %02d:%02d (paused) "
+                (floor (/ pomodoro--remaining 60))
+                (floor (mod pomodoro--remaining 60))))
+  (force-mode-line-update t)
+  (message "Pomodoro paused. %.0f minutes remaining."
+           (/ pomodoro--remaining 60.0)))
+
+(defun pomodoro--resume ()
+  "Resume a paused period."
+  (unless pomodoro--paused
+    (user-error "Not paused"))
+
+  (setq pomodoro--end-time
+        (time-add (current-time) (seconds-to-time pomodoro--remaining)))
+
+  (when (and (eq pomodoro--state 'work)
+             pomodoro--current-marker
+             (marker-buffer pomodoro--current-marker))
+    (org-with-point-at pomodoro--current-marker
+      (org-clock-in)))
+
+  (setq pomodoro--display-timer
+        (run-at-time nil 1 #'pomodoro--update-display))
+
+  (setq pomodoro--timer
+        (run-at-time pomodoro--remaining nil
+                     (if (eq pomodoro--state 'work)
+                         #'pomodoro--work-complete
+                       #'pomodoro--break-complete)))
+
+  (setq pomodoro--paused nil
+        pomodoro--remaining nil)
+  (message "Pomodoro resumed."))
+
+(defun pomodoro-pause-toggle ()
+  "Toggle pause/resume of the current pomodoro."
+  (interactive)
+  (if pomodoro--paused
+      (pomodoro--resume)
+    (pomodoro--pause)))
+
 ;;; Control Functions
 
 (defun pomodoro-stop ()
@@ -337,7 +405,9 @@ Use this when you finish a task before the pomodoro ends."
   (setq pomodoro--state nil
         pomodoro--end-time nil
         pomodoro--current-marker nil
-        pomodoro--count 0)
+        pomodoro--count 0
+        pomodoro--paused nil
+        pomodoro--remaining nil)
   (pomodoro--update-display)
   (message "Pomodoro stopped."))
 
@@ -360,14 +430,21 @@ Use this when you finish a task before the pomodoro ends."
 (defun pomodoro-status ()
   "Display current pomodoro status."
   (interactive)
-  (if pomodoro--state
-      (let* ((remaining (float-time (time-subtract pomodoro--end-time (current-time))))
-             (mins (floor (/ remaining 60)))
-             (secs (floor (mod remaining 60))))
-        (message "%s: %02d:%02d remaining. Pomodoros today: %d"
-                 (if (eq pomodoro--state 'work) "Working" "Break")
-                 mins secs pomodoro--count))
-    (message "No active pomodoro. Completed today: %d" pomodoro--count)))
+  (cond
+   (pomodoro--paused
+    (message "%s (paused): %02d:%02d remaining. Pomodoros today: %d"
+             (if (eq pomodoro--state 'work) "Working" "Break")
+             (floor (/ pomodoro--remaining 60))
+             (floor (mod pomodoro--remaining 60))
+             pomodoro--count))
+   (pomodoro--state
+    (let* ((remaining (float-time (time-subtract pomodoro--end-time (current-time))))
+           (mins (floor (/ remaining 60)))
+           (secs (floor (mod remaining 60))))
+      (message "%s: %02d:%02d remaining. Pomodoros today: %d"
+               (if (eq pomodoro--state 'work) "Working" "Break")
+               mins secs pomodoro--count)))
+   (t (message "No active pomodoro. Completed today: %d" pomodoro--count))))
 
 ;;; Keybindings
 
@@ -375,6 +452,7 @@ Use this when you finish a task before the pomodoro ends."
 (global-set-key (kbd "C-c p g") 'pomodoro-goto)
 (global-set-key (kbd "C-c p d") 'pomodoro-task-done)
 (global-set-key (kbd "C-c p s") 'pomodoro-status)
+(global-set-key (kbd "C-c p p") 'pomodoro-pause-toggle)
 
 (provide 'pomodoro)
 ;;; pomodoro.el ends here

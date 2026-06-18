@@ -3,81 +3,35 @@
 # key: daily
 # --
 
-#+title: `(file-name-base (buffer-file-name))`
+* Daily Routine
+** Morning - 4am - 5:30am [/]
+- [ ] Wake up @ 4am
+- [ ] Get dressed, cold water on face, brush teeth
+- [ ] Drink 750mL water
+- [ ] Prayer
+- [ ] Morning bodyweight movement/stretch/calisthenics/form
+- [ ] 1 hour programming study: Read book or practice language
 
-* Metrics
-** Sleep Quality: /10
-- Time to bed: :
-- Wake time: :
-- Total hours:
-- Quality notes:
-** Health Tracking
-*** Water - 0/3500mL
-*** Nutrition
-**** Meals:
-  + [ ] Breakfast:
-  + [ ] Lunch:
-  + [ ] Shake:
-  + [ ] Dinner:
-  + Snacks:
-    +
-*** Movement
-- [ ] Morning Movement
-- [ ] 30 point activity
-- [ ] Nightly stretch/foamroll
+** Morning - 5:30 - 7:00am
+*** Preparation [/]
+- [ ] Take Vitamins: Vitamin D, Multivitamin, Creatine
+- [ ] Make coffee
+- [ ] Make Oats
+*** TODO Work on most important task for the day
 
-* Morning Foundation [0/7]
-** [ ] Wake up, drink water, cold water on face, brush teeth
-** [ ] [[https://traditionalcatholicprayers.com/2019/10/05/morning-prayers/][Morning Prayer]] and scripture
-** [ ] Shower, Groom, & Dressed
-** [ ] Vitamins, Vitamin D, Creatine
-** [ ] Review day's battle plan
-** [ ] Financial/Systems Check
+** Morning - 7:00am - 9:30am [/]
+- [ ] Breakfast
+- [ ] Take daughter to school
+- [ ] Gym
 
-* Work
-** Outreach target: [0/100]
-** Calls completed: [0/20]
-** Revenue generated: $
-** Key wins:
+** Morning - 9:30am - 10:00am [/]
+- [ ] Lunch
+- [ ] Shower and dress
 
-* Family Focus
-** Quality Time Minutes: 
-** Meaningful Interactions:
-*** With Aurelia:
-    -
-*** With everyone:
-    -
+** 10:00 - 16:00: Work
+- Work in blocks of 25 minutes, do pushups and physical activity to break up the blocks. Aim for 12 25 minute blocks of work.
 
-* Faith
-** [ ] Daily Mass
-** [ ] Rosary
-** [ ] Spiritual Reading
-
-* Evening Review
-** Victories
-- What went exceptionally well:
-
-** Growth Areas
-- What could improve:
-
-** Gratitude
-- Three things, ideas, people etc. I'm grateful for:
-  1.
-  2.
-  3.
-
-** Evening Routine
-*** Tomorrow's Preparation [/]
-- [ ] Setup tomorrows journal file
-- [ ] Post priorities from [[file:~/org/projects.org][projects.org]] file
-- [ ] Set clothes out for morning
-*** [ ] Evening Groom
-*** [ ] [[https://traditionalcatholicprayers.com/2019/10/03/evening-prayers/][Evening Prayer]]
-
-* Daily Reflection
-** Focus Score [0-10]:
-** Energy Level [0-10]:
-** Most Impactful Moment:
-** Key Lesson:
-
-* Notes & Insights
+** Evening - 16:00 - 19:30 [/]
+- [ ] Set out clothes for tomorrow morning
+- [ ] Review day's notes and plan for tomorrow
+- [ ] Foamroll/stretch
