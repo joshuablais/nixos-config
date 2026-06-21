@@ -1,0 +1,204 @@
+### Variables — Mod1 = Alt (your $mainMod), Mod4 = Super (your META)
+set $mod Mod1
+set $super Mod4
+
+### Programs
+set $terminal kitty
+set $menu noctalia-shell ipc call launcher toggle
+set $email thunderbird
+set $browser chromium
+set $fileManager thunar
+set $btop kitty -e bash -c "btop"
+set $launcher ~/.config/sway/scripts/emacs-launcher
+
+### Output
+output eDP-1 mode 1920x1200 position 0,1440 scale 1
+# output DP-1 mode 2560x1440 position 0,0 scale 1
+# output HDMI-A-1 mode 2560x1080 position 0,0 scale 1
+
+### Input
+input type:keyboard {
+    xkb_layout us
+    repeat_delay 170
+    repeat_rate 90
+}
+input type:touchpad {
+    natural_scroll disabled
+    pointer_accel 0.8
+}
+input type:pointer {
+    pointer_accel 0.8
+}
+input "1133:49271:Logitech_USB_Receiver" {
+    pointer_accel -0.5
+}
+
+### Cursor
+seat * xcursor_theme Nordzy-cursors-white 24
+
+### Appearance
+default_border none
+default_floating_border none
+gaps inner 3
+gaps outer 3
+focus_wrapping no
+focus_on_window_activation focus
+
+# Single-value opacity (vanilla sway). Use swayfx if you want active/inactive split.
+for_window [app_id="emacs"]   opacity 0.95
+for_window [class="Emacs"]    opacity 0.95
+for_window [app_id="thunar"]  opacity 0.95
+
+### Window rules
+# Floating kitty with size
+for_window [app_id="kitty"] floating enable, resize set 1100 700
+
+# Workspace assignments — both app_id (Wayland-native) and class (XWayland) so you
+# don't have to know each app's build mode. The non-matching one is a silent no-op.
+assign [app_id="emacs"]               workspace number 1
+assign [class="Emacs"]                workspace number 1
+assign [app_id="firefox"]             workspace number 2
+assign [class="firefox"]              workspace number 2
+assign [app_id="chromium"]            workspace number 2
+assign [class="Chromium"]             workspace number 2
+assign [app_id="librewolf"]           workspace number 2
+assign [app_id="thunderbird"]         workspace number 4
+assign [class="thunderbird"]          workspace number 4
+assign [app_id="signal"]              workspace number 5
+assign [class="Signal"]               workspace number 5
+assign [app_id="org.telegram.desktop"] workspace number 5
+assign [app_id="gimp"]                workspace number 6
+assign [class="Gimp"]                 workspace number 6
+assign [app_id="com.obsproject.Studio"] workspace number 6
+
+### Environment + autostart
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_RUNTIME_DIR DISPLAY XDG_CURRENT_DESKTOP
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec systemctl --user import-environment GUILE_LOAD_PATH PATH
+
+exec gsettings set org.gnome.desktop.interface cursor-theme 'Nordzy-cursors-white'
+exec gsettings set org.gnome.desktop.interface cursor-size 24
+
+exec noctalia-shell
+exec wl-paste --type text  --watch cliphist store
+exec wl-paste --type image --watch cliphist store
+
+exec swayidle -w \
+    timeout 300 'noctalia-shell ipc call lockScreen lock' \
+    timeout 600 'swaymsg "output * power off"' \
+        resume  'swaymsg "output * power on"' \
+    before-sleep 'noctalia-shell ipc call lockScreen lock'
+
+exec emacs --daemon
+exec chromium
+exec thunderbird
+
+### Keybindings — launcher / terminal
+bindsym $mod+Ctrl+space  exec $menu
+bindsym $mod+Ctrl+Return exec $terminal
+
+### Emacs
+bindsym $mod+Shift+e exec emacs
+bindsym $super+e     exec emacsclient -n -e '(my/new-frame-with-vterm)'
+bindsym $mod+space         exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (universal-launcher-popup))'
+bindsym Ctrl+Shift+x       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (org-roam-dailies-capture-today))'
+bindsym Ctrl+Shift+c       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (org-capture))'
+bindsym $mod+Ctrl+f        exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (dirvish))'
+bindsym $mod+p             exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (pass) (call-interactively (quote pass-goto-entry)))'
+bindsym Ctrl+Shift+d       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (jb/download-media))'
+bindsym $mod+c             exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (my/org-agenda-dashboard))'
+bindsym $mod+m             exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (mu4e))'
+bindsym $mod+Ctrl+z        exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (elfeed))'
+bindsym $mod+Ctrl+m        exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (emms-playlist-mode-go))'
+bindsym $mod+Ctrl+e        exec emacsclient --eval '(thanos/type)'
+bindsym $mod+Ctrl+y        exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (jb/clipboard-manager))'
+
+### System
+bindsym $mod+Ctrl+l         exec noctalia-shell ipc call lockScreen lock
+bindsym $mod+Ctrl+Shift+f   exec $fileManager
+bindsym $mod+Ctrl+Shift+m   exec $email
+bindsym $mod+Ctrl+b         exec $btop
+
+### Screenshots / OCR / color picker
+bindsym Print          exec ~/.config/sway/scripts/screenshot.sh
+bindsym $mod+Ctrl+t    exec ~/.config/sway/scripts/ocr-screenshot.sh
+bindsym $mod+Shift+c   exec wl-color-picker
+
+### Encrypted drives
+bindsym $mod+Ctrl+o exec kitty -e zsh -c "~/.config/scripts/manage_encrypted_drives open; exec zsh"
+bindsym $mod+Ctrl+c exec kitty -e zsh -c "~/.config/scripts/manage_encrypted_drives close; exec zsh"
+
+### Keyboard pointer
+bindsym $super+f       exec wl-kbptr -o modes=floating,click -o mode_floating.source=detect
+bindsym $super+Shift+f exec wl-kbptr -o modes=floating,click -o mode_click.button=right -o mode_floating.source=detect
+
+### Streaming / capture scripts
+bindsym Ctrl+Alt+s exec /home/joshua/.config/scripts/cameraonscreen
+bindsym Ctrl+Alt+v exec /home/joshua/.config/scripts/streamscreen
+
+### Theme switcher / dictation
+bindsym $mod+Shift+q exec ~/nixos-config/dotfiles/noctalia/scripts/themeswitch.sh
+bindsym F9           exec ~/.config/sway/scripts/toggle-dictation.sh
+
+### Audio / brightness
+bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym XF86AudioMute        exec wpctl set-mute   @DEFAULT_AUDIO_SINK@ toggle
+bindsym XF86AudioMicMute     exec amixer set Capture toggle
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86MonBrightnessUp   exec brightnessctl set +5%
+
+### Window management
+bindsym $mod+q       kill
+bindsym $mod+Shift+0 exit
+bindsym $mod+t       floating toggle
+bindsym Alt+Tab      focus next
+bindsym $mod+Shift+Tab focus prev
+bindsym $mod+Shift+f fullscreen
+
+### Workspace switching
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+
+### Move active window to workspace
+bindsym $mod+Ctrl+Shift+1 move container to workspace number 1
+bindsym $mod+Ctrl+Shift+2 move container to workspace number 2
+bindsym $mod+Ctrl+Shift+3 move container to workspace number 3
+bindsym $mod+Ctrl+Shift+4 move container to workspace number 4
+bindsym $mod+Ctrl+Shift+5 move container to workspace number 5
+bindsym $mod+Ctrl+Shift+6 move container to workspace number 6
+bindsym $mod+Ctrl+Shift+7 move container to workspace number 7
+
+### Move window directionally
+bindsym $mod+Shift+Left  move left
+bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+Up    move up
+bindsym $mod+Shift+Down  move down
+
+### Resize (direct, no mode)
+bindsym $mod+Ctrl+Left  resize shrink width  20px
+bindsym $mod+Ctrl+Right resize grow   width  20px
+bindsym $mod+Ctrl+Up    resize shrink height 20px
+bindsym $mod+Ctrl+Down  resize grow   height 20px
+
+### Media keys on $super (META)
+bindsym $super+Up    exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindsym $super+Down  exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym $super+Left  exec ~/.config/sway/scripts/music-player-client previous
+bindsym $super+Right exec ~/.config/sway/scripts/music-player-client next
+bindsym $super+space exec ~/.config/sway/scripts/music-player-client play-pause
+
+### Mouse: hold $mod and drag with LMB to move, RMB to resize
+floating_modifier $mod normal
+
+### Scratchpad (analogue of Hyprland's special:magic workspace)
+bindsym $mod+s       scratchpad show
+bindsym $mod+Shift+s move scratchpad
+
+### Colors include
+include /home/joshua/.config/sway/noctalia/noctalia-colors.conf
