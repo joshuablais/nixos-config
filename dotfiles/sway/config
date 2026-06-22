@@ -150,10 +150,11 @@ bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 bindsym XF86MonBrightnessUp   exec brightnessctl set +5%
 
 ### Window management
+focus_wrapping workspace
 bindsym $mod+q       kill
 bindsym $mod+Shift+0 exit
 bindsym $mod+t       floating toggle
-bindsym Alt+Tab      focus next
+bindsym $mod+Tab      focus next
 bindsym $mod+Shift+Tab focus prev
 bindsym $mod+Shift+f fullscreen
 
