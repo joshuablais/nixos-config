@@ -23,7 +23,10 @@ input type:keyboard {
     repeat_rate 90
 }
 input type:touchpad {
+    tap enabled
     natural_scroll disabled
+    dwt enabled
+    middle_emulation enabled
     pointer_accel 0.8
 }
 input type:pointer {

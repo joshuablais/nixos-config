@@ -16,7 +16,8 @@
     ./email.nix
     ./fonts.nix
     # ./gaming.nix
-    ./hyprland.nix
+    # ./hyprland.nix
+    ./sway.nix
     ./kmonad.nix
     ./networking.nix
     ./power.nix
