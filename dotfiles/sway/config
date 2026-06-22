@@ -42,7 +42,7 @@ seat * xcursor_theme Nordzy-cursors-white 24
 default_border none
 default_floating_border none
 gaps inner 3
-gaps outer 3
+gaps outer 1
 focus_wrapping no
 focus_on_window_activation focus
 
@@ -91,7 +91,6 @@ exec swayidle -w \
         resume  'swaymsg "output * power on"' \
     before-sleep 'noctalia-shell ipc call lockScreen lock'
 
-exec emacs --daemon
 exec chromium
 exec thunderbird
 
@@ -131,8 +130,8 @@ bindsym $mod+Ctrl+o exec kitty -e zsh -c "~/.config/scripts/manage_encrypted_dri
 bindsym $mod+Ctrl+c exec kitty -e zsh -c "~/.config/scripts/manage_encrypted_drives close; exec zsh"
 
 ### Keyboard pointer
-bindsym $super+f       exec wl-kbptr -o modes=floating,click -o mode_floating.source=detect
-bindsym $super+Shift+f exec wl-kbptr -o modes=floating,click -o mode_click.button=right -o mode_floating.source=detect
+bindsym $super+f       exec wl-kbptr
+bindsym $super+Shift+f exec wl-kbptr -o mode_click.button=right
 
 ### Streaming / capture scripts
 bindsym Ctrl+Alt+s exec /home/joshua/.config/scripts/cameraonscreen
