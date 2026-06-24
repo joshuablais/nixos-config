@@ -105,6 +105,7 @@ bindsym $mod+space         exec $launcher '(progn (select-frame-set-input-focus 
 bindsym Ctrl+Shift+x       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (org-roam-dailies-capture-today))'
 bindsym Ctrl+Shift+c       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (org-capture))'
 bindsym $mod+Ctrl+f        exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (dirvish))'
+bindsym $mod+x             exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (execute-extended-command nil))'
 bindsym $mod+p             exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (pass) (call-interactively (quote pass-goto-entry)))'
 bindsym Ctrl+Shift+d       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (jb/download-media))'
 bindsym $mod+c             exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (my/org-agenda-dashboard))'
