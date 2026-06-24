@@ -5,7 +5,7 @@ set $super Mod4
 set $terminal kitty
 set $menu noctalia-shell ipc call launcher toggle
 set $email thunderbird
-set $browser chromium
+set $browser chromium --remote-debugging-port=9222
 set $fileManager thunar
 set $btop kitty -e bash -c "btop"
 set $launcher ~/.config/sway/scripts/emacs-launcher
@@ -108,6 +108,7 @@ bindsym $mod+Ctrl+f        exec $launcher '(progn (select-frame-set-input-focus 
 bindsym $mod+x             exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (execute-extended-command nil))'
 bindsym $mod+p             exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (pass) (call-interactively (quote pass-goto-entry)))'
 bindsym Ctrl+Shift+d       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (jb/download-media))'
+bindsym $mod+Shift+b       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (jb/switch-browser-tab))'
 bindsym $mod+c             exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (my/org-agenda-dashboard))'
 bindsym $mod+m             exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (mu4e))'
 bindsym $mod+Ctrl+z        exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (elfeed))'
@@ -120,6 +121,7 @@ bindsym $mod+Ctrl+l         exec noctalia-shell ipc call lockScreen lock
 bindsym $mod+Ctrl+Shift+f   exec $fileManager
 bindsym $mod+Ctrl+Shift+m   exec $email
 bindsym $mod+Ctrl+b         exec $btop
+bindsym $mod+Shift+Ctrl+w   exec $browser
 
 ### Screenshots / OCR / color picker
 bindsym Print          exec ~/.config/sway/scripts/screenshot.sh

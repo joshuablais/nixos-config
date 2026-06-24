@@ -89,4 +89,35 @@
   (define-key eww-mode-map (kbd "U") #'shr-copy-url)
   (define-key eww-mode-map (kbd "D") #'my/eww-download-image-at-point))
 
+
+;; Browser tab switching brought into emacs
+(defvar jb/browser-debug-port 9222
+  "CDP remote debugging port. Same for Firefox and Chromium.")
+
+(defun jb/browser-tabs ()
+  "Get all tabs from a CDP-compatible browser."
+  (let* ((raw (shell-command-to-string
+               (format "curl -s http://localhost:%d/json" jb/browser-debug-port)))
+         (tabs (json-parse-string raw :array-type 'list :object-type 'alist)))
+    (seq-filter (lambda (tab)
+                  (string= (alist-get 'type tab) "page"))
+                tabs)))
+
+(defun jb/switch-browser-tab ()
+  "Switch to a browser tab via CDP, then raise the browser window."
+  (interactive)
+  (let* ((tabs (jb/browser-tabs))
+         (candidates (mapcar (lambda (tab)
+                               (cons (format "%s  %s"
+                                             (alist-get 'title tab)
+                                             (alist-get 'url tab))
+                                     (alist-get 'id tab)))
+                             tabs))
+         (choice (completing-read "Tab: " (mapcar #'car candidates) nil t))
+         (id (cdr (assoc choice candidates))))
+    (shell-command
+     (format "curl -s -X POST http://localhost:%d/json/activate/%s"
+             jb/browser-debug-port id))
+    (shell-command "swaymsg '[app_id=\"chromium\" ] focus' || swaymsg '[app_id=\"firefox\"] focus'")))
+
 (provide 'browser)
