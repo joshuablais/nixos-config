@@ -23,7 +23,7 @@
                  stamp
                  track))
   (erc-autojoin-channels-alist
-   '(("libera" "#technicalrenaissance" "#emacs" "#go-nuts" "#systemcrafters" "#nixos" "#librephone")))
+   '(("libera" "#technicalrenaissance" "#emacs" "#go-nuts" "#systemcrafters" "#guix")))
   (erc-track-shorten-start 8)
   (erc-kill-buffer-on-part t)
   (erc-auto-query 'bury)
