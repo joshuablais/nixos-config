@@ -36,9 +36,9 @@
       github.user = "joshuablais";
 
       # URL rewriting - force SSH for all forges
-      url."git@github.com:".insteadOf = "https://github.com/";
-      url."git@codeberg.org:".insteadOf = "https://codeberg.org/";
-      url."git@forge.labrynth.org:".insteadOf = "https://forge.labrynth.org/";
+      url."git@github.com:".pushInsteadOf = "https://github.com/";
+      url."git@codeberg.org:".pushInsteadOf = "https://codeberg.org/";
+      url."git@forge.labrynth.org:".pushInsteadOf = "https://forge.labrynth.org/";
     };
   };
 

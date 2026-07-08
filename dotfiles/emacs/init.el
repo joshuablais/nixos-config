@@ -182,6 +182,13 @@
 (add-hook 'enable-theme-functions #'my/set-hl-line-face)
 (add-hook 'hl-line-mode-hook #'my/set-hl-line-face)
 
+(use-package pinentry
+  :demand t
+  :init
+  (setq epg-pinentry-mode 'ask)
+  :config
+  (pinentry-start))
+
 (use-package which-key
   :demand t
   :config

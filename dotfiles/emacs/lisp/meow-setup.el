@@ -125,10 +125,10 @@
    '("9" . meow-digit-argument)
    '("0" . meow-digit-argument)
    '("f p" . (lambda () (interactive)
-               (let ((default-directory "~/nixos-config/dotfiles/emacs/"))
+               (let ((default-directory "~/.config/guix/dotfiles/emacs/"))
                  (call-interactively #'find-file))))
    '("f s" . (lambda () (interactive)
-               (let ((default-directory "~/nixos-config/dotfiles/emacs/snippets/"))
+               (let ((default-directory "~/.config/guix/dotfiles/emacs/snippets/"))
                  (call-interactively #'find-file)))))
 
   (meow-motion-define-key

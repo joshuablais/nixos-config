@@ -12,6 +12,7 @@
           (css-mode        . css-ts-mode)
           (html-mode       . html-ts-mode)
           (nix-mode        . nix-ts-mode)
+          (terraform-mode  . terraform-ts-mode)
           (c-mode          . c-ts-mode)))
   (setq treesit-language-source-alist
         '((go         "https://github.com/tree-sitter/tree-sitter-go")
@@ -23,6 +24,7 @@
           (css        "https://github.com/tree-sitter/tree-sitter-css")
           (c          "https://github.com/tree-sitter/tree-sitter-c")
           (zig        "https://github.com/tree-sitter-grammars/tree-sitter-zig")
+          (hcl        "https://github.com/tree-sitter-grammars/tree-sitter-hcl" "main" "src")
           (html       "https://github.com/tree-sitter/tree-sitter-html"))))
 
 (dolist (entry '(("\\.go\\'"     . go-ts-mode)
@@ -41,6 +43,11 @@
 
 (use-package nix-ts-mode
   :mode "\\.nix\\'")
+
+(use-package terraform-mode
+  :ensure t
+  :mode ("\\.tf\\'" "\\.tfvars\\'")
+  :hook (terraform-mode . eglot-ensure))
 
 ;; YASNIPPET
 ;; No :defer — yas-global-mode must be live before the first eglot buffer
@@ -89,6 +96,7 @@
          (c-ts-mode      . eglot-ensure)
          (nix-ts-mode    . eglot-ensure)
          (templ-ts-mode  . eglot-ensure)
+         (terraform-ts-mode . eglot-ensure)
          (zig-mode       . eglot-ensure))
   :custom
   (eglot-autoshutdown       t)

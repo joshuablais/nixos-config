@@ -4,7 +4,7 @@
 ;; set browser to firefox
 ;; (setq browse-url-browser-function 'browse-url-firefox)
 ;; (setq browse-url-browser-function 'browse-url-generic)
-;; (setq browse-url-generic-program "chromium")
+(setq browse-url-generic-program "chromium")
 
 ;; set searx instance
 (setq eww-search-prefix "https://searx.labrynth.org/search?q=")
