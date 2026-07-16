@@ -3,13 +3,12 @@
   fonts = {
     packages = with pkgs; [
       alegreya
+      texlivePackages.cormorantgaramond
       nerd-fonts.geist-mono
       montserrat
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
-      google-fonts
     ];
-
     # Font configuration
     fontconfig = {
       enable = true;
