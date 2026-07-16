@@ -6,22 +6,22 @@
 }:
 {
   # Enable Ollama as a systemd service with CUDA
-  services.ollama = {
-    enable = true;
-    package = pkgs.ollama-cuda;
-    host = "0.0.0.0";
-    port = 11434;
-    environmentVariables = {
-      # Prevent OOM on your 10GB card
-      OLLAMA_MAX_LOADED_MODELS = "2";
-      OLLAMA_NUM_PARALLEL = "1";
-      # Keep models loaded for instant responses
-      OLLAMA_KEEP_ALIVE = "-1";
-      # Explicit CUDA device (if you have multiple GPUs)
-      CUDA_VISIBLE_DEVICES = "0";
-    };
+  # services.ollama = {
+  #   enable = true;
+  #   package = pkgs.ollama-cuda;
+  #   host = "0.0.0.0";
+  #   port = 11434;
+  #   environmentVariables = {
+  #     # Prevent OOM on your 10GB card
+  #     OLLAMA_MAX_LOADED_MODELS = "2";
+  #     OLLAMA_NUM_PARALLEL = "1";
+  #     # Keep models loaded for instant responses
+  #     OLLAMA_KEEP_ALIVE = "-1";
+  #     # Explicit CUDA device (if you have multiple GPUs)
+  #     CUDA_VISIBLE_DEVICES = "0";
+  #   };
 
-  };
+  # };
 
   # You likely still want the CLI tools
   environment.systemPackages = [

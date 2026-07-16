@@ -36,6 +36,7 @@
     slurp
     kanshi
     swayidle
+    swayr
     wl-clipboard
     wl-color-picker
     wl-kbptr
