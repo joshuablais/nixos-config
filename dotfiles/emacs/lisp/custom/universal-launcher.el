@@ -16,7 +16,7 @@
   '((:name "Context" :icon "flash" :types (contextual custom-action))
     (:name "Active" :icon "device-desktop" :types (buffer running))
     (:name "Tasks" :icon "checklist" :types (agenda-task))
-    (:name "Files & Apps" :icon "apps" :types (file app flatpak))
+    (:name "Files & Apps" :icon "apps" :types (file app flatpak nix))
     (:name "Web" :icon "globe" :types (bookmark firefox-action))
     (:name "System" :icon "terminal" :types (command ssh))
     (:name "Tools" :icon "wrench" :types (emoji calculator kill-ring-item)))
@@ -64,6 +64,7 @@
     (puthash 'running    (nerd-icons-mdicon  "nf-md-monitor"          :face '(:foreground "#8b919a"  :height 0.9)) cache)
     (puthash 'app        (nerd-icons-faicon  "nf-fa-cube"             :face '(:foreground "#e0dcd4"  :height 0.9)) cache)
     (puthash 'flatpak    (nerd-icons-mdicon  "nf-md-layers"           :face '(:foreground "#56b6c2"  :height 0.9)) cache)
+    (puthash 'nix        (nerd-icons-mdicon  "nf-md-nix"              :face '(:foreground "#7ebae4"  :height 0.9)) cache)
     (puthash 'firefox    (nerd-icons-faicon  "nf-fa-firefox"          :face '(:foreground "#e06c75"  :height 0.9)) cache)
     (puthash 'bookmark   (nerd-icons-octicon "nf-oct-bookmark"        :face '(:foreground "#b8c4b8"  :height 0.9)) cache)
     (puthash 'file       (nerd-icons-faicon  "nf-fa-file"             :face '(:foreground "#d4ccb4"  :height 0.9)) cache)
@@ -149,6 +150,16 @@
                                        (car app))
                                (list 'app (cdr app))))
                        (universal-launcher--get-flatpak-applications)))
+             category-handlers)
+
+    (puthash 'nix
+             (lambda ()
+               (mapcar (lambda (app)
+                         (cons (format "%s Nix: %s"
+                                       (universal-launcher--get-icon 'nix)
+                                       (car app))
+                               (list 'app (cdr app))))
+                       (universal-launcher--get-nix-applications)))
              category-handlers)
 
     (puthash 'bookmark
@@ -265,13 +276,14 @@
     apps))
 
 (defun universal-launcher--get-applications ()
-  "Get list of system applications from .desktop files."
+  "Get list of system applications from .desktop files.
+Excludes flatpak and nix exports — those have dedicated handlers."
   (let ((apps '())
         (dirs '("/usr/share/applications/"
                 "/usr/local/share/applications/"
                 "~/.local/share/applications/"
-                "/var/lib/flatpak/exports/share/applications/"
-                "~/.local/share/flatpak/exports/share/applications/")))
+                "~/.guix-profile/share/applications/"
+                "/run/current-system/profile/share/applications/")))
     (dolist (dir dirs)
       (when (file-directory-p (expand-file-name dir))
         (dolist (file (directory-files (expand-file-name dir) t "\\.desktop$"))
@@ -285,38 +297,72 @@
                   (setq exec-line (match-string 1))
                   (push (cons name (replace-regexp-in-string "%[FfUu]" "" exec-line))
                         apps))))))))
-    apps))
+    (cl-remove-duplicates apps :test (lambda (a b) (string= (car a) (car b))) :from-end t)))
 
 (defun universal-launcher--get-flatpak-applications ()
   "Get list of installed Flatpak applications."
   (let ((apps '()))
     (when (executable-find "flatpak")
       (with-temp-buffer
-        ;; Try both user and system installations
         (dolist (scope '("--user" "--system"))
           (erase-buffer)
-          (when (= 0 (call-process "flatpak" nil t nil "list" "--app" scope "--columns=name,application"))
+          ;; --columns with no header: use machine-readable output
+          (when (= 0 (call-process "flatpak" nil t nil
+                                   "list" "--app" scope
+                                   "--columns=name,application"))
             (goto-char (point-min))
-            ;; Skip the header line
-            (when (looking-at "Name.*Application ID")
-              (forward-line 1))
             (while (not (eobp))
-              (let* ((line (buffer-substring-no-properties (line-beginning-position) (line-end-position)))
-                     ;; Split on multiple spaces (2 or more) to handle column alignment
-                     (parts (split-string line "[ \t]\\{2,\\}" t))
-                     (name (when (>= (length parts) 1) (string-trim (nth 0 parts))))
-                     (app-id (when (>= (length parts) 2) (string-trim (nth 1 parts)))))
+              (let* ((line (buffer-substring-no-properties
+                            (line-beginning-position) (line-end-position)))
+                     (parts (split-string line "\t" t))
+                     (name (car parts))
+                     (app-id (cadr parts)))
                 (when (and name app-id
-                           (not (string-empty-p name))
-                           (not (string-empty-p app-id))
-                           ;; Ensure it looks like a proper app ID
-                           (string-match-p "^[a-zA-Z][a-zA-Z0-9._-]*\\.[a-zA-Z][a-zA-Z0-9._-]*" app-id))
-                  (push (cons (format "%s (Flatpak)" name)
-                              (concat "flatpak run " app-id))
+                           (not (string-empty-p (string-trim name)))
+                           (not (string-empty-p (string-trim app-id))))
+                  (push (cons (format "%s (Flatpak)" (string-trim name))
+                              (universal-launcher--flatpak-run-command
+                               (string-trim app-id)))
                         apps)))
               (forward-line 1))))))
-    ;; Remove duplicates (in case app appears in both user and system)
     (cl-remove-duplicates apps :test (lambda (a b) (string= (cdr a) (cdr b))))))
+
+(defun universal-launcher--flatpak-run-command (app-id)
+  "Build a launch command for APP-ID that works without an inherited session bus."
+  (if (getenv "DBUS_SESSION_BUS_ADDRESS")
+      (concat "flatpak run " app-id)
+    (concat "dbus-run-session -- flatpak run " app-id)))
+
+(defun universal-launcher--get-nix-applications ()
+  "Get Nix (nixpkgs) applications from the user profile's desktop entries."
+  (let* ((appsdir (expand-file-name "~/.nix-profile/share/applications"))
+         (apps '()))
+    (when (file-directory-p appsdir)
+      (dolist (file (directory-files appsdir t "\\.desktop\\'"))
+        (with-temp-buffer
+          (insert-file-contents file)
+          (goto-char (point-min))
+          (let (name exec type no-display hidden
+                     (end (save-excursion
+                            (if (re-search-forward "^\\[Desktop Action" nil t)
+                                (match-beginning 0)
+                              (point-max)))))
+            (when (re-search-forward "^\\[Desktop Entry\\]" nil t)
+              (while (re-search-forward
+                      "^\\([A-Za-z0-9-]+\\)[[:space:]]*=[[:space:]]*\\(.*\\)$" end t)
+                (pcase (match-string 1)
+                  ("Name"      (unless name (setq name (match-string 2))))
+                  ("Exec"      (unless exec (setq exec (match-string 2))))
+                  ("Type"      (setq type (match-string 2)))
+                  ("NoDisplay" (setq no-display (string= (match-string 2) "true")))
+                  ("Hidden"    (setq hidden (string= (match-string 2) "true"))))))
+            (when (and name exec (equal type "Application")
+                       (not no-display) (not hidden))
+              (push (cons name
+                          (string-trim
+                           (replace-regexp-in-string "%[a-zA-Z]" "" exec)))
+                    apps))))))
+    (cl-remove-duplicates apps :test (lambda (a b) (string= (car a) (car b))) :from-end t)))
 
 ;; TODO Calculator Module
 ;; Calculator Module

@@ -68,5 +68,22 @@
   (interactive)
   (shell-command "~/.config/scripts/Misc/checks"))
 
+(defun jb/sort-lines-in-region-or-block (beg end)
+  "Sort lines between BEG and END, prompting via search if no region."
+  (interactive
+   (if (use-region-p)
+       (list (region-beginning) (region-end))
+     (save-excursion
+       (let ((open (save-excursion
+                     (goto-char (line-end-position))
+                     (nth 1 (syntax-ppss)))))
+         (unless open (user-error "Not inside a block"))
+         ;; climb to outermost list on this line
+         (goto-char open)
+         (while (nth 1 (syntax-ppss)) (goto-char (nth 1 (syntax-ppss))))
+         (let ((e (save-excursion (forward-sexp) (line-beginning-position))))
+           (forward-line 1)
+           (list (line-beginning-position) e))))))
+  (sort-lines nil beg end))
 
 (provide 'tools)

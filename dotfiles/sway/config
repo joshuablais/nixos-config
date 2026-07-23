@@ -82,6 +82,7 @@ exec gsettings set org.gnome.desktop.interface cursor-theme 'Nordzy-cursors-whit
 exec gsettings set org.gnome.desktop.interface cursor-size 24
 
 exec noctalia-shell
+exec swayrd
 exec wl-paste --type text  --watch cliphist store
 exec wl-paste --type image --watch cliphist store
 
@@ -143,6 +144,7 @@ bindsym Ctrl+Alt+v exec /home/joshua/.config/scripts/streamscreen
 ### Theme switcher / dictation
 bindsym $mod+Shift+q exec ~/nixos-config/dotfiles/noctalia/scripts/themeswitch.sh
 bindsym F9           exec ~/.config/sway/scripts/toggle-dictation.sh
+bindsym $mod+Shift+w exec noctalia-shell ipc call wallpaper toggle
 
 ### Audio / brightness
 bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+

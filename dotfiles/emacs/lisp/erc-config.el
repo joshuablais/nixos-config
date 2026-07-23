@@ -28,6 +28,8 @@
   (erc-kill-buffer-on-part t)
   (erc-auto-query 'bury)
   (erc-fill-column 100)
+  (erc-fill-function 'erc-fill-wrap)
+  (erc-fill-wrap-merge t)
   (erc-save-queries-on-quit t)
   (erc-interpret-mirc-color t)
   :config

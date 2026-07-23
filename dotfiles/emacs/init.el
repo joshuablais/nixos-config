@@ -3,7 +3,7 @@
 ;; Username setup
 (setq user-full-name "Joshua Blais"
       user-mail-address "josh@joshblais.com")
-(setq auth-sources '("~/.authinfo.gpg" "~/.authinfo")
+(setq auth-sources '("~/.authinfo.gpg")
       auth-source-cache-expiry nil)
 
 ;; Elpaca bootstrap
@@ -218,13 +218,13 @@
 (require 'flash-config)
 (require 'pass-config)
 (require 'org-caldav-config)
-(require 'markdown)
+;; (require 'markdown)
 (require 'development)
 (require 'ledger-config)
 ;; Not working
 ;; (require 'filechooser-config)
 (require 'grammars)
-(require 'guix-config)
+(require 'jb-guix)
 (require 'modeline)
 (require 'editing)
 (require 'tabs)

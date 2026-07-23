@@ -19,6 +19,11 @@
           (lambda ()
             (setq file-name-handler-alist my--old-file-name-handler-alist)))
 
+(let ((nix-bin (expand-file-name "~/.nix-profile/bin")))
+  (when (file-directory-p nix-bin)
+    (add-to-list 'exec-path nix-bin)
+    (setenv "PATH" (concat nix-bin path-separator (getenv "PATH")))))
+
 ;;; UI — set frame parameters directly
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
