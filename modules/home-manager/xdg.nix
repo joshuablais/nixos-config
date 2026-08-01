@@ -22,6 +22,11 @@
         "libreoffice-writer.desktop";
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" = "libreoffice-calc.desktop";
       "x-scheme-handler/mailto" = "emacsclient-mail.desktop";
+      "x-scheme-handler/http" = "chromium-browser.desktop";
+      "x-scheme-handler/https" = "chromium-browser.desktop";
+      "text/html" = "chromium-browser.desktop";
+      "x-scheme-handler/about" = "chromium-browser.desktop";
+      "x-scheme-handler/unknown" = "chromium-browser.desktop";
     };
   };
 
