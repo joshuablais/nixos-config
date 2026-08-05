@@ -37,6 +37,14 @@
   time.timeZone = "America/Edmonton";
   i18n.defaultLocale = "en_CA.UTF-8";
 
+  documentation.enable = true;
+  documentation.dev.enable = true;
+  documentation.man.enable = true;
+  environment.systemPackages = with pkgs; [
+    man-pages
+    man-pages-posix
+  ];
+
   # Enable Supernote sync tool
   # services.supernote-watcher.enable = true;
 
