@@ -33,6 +33,15 @@
 (use-package language-detection
   :ensure t)
 
+(defun jb/browse-url-chromium (url &rest _args)
+  "Open URL in chromium and focus the chromium window under Sway."
+  (start-process "chromium" nil "chromium" url)
+  (run-with-timer
+   0.1 nil
+   (lambda ()
+     (call-process "swaymsg" nil nil nil
+                   "[app_id=\"chromium\"] focus"))))
+
 (defun my-browse-url-mpv (url &rest _args)
   "Open URL in mpv."
   (start-process "mpv" nil "mpv" url))
@@ -44,17 +53,26 @@
     (find-file-other-window tmp)
     (pdf-view-mode)))
 
+(defvar jb/chromium-domains
+  '("github.com" "gitlab.com" "codeberg.org" "forge.labrynth.org"
+    "google.com" "annas-archive.gl" "search.nixos.org" "toys.whereis.social"
+    "goodreads.com" "youtube.com" "reddit.com" "kagi.com"
+    "perplexity.ai" "wolframalpha.com" "sourcegraph.com"
+    "archive.org" "yandex.com" "searx.labrynth.org" "127.0.0.1:4433"
+    "wikipedia.org")
+  "Domains forced to open in chromium rather than eww.")
+
 (setq browse-url-handlers
-      '(("\\(youtube\\.com\\|youtu\\.be\\|vimeo\\.com\\|twitch\\.tv\\)" . my-browse-url-mpv)
+      `(
+        ;; ("\\(youtube\\.com\\|youtu\\.be\\|vimeo\\.com\\|twitch\\.tv\\)" . my-browse-url-mpv)
         ("\\.mp4$" . my-browse-url-mpv)
         ("\\.pdf$" . my-browse-url-pdf)
         ("^gemini://" . elpher-browse-url-elpher)
         ("^gopher://" . elpher-browse-url-elpher)
+        (,(regexp-opt jb/chromium-domains) . jb/browse-url-chromium)
         ("." . eww-browse-url)))
 
-;; Keep your fallback setting
-(setq browse-url-secondary-browser-function 'browse-url-generic
-      browse-url-generic-program "chromium")
+(setq browse-url-secondary-browser-function #'jb/browse-url-chromium)
 
 (with-eval-after-load 'eww
   (define-key eww-mode-map (kbd "=") #'text-scale-increase)

@@ -235,6 +235,7 @@
 (require 'dired-config)
 (require 'jabber-config)
 (require 'vterm-config)
+(require 'ghostel-config)
 (require 'elfeed-config)
 (require 'reading)
 (require 'emms-config)

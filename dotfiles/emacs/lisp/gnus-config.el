@@ -1,5 +1,7 @@
 ;;; gnus-config.el --- Description -*- lexical-binding: t; -*-
 
+(require 'tools)
+
 (defun my/read-agenix-secret (path)
   "Read and trim a secret from PATH."
   (with-temp-buffer
@@ -15,10 +17,6 @@
                (nntp-address "news.eternal-september.org")
                (nntp-port-number 119)
                (nntp-stream-type starttls)))
-
-  (setq canlock-password  (my/read-agenix-secret "/run/agenix/canlock")
-        user-full-name    (my/read-agenix-secret "/run/agenix/gnus-name")
-        user-mail-address (my/read-agenix-secret "/run/agenix/gnus-email"))
 
   ;; === LOCAL STORAGE ===
   (setq gnus-directory              "~/.local/share/gnus/"
@@ -85,5 +83,11 @@
           (message "Subscribed to %s" group)))))
 
   (add-hook 'gnus-started-hook #'my/gnus-auto-subscribe-groups))
+
+(defun my/gnus-load-secrets ()
+  (setq canlock-password  (my/read-secret "gnus/canlock")
+        user-full-name    (my/read-secret "gnus/name")
+        user-mail-address (my/read-secret "gnus/email")))
+(add-hook 'gnus-started-hook #'my/gnus-load-secrets)
 
 (provide 'gnus-config)

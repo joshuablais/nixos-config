@@ -101,7 +101,7 @@ bindsym $mod+Ctrl+Return exec $terminal
 
 ### Emacs
 bindsym $mod+Shift+e exec emacs
-bindsym $super+e     exec emacsclient -n -e '(my/new-frame-with-vterm)'
+bindsym $super+e     exec emacsclient -n -e '(my/new-frame-with-ghostel)'
 bindsym $mod+space         exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (universal-launcher-popup))'
 bindsym Ctrl+Shift+x       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (org-roam-dailies-capture-today))'
 bindsym Ctrl+Shift+c       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (org-capture))'

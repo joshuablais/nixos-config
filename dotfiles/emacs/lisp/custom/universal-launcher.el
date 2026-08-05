@@ -600,6 +600,7 @@ C-u prefix forces engine re-selection."
   (let* ((search-engines
           '(("Google" . "https://www.google.com/search?q=")
             ("Searx" . "https://searx.labrynth.org/search?q=")
+            ("Hister" . "http://127.0.0.1:4433/?q=")
             ("Go documentation" . "https://pkg.go.dev/search?q=")
             ("ArchWiki" . "https://wiki.archlinux.org/index.php?search=")
             ("DuckDuckGo" . "https://duckduckgo.com/?q=")
@@ -611,6 +612,7 @@ C-u prefix forces engine re-selection."
             ("4get" . "https://4get.ca/web?s=")
             ("Goodreads" . "https://www.goodreads.com/search?q=")
             ("Nix Packages" . "https://search.nixos.org/packages?channel=25.05&query=")
+            ("Guix Packages" . "https://toys.whereis.social/?search=")
             ("NixOS Options" . "https://search.nixos.org/options?channel=25.05&query=")
             ("DevDocs.io" . "https://devdocs.io/#q=")
             ("Doom discourse" . "https://discourse.doomemacs.org/search?q=")
