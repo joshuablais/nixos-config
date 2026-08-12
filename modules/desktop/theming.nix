@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    nordic
+    # nordic
     nordzy-cursor-theme
     zafiro-icons
     papirus-icon-theme
