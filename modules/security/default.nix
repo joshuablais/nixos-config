@@ -18,6 +18,8 @@
 
   # Tailscale service
   services.tailscale.enable = true;
+  # Netbird service
+  services.netbird.enable = true;
 
   # SSH hardening
   services.openssh = {
@@ -37,5 +39,6 @@
     fail2ban
     gnupg
     age
+    netbird-ui
   ];
 }
