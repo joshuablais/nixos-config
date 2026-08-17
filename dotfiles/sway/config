@@ -96,7 +96,7 @@ exec chromium
 exec thunderbird
 
 ### Keybindings — launcher / terminal
-bindsym $mod+Ctrl+space  exec $menu
+# bindsym $mod+Ctrl+space  exec $menu
 bindsym $mod+Ctrl+Return exec $terminal
 
 ### Emacs
@@ -114,7 +114,7 @@ bindsym $mod+c             exec $launcher '(progn (select-frame-set-input-focus 
 bindsym $mod+m             exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (mu4e))'
 bindsym $mod+Ctrl+z        exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (elfeed))'
 bindsym $mod+Ctrl+m        exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (emms-playlist-mode-go))'
-bindsym $mod+Ctrl+e        exec emacsclient --eval '(thanos/type)'
+bindsym $mod+Ctrl+e        exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (jb/roam-capture-everywhere))'
 bindsym $mod+Ctrl+y        exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (jb/clipboard-manager))'
 
 ### System

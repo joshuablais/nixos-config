@@ -3,7 +3,12 @@
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs31;
+    package = (
+      pkgs.emacs31.override {
+        withXwidgets = true;
+        withGTK3 = true;
+      }
+    );
     extraPackages =
       epkgs: with epkgs; [
         vterm
