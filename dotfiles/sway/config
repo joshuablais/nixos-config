@@ -136,6 +136,7 @@ bindsym $mod+Ctrl+c exec kitty -e zsh -c "~/.config/scripts/manage_encrypted_dri
 ### Keyboard pointer
 bindsym $super+f       exec wl-kbptr
 bindsym $super+Shift+f exec wl-kbptr -o mode_click.button=right
+bindsym $super+d exec ~/.config/sway/scripts/wl-kbptr-double-click.sh
 
 ### Streaming / capture scripts
 bindsym Ctrl+Alt+s exec /home/joshua/.config/scripts/cameraonscreen

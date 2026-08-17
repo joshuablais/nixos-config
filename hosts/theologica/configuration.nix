@@ -27,6 +27,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "ydotool"
     ];
   };
 

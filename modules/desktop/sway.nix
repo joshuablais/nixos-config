@@ -50,4 +50,5 @@
 
   services.fprintd.enable = true;
   security.pam.services.swaylock.fprintAuth = true;
+  programs.ydotool.enable = true;
 }
