@@ -12,6 +12,7 @@
     extraPackages =
       epkgs: with epkgs; [
         vterm
+        geiser
         pdf-tools
         treesit-grammars.with-all-grammars
         mu4e
