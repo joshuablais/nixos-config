@@ -13,6 +13,7 @@
       epkgs: with epkgs; [
         vterm
         geiser
+        geiser-guile
         pdf-tools
         treesit-grammars.with-all-grammars
         mu4e
