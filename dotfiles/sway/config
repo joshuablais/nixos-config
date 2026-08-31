@@ -48,8 +48,13 @@ focus_on_window_activation focus
 
 # Single-value opacity (vanilla sway). Use swayfx if you want active/inactive split.
 for_window [app_id="emacs"]   opacity 0.95
-for_window [class="Emacs"]    opacity 0.98
+for_window [class="Emacs"]    opacity 0.99
 for_window [app_id="thunar"]  opacity 0.95
+
+# Global blur configuration in SwayFX
+blur enable
+blur_passes 3
+blur_radius 5
 
 ### Window rules
 # Floating kitty with size
