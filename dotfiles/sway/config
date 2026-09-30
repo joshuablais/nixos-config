@@ -63,8 +63,6 @@ for_window [app_id="kitty"] floating enable, resize set 1100 700
 
 # Workspace assignments — both app_id (Wayland-native) and class (XWayland) so you
 # don't have to know each app's build mode. The non-matching one is a silent no-op.
-assign [app_id="emacs"]               workspace number 1
-assign [class="Emacs"]                workspace number 1
 assign [app_id="firefox"]             workspace number 2
 assign [class="firefox"]              workspace number 2
 assign [app_id="chromium"]            workspace number 2
@@ -106,13 +104,13 @@ exec thunderbird
 bindsym $mod+Ctrl+Return exec $terminal
 
 ### Emacs
-bindsym $mod+Shift+e exec emacs
-bindsym $super+e     exec emacsclient -n -e '(my/new-frame-with-ghostel)'
+bindsym $mod+Shift+e       exec emacs
+bindsym $mod+Return        exec emacsclient -n -e '(my/new-frame-with-ghostel)'
 bindsym $mod+space         exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (universal-launcher-popup))'
 bindsym Ctrl+Shift+x       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (org-roam-dailies-capture-today))'
 bindsym Ctrl+Shift+c       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (org-capture))'
 bindsym $mod+Ctrl+f        exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (dirvish))'
-bindsym $mod+x             exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (execute-extended-command nil))'
+# bindsym $mod+x             exec $launcher '(progn (when my/last-focused-frame (select-frame-set-input-focus my/last-focused-frame)) (execute-extended-command nil))'
 bindsym $mod+p             exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (pass) (call-interactively (quote pass-goto-entry)))'
 bindsym Ctrl+Shift+d       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (jb/download-media))'
 bindsym Ctrl+Shift+b       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (jb/bookmark-browser-tab))'
