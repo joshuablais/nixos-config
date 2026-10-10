@@ -16,8 +16,20 @@
       name = "Zafiro-icons-Dark";
       package = pkgs.zafiro-icons;
     };
+
+    gtk2.extraConfig = ''
+      gtk-key-theme-name = "Emacs"
+    '';
+
+    gtk3.extraConfig = {
+      gtk-key-theme-name = "Emacs";
+    };
   };
 
+  # On Wayland, GTK3 reads GSettings, not just settings.ini. Set both.
+  dconf.settings."org/gnome/desktop/interface" = {
+    gtk-key-theme = "Emacs";
+  };
   # gtk = {
   #   enable = true;
   #   theme = {
