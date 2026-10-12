@@ -20,11 +20,11 @@
       owner = "joshua";
       mode = "400";
     };
-    sshConfig = {
-      file = ../../secrets/ssh-config.age;
-      path = "/home/joshua/.ssh/config";
-      owner = "joshua";
-      mode = "600";
-    };
+    # sshConfig = {
+    #   file = ../../secrets/ssh-config.age;
+    #   path = "/home/joshua/.ssh/config";
+    #   owner = "joshua";
+    #   mode = "600";
+    # };
   };
 }

@@ -17,7 +17,7 @@ in
   "gnus-email.age".publicKeys = users;
   "restic-password.age".publicKeys = users;
   "storagebox.age".publicKeys = users;
-  "ssh-config.age".publicKeys = users;
+  # "ssh-config.age".publicKeys = users;
   "miniflux-admin.age".publicKeys = servers;
   "cloudflare-api-token.age".publicKeys = servers;
 }
