@@ -105,16 +105,21 @@ bindsym $super+Return exec $terminal
 
 ### Emacs
 bindsym $mod+Shift+e       exec emacs
-bindsym $mod+Ctrl+Return        exec emacsclient -n -e '(my/new-frame-with-ghostel)'
-bindsym $mod+space         exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (universal-launcher-popup))'
+bindsym $mod+Ctrl+Return   exec emacsclient -n -e '(my/new-frame-with-ghostel)'
+# bindsym $mod+space         exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (universal-launcher-popup))'
+# bindsym Ctrl+Shift+b       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (jb/bookmark-browser-tab))'
+# bindsym $mod+Shift+b       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (jb/switch-browser-tab))'
+for_window [title="^ul-launcher$"] floating enable, sticky enable, border none, move position center
+
+bindsym $mod+space exec emacsclient -n -e '(universal-launcher-float)'
+bindsym $mod+Shift+b exec emacsclient -n -e '(universal-launcher-tabs)'
+bindsym Ctrl+Shift+b exec emacsclient -n -e '(universal-launcher-tabs-bookmark)'
+
 bindsym Ctrl+Shift+x       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (org-roam-dailies-capture-today))'
 bindsym Ctrl+Shift+c       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (org-capture))'
 bindsym $mod+Ctrl+f        exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (dirvish))'
-# bindsym $mod+x             exec $launcher '(progn (when my/last-focused-frame (select-frame-set-input-focus my/last-focused-frame)) (execute-extended-command nil))'
 bindsym $mod+p             exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (pass) (call-interactively (quote pass-goto-entry)))'
 bindsym Ctrl+Shift+d       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (jb/download-media))'
-bindsym Ctrl+Shift+b       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (jb/bookmark-browser-tab))'
-bindsym $mod+Shift+b       exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (jb/switch-browser-tab))'
 bindsym $mod+c             exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (my/org-agenda-dashboard))'
 bindsym $mod+m             exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (mu4e))'
 bindsym $mod+Ctrl+z        exec $launcher '(progn (select-frame-set-input-focus (selected-frame)) (elfeed))'
