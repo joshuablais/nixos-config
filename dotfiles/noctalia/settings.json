@@ -181,7 +181,6 @@
                 {
                     "colorizeDistroLogo": false,
                     "colorizeSystemIcon": "primary",
-                    "colorizeSystemText": "none",
                     "customIconPath": "",
                     "enableColorization": true,
                     "icon": "noctalia",
@@ -475,14 +474,14 @@
         "disableWallpaper": true
     },
     "notifications": {
-        "backgroundOpacity": 0.9500000000000001,
+        "backgroundOpacity": 1,
         "clearDismissed": true,
         "criticalUrgencyDuration": 15,
         "density": "default",
         "enableBatteryToast": true,
         "enableKeyboardLayoutToast": false,
         "enableMarkdown": false,
-        "enableMediaToast": false,
+        "enableMediaToast": true,
         "enabled": false,
         "location": "top_right",
         "lowUrgencyDuration": 3,
@@ -676,7 +675,7 @@
         "showHiddenFiles": false,
         "skipStartupTransition": false,
         "solidColor": "#1a1a2e",
-        "sortOrder": "date_desc",
+        "sortOrder": "name",
         "transitionDuration": 800,
         "transitionEdgeSmoothness": 0.05,
         "transitionType": [
@@ -685,7 +684,7 @@
         "useOriginalImages": false,
         "useSolidColor": false,
         "useWallhaven": false,
-        "viewMode": "recursive",
+        "viewMode": "single",
         "wallhavenApiKey": "",
         "wallhavenCategories": "111",
         "wallhavenOrder": "desc",

@@ -1,0 +1,61 @@
+{
+  "bar": {
+    "tooltip-empty": "無 USB 裝置",
+    "tooltip-count": "%1 個裝置已掛載"
+  },
+  "panel": {
+    "title": "USB 管理器",
+    "mounted": "已掛載",
+    "refresh": "重新整理",
+    "empty": "未偵測到 USB 裝置",
+    "empty-hint": "插入 USB 裝置以開始使用",
+    "unmount-all": "全部卸載",
+    "eject-all": "全部退出"
+  },
+  "device": {
+    "mounted": "已掛載",
+    "used": "已用 {size}",
+    "free": "可用 {size}",
+    "action-open": "開啟",
+    "action-mount": "掛載",
+    "action-unmount": "卸載",
+    "action-eject": "安全退出",
+    "action-copy-path": "複製路徑"
+  },
+  "context": {
+    "open": "開啟 USB 管理器",
+    "refresh": "重新整理裝置",
+    "unmount-all": "全部卸載",
+    "settings": "設定"
+  },
+  "notifications": {
+    "mounted": "已掛載",
+    "unmounted": "已卸載",
+    "ejected": "已安全退出",
+    "mount-failed": "掛載失敗",
+    "unmount-failed": "卸載失敗",
+    "eject-failed": "退出失敗",
+    "unmount-all": "所有裝置已卸載",
+    "eject-all": "所有裝置已退出",
+    "path-copied": "路徑已複製"
+  },
+  "settings": {
+    "section-bar": "工具列元件",
+    "hide-when-empty": "無裝置時隱藏",
+    "hide-when-empty-desc": "沒有 USB 裝置連接時隱藏工具列圖示",
+    "show-badge": "顯示數量徽章",
+    "show-badge-desc": "在工具列圖示上顯示已掛載裝置的數量",
+    "icon-color": "圖示顏色",
+    "icon-color-desc": "自訂圖示顏色（保留為「無」以使用預設顏色）",
+    "section-behavior": "行為",
+    "auto-mount": "自動掛載",
+    "auto-mount-desc": "插入 USB 裝置時自動掛載",
+    "notifications": "通知",
+    "notifications-desc": "在掛載/卸載/退出事件時顯示通知",
+    "section-browser": "檔案瀏覽器",
+    "file-browser": "檔案瀏覽器",
+    "file-browser-desc": "用於開啟檔案瀏覽器的指令（例如 yazi、ranger、xdg-open、dolphin）",
+    "terminal": "終端機模擬器",
+    "terminal-desc": "用於開啟終端機檔案管理員的終端機（yazi、ranger 等）"
+  }
+}

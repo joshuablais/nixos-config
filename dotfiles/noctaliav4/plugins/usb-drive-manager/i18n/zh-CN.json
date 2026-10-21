@@ -1,0 +1,61 @@
+{
+  "bar": {
+    "tooltip-empty": "无 USB 设备",
+    "tooltip-count": "%1 个设备已挂载"
+  },
+  "panel": {
+    "title": "USB 管理器",
+    "mounted": "已挂载",
+    "refresh": "刷新",
+    "empty": "未检测到 USB 设备",
+    "empty-hint": "插入 USB 设备以开始使用",
+    "unmount-all": "全部卸载",
+    "eject-all": "全部弹出"
+  },
+  "device": {
+    "mounted": "已挂载",
+    "used": "已用 {size}",
+    "free": "可用 {size}",
+    "action-open": "打开",
+    "action-mount": "挂载",
+    "action-unmount": "卸载",
+    "action-eject": "安全弹出",
+    "action-copy-path": "复制路径"
+  },
+  "context": {
+    "open": "打开 USB 管理器",
+    "refresh": "刷新设备",
+    "unmount-all": "全部卸载",
+    "settings": "设置"
+  },
+  "notifications": {
+    "mounted": "已挂载",
+    "unmounted": "已卸载",
+    "ejected": "已安全弹出",
+    "mount-failed": "挂载失败",
+    "unmount-failed": "卸载失败",
+    "eject-failed": "弹出失败",
+    "unmount-all": "所有设备已卸载",
+    "eject-all": "所有设备已弹出",
+    "path-copied": "路径已复制"
+  },
+  "settings": {
+    "section-bar": "任务栏组件",
+    "hide-when-empty": "无设备时隐藏",
+    "hide-when-empty-desc": "没有 USB 设备连接时隐藏任务栏图标",
+    "show-badge": "显示数量徽标",
+    "show-badge-desc": "在任务栏图标上显示已挂载设备的数量",
+    "icon-color": "图标颜色",
+    "icon-color-desc": "自定义图标颜色（保留为“无”以使用默认颜色）",
+    "section-behavior": "行为",
+    "auto-mount": "自动挂载",
+    "auto-mount-desc": "插入 USB 设备时自动挂载",
+    "notifications": "通知",
+    "notifications-desc": "在挂载/卸载/弹出事件时显示通知",
+    "section-browser": "文件浏览器",
+    "file-browser": "文件浏览器",
+    "file-browser-desc": "用于打开文件浏览器的命令（例如 yazi、ranger、xdg-open、dolphin）",
+    "terminal": "终端模拟器",
+    "terminal-desc": "用于打开基于终端的文件管理器的终端（yazi、ranger 等）"
+  }
+}

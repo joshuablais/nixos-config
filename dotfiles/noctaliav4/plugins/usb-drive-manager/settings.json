@@ -1,0 +1,8 @@
+{
+  "autoMount": true,
+  "fileBrowser": "yazi",
+  "terminalCommand": "kitty",
+  "showNotifications": true,
+  "hideWhenEmpty": true,
+  "showBadge": false
+}

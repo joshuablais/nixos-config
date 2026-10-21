@@ -1,0 +1,203 @@
+[bar.default]
+center = [ "media" ]
+end = [ "group:g1", "volume", "network", "bluetooth", "battery", "weather", "clock", "control-center", "session" ]
+font_weight = 350
+margin_edge = 0
+margin_ends = 0
+padding = 20
+radius = 0
+scale = 1.5000000149011612
+start = [ "workspaces", "active_window" ]
+thickness = 45
+widget_spacing = 19
+
+    [[bar.default.capsule_group]]
+    fill = "surface_variant"
+    id = "g1"
+    members = [ "tray" ]
+    opacity = 1.0
+    padding = 6.0
+
+[calendar]
+enabled = true
+
+[control_center]
+sidebar = "full"
+
+[desktop_widgets]
+enabled = false
+
+[location]
+address = "Edmonton"
+
+[lockscreen_widgets]
+enabled = false
+schema_version = 2
+widget_order = [ "lockscreen-login-box@WL-1", "lockscreen-login-box@DP-2" ]
+
+    [lockscreen_widgets.grid]
+    cell_size = 16
+    major_interval = 4
+    visible = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@DP-2"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 1920.0
+    cy = 2037.0
+    output = "DP-2"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@DP-2".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        input_opacity = 1.0
+        input_radius = 6.0
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+
+    [lockscreen_widgets.widget."lockscreen-login-box@WL-1"]
+    box_height = 70.0
+    box_width = 400.0
+    cx = 957.0
+    cy = 2033.0
+    output = "WL-1"
+    rotation = 0.0
+    type = "login_box"
+
+        [lockscreen_widgets.widget."lockscreen-login-box@WL-1".settings]
+        background_color = "surface_variant"
+        background_opacity = 0.88
+        background_radius = 12.0
+        input_opacity = 1.0
+        input_radius = 6.0
+        show_caps_lock = true
+        show_keyboard_layout = true
+        show_login_button = true
+
+[nightlight]
+enabled = true
+temperature_day = 7500
+temperature_night = 3600
+
+[osd]
+position = "top_right"
+
+[accessibility]
+ui_scale = 1.5
+
+[shell]
+corner_radius_scale = 0.6
+font_family = "Alegreya"
+settings_show_advanced = true
+
+    [shell.animation]
+    speed = 4.0
+
+    [shell.panel]
+    open_near_click_control_center = true
+
+    [shell.launcher]
+    compact = true
+
+    [shell.launcher.providers.session]
+    global = true
+
+    [[shell.session.actions]]
+    action = "lock"
+    countdown_seconds = 0.0
+    enabled = false
+    shortcut = "1"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "logout"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "2"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "lock_and_suspend"
+    countdown_seconds = 0.0
+    enabled = false
+    shortcut = "3"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "reboot"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "4"
+    variant = "default"
+
+    [[shell.session.actions]]
+    action = "shutdown"
+    countdown_seconds = 0.0
+    enabled = true
+    shortcut = "5"
+    variant = "destructive"
+
+[theme]
+builtin = "Noctalia"
+community_palette = "Oxocarbon"
+custom_palette = "Compline"
+mode = "dark"
+source = "custom"
+wallpaper_scheme = "m3-content"
+
+    [theme.templates]
+    builtin_ids = [ "gtk3", "gtk4", "qt", "sway" ]
+    community_ids = [ "telegram" ]
+
+[wallpaper]
+directory = "/home/joshua/Pictures/Wallpapers"
+
+    [wallpaper.default]
+    path = "/home/joshua/Pictures/Wallpapers/John_Martin_-_Belshazzar's_Feast_-_Google_Art_Project-edit.webp"
+
+    [wallpaper.last]
+    path = "/home/joshua/Pictures/Wallpapers/John_Martin_-_Belshazzar's_Feast_-_Google_Art_Project-edit.webp"
+
+    [wallpaper.monitors.DP-2]
+    path = "/home/joshua/Pictures/Wallpapers/John_Martin_-_Belshazzar's_Feast_-_Google_Art_Project-edit.webp"
+
+[widget.active_window]
+display = "text_only"
+icon_size = 15
+max_length = 391
+scale = 0.75
+
+[widget.bluetooth]
+scale = 0.80000000000000004
+
+[widget.clock]
+format = "{:%A, %B %-d | %H:%M}"
+scale = 0.75
+
+[widget.control-center]
+custom_image = "/home/joshua/Pictures/gnu_guix_logo_icon_171081.webp"
+custom_image_colorize = true
+
+[widget.media]
+scale = 0.80000000000000004
+
+[widget.network]
+scale = 0.75
+
+[widget.session]
+scale = 0.80000000000000004
+
+[widget.volume]
+scale = 0.75
+show_label = false
+
+[widget.weather]
+scale = 0.75
+
+[widget.workspaces]
+style = "minimal"
+scale = 1.15

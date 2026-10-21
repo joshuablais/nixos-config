@@ -1,0 +1,36 @@
+{
+  "id": "usb-drive-manager",
+  "name": "USB Drive Manager",
+  "version": "1.4.0",
+  "minNoctaliaVersion": "3.6.0",
+  "author": "hennifant",
+  "license": "MIT",
+  "repository": "https://github.com/noctalia-dev/noctalia-plugins",
+  "description": "Manage USB drives: detect, mount, unmount, safely eject, and browse files",
+    "tags": [
+    "Bar",
+    "Panel",
+    "Utility"
+  ],
+  "entryPoints": {
+    "main": "Main.qml",
+    "barWidget": "BarWidget.qml",
+    "controlCenterWidget": "ControlCenterWidget.qml",
+    "panel": "Panel.qml",
+    "settings": "Settings.qml"
+  },
+  "dependencies": {
+    "plugins": []
+  },
+  "metadata": {
+    "defaultSettings": {
+      "autoMount": false,
+      "fileBrowser": "yazi",
+      "terminalCommand": "kitty",
+      "showNotifications": true,
+      "hideWhenEmpty": false,
+      "showBadge": false,
+      "iconColor": "none"
+    }
+  }
+}
