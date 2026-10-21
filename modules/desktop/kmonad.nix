@@ -1,17 +1,13 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
-  environment.systemPackages = with pkgs; [
-    kmonad
+  environment.systemPackages = [ pkgs.kmonad ];
+
+  # Loads uinput, creates the uinput group, installs the one udev rule for it.
+  hardware.uinput.enable = true;
+
+  # input: read the physical keyboard. uinput: write the virtual one.
+  users.users.joshua.extraGroups = [
+    "input"
+    "uinput"
   ];
-
-  # Setup Kmonad
-  boot.kernelModules = [ "uinput" ];
-
-  services.udev.extraRules = ''
-    # KMonad user access to /dev/uinput
-    KERNEL=="uinput", MODE="0660", GROUP="input", TAG+="uaccess"
-  '';
-
-  # Add your user to the input group
-  users.users.joshua.extraGroups = [ "input" ];
 }

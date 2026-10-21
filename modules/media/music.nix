@@ -8,7 +8,6 @@
     spotdl
     jellyfin-tui
     # Audio tools
-    audacity
     # Audio codecs
     ffmpeg-full
     flac

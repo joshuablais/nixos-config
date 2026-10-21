@@ -45,7 +45,7 @@
     wtype
     xclip
     kitty
-    noctalia-shell
+    noctalia
     wofi
   ];
 
