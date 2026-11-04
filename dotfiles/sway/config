@@ -47,8 +47,8 @@ focus_wrapping no
 focus_on_window_activation focus
 
 # Single-value opacity (vanilla sway). Use swayfx if you want active/inactive split.
-for_window [app_id="emacs"]   opacity 0.98
-for_window [class="Emacs"]    opacity 0.98
+for_window [app_id="emacs"]   opacity 1
+for_window [class="Emacs"]    opacity 1
 for_window [class="Kitty"]    opacity 0.90
 for_window [app_id="thunar"]  opacity 0.90
 
@@ -217,10 +217,6 @@ bindsym $super+space exec ~/.config/sway/scripts/music-player-client play-pause
 
 ### Mouse: hold $mod and drag with LMB to move, RMB to resize
 floating_modifier $mod normal
-
-### Scratchpad (analogue of Hyprland's special:magic workspace)
-bindsym $mod+s       scratchpad show
-bindsym $mod+Shift+s move scratchpad
 
 ### Colors include
 include /home/joshua/.config/sway/noctalia/noctalia-colors.conf

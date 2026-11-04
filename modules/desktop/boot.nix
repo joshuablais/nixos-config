@@ -29,5 +29,5 @@
   boot.loader.grub.configurationLimit = 5;
 
   # LUKS + Plymouth integration for themed password prompts
-  boot.initrd.systemd.enable = true;
+  # boot.initrd.systemd.enable = true;
 }
