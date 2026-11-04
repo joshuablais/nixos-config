@@ -30,4 +30,6 @@ in
       value = mkNode host;
     }) deployableHosts
   );
+  flake.colmenaHive = inputs.colmena.lib.makeHive self.colmena;
+
 }
